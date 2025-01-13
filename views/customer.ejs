@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Trishastik Bharat Sustainable Farms</title>
+    <link rel="icon" href="/images/logo.png" type="image/png">
+    <link href="/stylesheet/output.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-600">
+
+    <%- include("./includes/navbar.ejs") %>
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white"><h1 class="text-4xl md:text-6xl font-bold"><%- include("./includes/flash.ejs") %></h1></div>
+    
+    <section id="featured-products" class="py-16 bg-white">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800">OUR CUSTOMER</h2>
+            
+            
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="cart">
+                    <% for (let listing of allListings) { %>
+                        <div class="bg-gray-100 p-4 rounded-lg shadow-lg ">
+                        
+                        <h3 class="text-xl font-semibold text-gray-800"> Customer Name : <%= listing.name %></h3>
+                        <p class="text-lg font-semibold text-gray-800 mt-2">Customer address :  <%= listing.address %></p>
+                        <p class="text-lg font-semibold text-gray-800 mt-2">Customer Phone : <%= listing.phone %></p>
+                        <p class="text-lg font-semibold text-gray-800 mt-2">Products taken :  <%= listing.products %></p>
+                        <p class="text-lg font-semibold text-gray-800 mt-2">Paid amount : <%= listing.totalamount %></p> 
+                      
+                        
+                    </div>
+                    <% } %>
+                </div>
+                
+            
+        </div>
+    </section>
+   
+  
+
+   
+    <section id="testimonials" class="py-16 bg-white">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800">Customer Testimonials</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+               
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                    <p class="text-lg italic text-gray-600 mb-4">"The organic tomatoes I bought from Trishastik Bharat
+                        were so fresh and flavorful. I could taste the difference compared to regular store-bought
+                        ones!"</p>
+                    <h3 class="font-semibold text-gray-800">Amit Sharma</h3>
+                    <p class="text-gray-500">Farmer & Regular Customer</p>
+                </div>
+
+                
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                    <p class="text-lg italic text-gray-600 mb-4">"I’ve been using their organic honey for months now,
+                        and it’s absolutely the best I’ve ever tasted. Truly natural!"</p>
+                    <h3 class="font-semibold text-gray-800">Priya Verma</h3>
+                    <p class="text-gray-500">Health Enthusiast</p>
+                </div>
+
+               
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                    <p class="text-lg italic text-gray-600 mb-4">"Trishastik Bharat’s handmade soaps are incredibly
+                        gentle on the skin. I love how they use all-natural ingredients!"</p>
+                    <h3 class="font-semibold text-gray-800">Rita Das</h3>
+                    <p class="text-gray-500">Customer & Eco-Conscious Shopper</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include("./includes/footer.ejs") %>
+    <script src="/javascript/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Trishastik Bharat Sustainable Farms</title>
+    <link href="/stylesheet/output.css" rel="stylesheet">
+    <link rel="icon" href="/images/logo.png" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+</head>
+<body class="bg-slate-600">
+
+    <%- include("./includes/navbar.ejs") %>
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white"><h1 class="text-4xl md:text-6xl font-bold"><%- include("./includes/flash.ejs") %></h1></div>
+
+<section id="checkout" class="py-16 bg-white">
+    <div class="container mx-auto">
+        <h2 class="text-3xl font-bold mb-8 text-gray-800 text-center">Checkout</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Cart Summary</h3>
+                <div id="cart-summary" class="space-y-4">
+                    <div id="total-amount" class="text-lg font-semibold text-gray-800">
+                        <span>Total: </span>
+                       <span id="total-price"> <%= totalAmount.toFixed(2) %></span>
+                       <div id="total-amount" class="text-lg font-semibold text-gray-800">
+                        <span>Products: </span>
+                       <span id="total-price">  <%= cartTitles %> </span>
+                    </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</section>
+
+
+                
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Shipping Details</h3>
+                    <form action="/checkout" method="POST" class="space-y-4">
+                        <% user.cart.forEach(function(item) { %> <input type="hidden" name="productIds" value="<%= item._id %>"> <% }) %>
+        <input type="hidden" id="total-amount-field" name="listing[totalamount]" value="<%= totalAmount.toFixed(2) %>">
+        <input type="hidden" id="total-amount-field" name="listing[products]" value="<%= cartTitles %> ">
+                        <div class="flex flex-col">
+                            <label for="name" class="text-gray-800">Full Name</label>
+                            <input type="text" id="full-name" name="listing[name]" class="p-2 border rounded-md w-full" required>
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="address" class="text-gray-800">Address</label>
+                            <input type="text" id="address" name="listing[address]" class="p-2 border rounded-md w-full" required>
+                        </div>
+
+                   
+
+                        <div class="flex flex-col">
+                            <label for="phone" class="text-gray-800">phone</label>
+                            <input type="tel" id="phone" name="listing[phone]" class="p-2 border rounded-md w-full" required>
+                        </div>
+
+                       
+
+                        <div class="flex justify-between items-center mt-4">
+                            <button type="submit" class="bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 w-full">Complete Purchase</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include("./includes/footer.ejs") %>
+    
+    <script src="/javascript/script.js"></script>
+</body>
+</html>
