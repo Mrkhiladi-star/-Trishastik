@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        /* General page styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7fafc; /* Light background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('/images/veg.png'); /* Random background image */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Profile Page container */
+        .profile-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        /* Profile Container */
+        .profile-container {
+            background: linear-gradient(to right, #34d399, #3b82f6); /* Green to Blue Gradient */
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            height: 450px; /* Increased height to accommodate content */
+            padding: 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Ensures content is spaced correctly */
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Profile Image */
+        .profile-container .w-32 {
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 16px;
+            border: 4px solid white;
+        }
+
+        .profile-container .w-32 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-container .w-32 img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Profile Name and Email */
+        .profile-container h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .profile-container p {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: #e0e0e0;
+        }
+
+        /* Edit Profile and Logout Buttons */
+        .profile-container a {
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 0;
+            padding: 12px 24px;
+            border-radius: 25px;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .profile-container .text-yellow-300 {
+            background-color: #ffcc00;
+            color: white;
+        }
+
+        .profile-container .text-yellow-300:hover {
+            background-color: #e5b100;
+            transform: scale(1.05);
+        }
+
+        /* Smaller Logout Button */
+        .profile-container .text-red-500 {
+            background-color: #ff4d4d;
+            color: white;
+            font-size: 1rem; /* Smaller font size */
+            padding: 8px 16px; /* Smaller padding */
+            border-radius: 20px; /* Round the corners a bit */
+            width: auto; /* Auto width for smaller button */
+        }
+
+        .profile-container .text-red-500:hover {
+            background-color: #e60000;
+            transform: scale(1.05);
+        }
+
+        /* Box shadow effect on profile actions */
+        .profile-container a:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        /* Media query for responsiveness */
+        @media (max-width: 768px) {
+            .profile-container {
+                width: 90%;
+                height: auto;
+                padding: 20px;
+            }
+
+            .profile-container h1 {
+                font-size: 1.5rem;
+            }
+
+            .profile-container p {
+                font-size: 1rem;
+            }
+
+            .profile-container a {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Profile Page -->
+    <div class="profile-page">
+        <div class="profile-container">
+            <div class="text-center text-white">
+                <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4">
+                    <img src="https://tse4.mm.bing.net/th?id=OIP.hGSCbXlcOjL_9mmzerqAbQHaHa&pid=Api&P=0&h=180" alt="Profile Picture"
+                        class="w-full h-full object-cover">
+                </div>
+                <h1 class="text-2xl font-semibold mb-2"><%= currUser.username %></h1>
+                <p class="text-lg mb-4"><%= currUser.email %></p>
+            </div>
+
+            <a href="/logout" class="text-red-500 hover:text-red-600">Logout</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

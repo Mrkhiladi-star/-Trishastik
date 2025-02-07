@@ -1282,6 +1282,7 @@ video {
 .sidebar {
   position: fixed;
   top: 0;
+  right: -300px;
   left: 0;
   width: 250px;
   height: 100%;
@@ -1370,4 +1371,145 @@ video {
 #map {
  height: 400px;
  width: 80vh;
+}
+.profile-box {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 200px;
+  padding: 12px;
+  z-index: 1000;
+}
+
+.profile-box.active {
+  display: block;
+}
+
+.w-8 {
+  width: 32px; /* Profile picture size in navbar */
+}
+
+.h-8 {
+  height: 32px;
+}
+
+.w-16 {
+  width: 64px; /* Profile picture size in profile box */
+}
+
+.h-16 {
+  height: 64px;
+}
+
+.rounded-full {
+  border-radius: 9999px; /* Circular shape */
+}
+
+.overflow-hidden {
+  overflow: hidden; /* Clips the image to fit within the circle */
+}
+
+.object-cover {
+  object-fit: cover; /* Ensures the image covers the circular container */
+}
+
+.text-center {
+  text-align: center;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-gray-800 {
+  color: #2d3748;
+}
+
+.text-red-500 {
+  color: #f56565;
+}
+
+.text-red-600:hover {
+  color: #e53e3e;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.border-gray-300 {
+  border-color: #e2e8f0;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.hidden {
+  display: none;
+}
+
+.profile-box {
+  position: absolute;
+  right: 0;
+  margin-top: 8px;
+  padding: 12px;
+  width: 200px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.profile-box .text-center {
+  text-align: center;
+}
+
+.profile-box .w-16,
+.profile-box .h-16 {
+  width: 64px; /* Profile picture size in profile box */
+  height: 64px;
+}
+
+.profile-box .rounded-full {
+  border-radius: 9999px; /* Circular shape */
+}
+
+.profile-box .object-cover {
+  object-fit: cover; /* Ensures the image covers the circular container */
+}
+
+.profile-box .border-2 {
+  border-width: 2px;
+}
+
+.profile-box .border-gray-300 {
+  border-color: #e2e8f0;
+}
+.hidden {
+  display: none;
+}
+
+.profile-box {
+  position: absolute;
+  right: 0;
+  margin-top: 8px;
+  padding: 12px;
+  width: 200px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
 }

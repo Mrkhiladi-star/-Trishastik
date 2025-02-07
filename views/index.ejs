@@ -21,11 +21,11 @@
     <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
         <h1 class="text-4xl md:text-6xl font-bold">Trishastik Bharat Sustainable Farms</h1>
         <p class="text-lg md:text-2xl mt-4">Empowering Farmers with Sustainable Practices</p>
-        <% if(currUser.email === "freeforfire15@gmail.com") { %>
+        
             <form class="mt-6 px-8 py-3 bg-green-600 hover:bg-green-700 rounded-lg text-white text-lg" method="GET" action="/new">
                 <button>Create New Listing</button>
             </form>
-        <% } %>
+     
     </div>
     
 </div>
@@ -43,7 +43,7 @@
                         <h3 class="text-xl font-semibold text-gray-800"> <%= listing.title %></h3>
                         <p class="text-gray-600 mt-2"> <%= listing.description %></p>
                         
-                        <p class="text-lg font-semibold text-gray-800 mt-2"> <%= listing.price %></p> <!-- Corrected line -->
+                        <p class="text-lg font-semibold text-gray-800 mt-2"> <%= listing.price %></p>
                         <a href="/addtocart/<%= listing._id %>"
                             class="mt-4 inline-block px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg product-1">Add to
                             Cart</a>
@@ -56,41 +56,31 @@
     </section>
    
   
-
-
     <section id="testimonials" class="py-16 bg-white">
-        <div class="container mx-auto text-center">
+        <div class="container mx-auto text-center">  <form class="mt-6 px-8 py-3 bg-green-600 hover:bg-green-700 rounded-lg text-white text-lg" method="GET" action="/newreview">
+            <button>Create New Review</button>
+        </form>
             <h2 class="text-3xl font-bold mb-8 text-gray-800">Customer Testimonials</h2>
-
+            
+            
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                    <% for (let listing of allReviews) { %>
+                        <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                            <p class="text-lg italic text-gray-600 mb-4"> <%= listing.description %></p>
+                                
+                            <h3 class="font-semibold text-gray-800"> <%= listing.name %></h3>
+                            <p class="text-gray-500"> <%= listing.post %></p>
+                        </div>
+                    <% } %>
+                </div>
                 
-                <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
-                    <p class="text-lg italic text-gray-600 mb-4">"The organic tomatoes I bought from Trishastik Bharat
-                        were so fresh and flavorful. I could taste the difference compared to regular store-bought
-                        ones!"</p>
-                    <h3 class="font-semibold text-gray-800">Amit Sharma</h3>
-                    <p class="text-gray-500">Farmer & Regular Customer</p>
-                </div>
-
-               
-                <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
-                    <p class="text-lg italic text-gray-600 mb-4">"I’ve been using their organic honey for months now,
-                        and it’s absolutely the best I’ve ever tasted. Truly natural!"</p>
-                    <h3 class="font-semibold text-gray-800">Priya Verma</h3>
-                    <p class="text-gray-500">Health Enthusiast</p>
-                </div>
-
-               
-                <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
-                    <p class="text-lg italic text-gray-600 mb-4">"Trishastik Bharat’s handmade soaps are incredibly
-                        gentle on the skin. I love how they use all-natural ingredients!"</p>
-                    <h3 class="font-semibold text-gray-800">Rita Das</h3>
-                    <p class="text-gray-500">Customer & Eco-Conscious Shopper</p>
-                </div>
-            </div>
+            
         </div>
     </section>
+   
+  
 
+   
    
     <section id="video" class="py-16 bg-gray-100">
         <div class="container mx-auto text-center">
