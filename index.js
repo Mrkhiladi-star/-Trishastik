@@ -208,11 +208,11 @@ app.post("/educationnew", isLoggedIn , async (req, res) =>  { const allowedEmail
           return next(err);
         }
         req.flash("success", "Registered Successfully");
-        res.redirect("/login");
+        res.redirect("/");
       });
     } catch (e) {
       req.flash("error", e.message);
-      res.redirect("/login");
+      res.redirect("/");
     }
   });
   app.post("/login",saveRedirectUrl,
@@ -236,8 +236,8 @@ app.post("/educationnew", isLoggedIn , async (req, res) =>  { const allowedEmail
 
   let user =await User.findOne({email:req.user.email})
   user.cart.push(req.params.productid)
-  await user.save(); res.redirect("/")
-  req.flash("success", "Added to cart");
+  await user.save(); 
+  req.flash("success", "Added to cart");res.redirect("/")
     } else {
       res.status(403).send("Access denied: You are not authorized to view this page.");
     }
@@ -284,13 +284,13 @@ const user = await User.findOne({ email: req.user.email }).populate("cart");
 const productIds = req.body.productIds;
 if (!productIds || productIds.length === 0) {
     req.flash("error", "Your cart is empty.");
-    return res.redirect("/cart"); 
+    return res.redirect("/shop"); 
   }
 const cartProducts = await Listing.find({ '_id': { $in: productIds } });
 user.order = [...user.order, ...cartProducts]; 
 user.cart = [];
 await user.save();req.flash("success", "Purchased Successfully");
-res.redirect("/home");
+res.redirect("/");
 });
 
 app.get("/customer", isLoggedIn, async (req, res) => {
@@ -306,5 +306,3 @@ app.get("/customer", isLoggedIn, async (req, res) => {
  app.listen(8080, () => {
       console.log("server is listening to port 8080");
   }); 
-
-  
