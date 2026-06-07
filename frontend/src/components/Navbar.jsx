@@ -224,6 +224,19 @@ const Navbar = () => {
         </div>
       </div>
 
+      {user && !user.isProfileComplete && (
+        <div className="mt-3 bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs px-4 py-2.5 rounded-xl flex items-center justify-between animate-fade-in shadow-md">
+          <div className="flex items-center space-x-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 relative flex shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+            </span>
+            <span>Your profile is incomplete. Please add your contact and address details to unlock all platform features.</span>
+          </div>
+          <Link to="/profile" className="font-bold underline hover:text-amber-300 ml-4 shrink-0">Complete Profile</Link>
+        </div>
+      )}
+
       {/* Mobile Drawer (Sidebar) */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 flex md:hidden">

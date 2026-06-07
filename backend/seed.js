@@ -10,20 +10,18 @@ async function run() {
     await mongoose.connect(dbUrl);
     console.log("Connected! Seeding default users...");
 
-    // Check if admin exists
-    const adminExists = await User.findOne({ username: "admin" });
-    if (!adminExists) {
-      const adminUser = new User({
-        username: "admin",
-        email: "freeforfire15@gmail.com",
-        role: "admin",
-        fullName: "Administrator"
-      });
-      await User.register(adminUser, "admin123");
-      console.log("Created admin user: admin / admin123");
-    } else {
-      console.log("Admin user already exists");
-    }
+    // Delete existing admin if any to ensure credentials are updated
+    await User.deleteOne({ username: "admin" });
+    console.log("Deleted old admin if any");
+
+    const adminUser = new User({
+      username: "admin",
+      email: "sramu1090@gmail.com",
+      role: "admin",
+      fullName: "Administrator"
+    });
+    await User.register(adminUser, "Mrkhiladi@123");
+    console.log("Created admin user: admin/Mrkhiladi@123");
 
     // Check if agent exists
     const agentExists = await User.findOne({ username: "agent1" });

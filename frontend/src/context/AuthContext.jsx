@@ -51,16 +51,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (username, email, password, role) => {
+  const register = async (username, email, password, role, otp = null) => {
     setError(null);
     try {
+      const bodyPayload = { username, email, password, role };
+      if (otp) bodyPayload.otp = otp;
+
       const response = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password, role })
+        body: JSON.stringify(bodyPayload)
       });
       const data = await response.json();
       if (response.ok && data.success) {
+        if (data.otpRequired) {
+          return { success: true, otpRequired: true, message: data.message };
+        }
         setUser(data.user);
         return { success: true };
       } else {

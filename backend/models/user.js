@@ -7,6 +7,14 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  isEmailVerified: {
+    type: Boolean,
+    default: false
+  },
+  isProfileComplete: {
+    type: Boolean,
+    default: false
+  },
   role: {
     type: String,
     enum: ["customer", "farmer", "admin", "agent", "fertilizer_seller", "instrument_seller", "transporter"],

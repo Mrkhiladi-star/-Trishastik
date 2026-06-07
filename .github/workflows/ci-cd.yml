@@ -1,0 +1,69 @@
+name: Trishastik CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-id: '20'
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'backend/package-lock.json'
+
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          npm ci
+
+      - name: Run E2E Integration Tests
+        env:
+          NODE_ENV: test
+          ATLASDB_URL: mongodb://localhost:27017/trishastik
+        run: |
+          cd backend
+          # Run DB seeding
+          node seed.js
+          # Start server in background
+          node index.js &
+          # Wait for server startup
+          sleep 5
+          # Run E2E test script
+          node e2e_test.js
+
+  frontend-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-id: '20'
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Lint Frontend
+        run: |
+          cd frontend
+          npm run lint || echo "Lint warnings found"
+
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm run build
