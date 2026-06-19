@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-import { 
-  User as UserIcon, Mail, Phone, MapPin, Sprout, Shield, Lock, 
-  Settings, Save, Upload, Calendar, ChevronRight, Activity, 
+import {
+  User as UserIcon, Mail, Phone, MapPin, Sprout, Shield, Lock,
+  Settings, Save, Upload, Calendar, ChevronRight, Activity,
   TrendingUp, Award, Droplets, HardHat, FileText, CheckCircle2,
   AlertTriangle, Hourglass, ShoppingBag, Store, Tag, Truck, Navigation
 } from "lucide-react";
@@ -12,7 +12,7 @@ const Profile = () => {
   const [soilTests, setSoilTests] = useState([]);
   const [loadingTests, setLoadingTests] = useState(user?.role === "farmer" || user?.role === "agent");
   const [activeTab, setActiveTab] = useState("personal");
-  
+
   // Role-specific stats states
   const [ordersCount, setOrdersCount] = useState(0);
   const [listingsCount, setListingsCount] = useState(0);
@@ -64,7 +64,7 @@ const Profile = () => {
   const fetchSoilTests = async () => {
     try {
       setLoadingTests(true);
-      const response = await fetch("/api/soil-tests");
+      const response = await fetch("/soil-tests");
       if (response.ok) {
         const data = await response.json();
         setSoilTests(data.soilTests || []);
@@ -78,27 +78,27 @@ const Profile = () => {
 
   useEffect(() => {
     if (!user) return;
-    
+
     if (user.role === "farmer" || user.role === "agent") {
       fetchSoilTests();
     }
-    
+
     if (user.role === "customer") {
-      fetch("/api/orders")
+      fetch("/orders")
         .then(res => res.ok ? res.json() : null)
         .then(data => { if (data) setOrdersCount(data.orders?.length || 0); })
         .catch(err => console.error(err));
     }
-    
+
     if (user.role === "fertilizer_seller" || user.role === "instrument_seller") {
-      fetch("/api/seller/listings")
+      fetch("/seller/listings")
         .then(res => res.ok ? res.json() : null)
         .then(data => { if (data) setListingsCount(data.myListings?.length || 0); })
         .catch(err => console.error(err));
     }
-    
+
     if (user.role === "transporter") {
-      fetch("/api/transporter/active")
+      fetch("/transporter/active")
         .then(res => res.ok ? res.json() : null)
         .then(data => {
           if (data) {
@@ -135,21 +135,21 @@ const Profile = () => {
     setMessage({ text: "", type: "" });
 
     try {
-      const response = await fetch("/api/profile", {
+      const response = await fetch("/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           fullName,
           phone,
           address: { street, city, state, pincode },
-          farmingInfo: { 
+          farmingInfo: {
             cropTypes: cropTypes.split(",").map(c => c.trim()).filter(Boolean),
-            experienceYears: Number(experienceYears) 
+            experienceYears: Number(experienceYears)
           },
-          landDetails: { 
-            farmArea: Number(farmArea), 
-            soilType, 
-            location: locationName 
+          landDetails: {
+            farmArea: Number(farmArea),
+            soilType,
+            location: locationName
           }
         })
       });
@@ -185,7 +185,7 @@ const Profile = () => {
       const formData = new FormData();
       formData.append("photo", file);
 
-      const response = await fetch("/api/profile/photo", {
+      const response = await fetch("/profile/photo", {
         method: "POST",
         body: formData
       });
@@ -214,7 +214,7 @@ const Profile = () => {
 
     setSaveLoading(true);
     try {
-      const response = await fetch("/api/profile/change-password", {
+      const response = await fetch("/profile/change-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ oldPassword, newPassword })
@@ -268,14 +268,13 @@ const Profile = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up">
-      
+
       {/* Toast Alert Banner */}
       {message.text && (
-        <div className={`p-4 rounded-2xl mb-6 text-center font-semibold border flex items-center justify-center space-x-2 max-w-2xl mx-auto ${
-          message.type === "success" 
-            ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" 
+        <div className={`p-4 rounded-2xl mb-6 text-center font-semibold border flex items-center justify-center space-x-2 max-w-2xl mx-auto ${message.type === "success"
+            ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
             : "bg-red-500/10 border-red-500/20 text-red-400"
-        }`}>
+          }`}>
           {message.type === "success" ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}
           <span>{message.text}</span>
         </div>
@@ -283,7 +282,7 @@ const Profile = () => {
 
       {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
+
         {/* Left Column: Summary Card */}
         <div className="lg:col-span-4 space-y-6">
           <div className="glass-panel p-6 rounded-3xl border border-slate-800/80 flex flex-col items-center text-center relative overflow-hidden">
@@ -447,7 +446,7 @@ const Profile = () => {
           <div className="glass-panel p-6 rounded-3xl border border-slate-800/80 space-y-4">
             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Navigation Tabs</h4>
             <div className="flex flex-col space-y-2">
-              <button 
+              <button
                 onClick={() => setActiveTab("personal")}
                 className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-all ${activeTab === "personal" ? "bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500" : "hover:bg-slate-900 text-slate-300"}`}
               >
@@ -459,7 +458,7 @@ const Profile = () => {
               </button>
 
               {user.role === "farmer" && (
-                <button 
+                <button
                   onClick={() => setActiveTab("farming")}
                   className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-all ${activeTab === "farming" ? "bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500" : "hover:bg-slate-900 text-slate-300"}`}
                 >
@@ -472,7 +471,7 @@ const Profile = () => {
               )}
 
               {user.role === "farmer" && (
-                <button 
+                <button
                   onClick={() => setActiveTab("history")}
                   className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-all ${activeTab === "history" ? "bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500" : "hover:bg-slate-900 text-slate-300"}`}
                 >
@@ -484,7 +483,7 @@ const Profile = () => {
                 </button>
               )}
 
-              <button 
+              <button
                 onClick={() => setActiveTab("security")}
                 className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-all ${activeTab === "security" ? "bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500" : "hover:bg-slate-900 text-slate-300"}`}
               >
@@ -501,7 +500,7 @@ const Profile = () => {
         {/* Right Column: Tab View */}
         <div className="lg:col-span-8">
           <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800/80 min-h-[500px]">
-            
+
             {/* Tab: Personal Details */}
             {activeTab === "personal" && (
               <div>
@@ -510,10 +509,10 @@ const Profile = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Full Name</label>
-                      <input 
-                        type="text" 
-                        value={fullName} 
-                        onChange={(e) => setFullName(e.target.value)} 
+                      <input
+                        type="text"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
                         className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
                         placeholder="Enter full name"
                       />
@@ -521,10 +520,10 @@ const Profile = () => {
 
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Phone Number</label>
-                      <input 
-                        type="tel" 
-                        value={phone} 
-                        onChange={(e) => setPhone(e.target.value)} 
+                      <input
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
                         className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
                         placeholder="Contact number"
                       />
@@ -536,21 +535,21 @@ const Profile = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="sm:col-span-2 space-y-1.5">
                         <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Street / Locality</label>
-                        <input 
-                          type="text" 
-                          value={street} 
-                          onChange={(e) => setStreet(e.target.value)} 
+                        <input
+                          type="text"
+                          value={street}
+                          onChange={(e) => setStreet(e.target.value)}
                           className="w-full glass-input rounded-xl px-4 py-3 text-sm"
                           placeholder="e.g. Near Sitapur Junction"
                         />
                       </div>
-                      
+
                       <div className="space-y-1.5">
                         <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Postal Pincode</label>
-                        <input 
-                          type="text" 
-                          value={pincode} 
-                          onChange={(e) => setPincode(e.target.value)} 
+                        <input
+                          type="text"
+                          value={pincode}
+                          onChange={(e) => setPincode(e.target.value)}
                           className="w-full glass-input rounded-xl px-4 py-3 text-sm"
                           placeholder="e.g. 261001"
                         />
@@ -560,10 +559,10 @@ const Profile = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
                         <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">District / City</label>
-                        <input 
-                          type="text" 
-                          value={city} 
-                          onChange={(e) => setCity(e.target.value)} 
+                        <input
+                          type="text"
+                          value={city}
+                          onChange={(e) => setCity(e.target.value)}
                           className="w-full glass-input rounded-xl px-4 py-3 text-sm"
                           placeholder="District name"
                         />
@@ -571,10 +570,10 @@ const Profile = () => {
 
                       <div className="space-y-1.5">
                         <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">State</label>
-                        <input 
-                          type="text" 
-                          value={state} 
-                          onChange={(e) => setState(e.target.value)} 
+                        <input
+                          type="text"
+                          value={state}
+                          onChange={(e) => setState(e.target.value)}
                           className="w-full glass-input rounded-xl px-4 py-3 text-sm"
                           placeholder="State name"
                         />
@@ -582,8 +581,8 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={saveLoading}
                     className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50"
                   >
@@ -602,11 +601,11 @@ const Profile = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Farm Land Area (in Acres)</label>
-                      <input 
-                        type="number" 
+                      <input
+                        type="number"
                         step="0.1"
-                        value={farmArea} 
-                        onChange={(e) => setFarmArea(e.target.value)} 
+                        value={farmArea}
+                        onChange={(e) => setFarmArea(e.target.value)}
                         className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
                         placeholder="e.g. 5.5"
                       />
@@ -614,9 +613,9 @@ const Profile = () => {
 
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Current Soil Type</label>
-                      <select 
-                        value={soilType} 
-                        onChange={(e) => setSoilType(e.target.value)} 
+                      <select
+                        value={soilType}
+                        onChange={(e) => setSoilType(e.target.value)}
                         className="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 font-semibold"
                       >
                         <option value="">Select Soil Type</option>
@@ -634,10 +633,10 @@ const Profile = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Typical Crops Planned (Comma Separated)</label>
-                      <input 
-                        type="text" 
-                        value={cropTypes} 
-                        onChange={(e) => setCropTypes(e.target.value)} 
+                      <input
+                        type="text"
+                        value={cropTypes}
+                        onChange={(e) => setCropTypes(e.target.value)}
                         className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
                         placeholder="e.g. Wheat, Rice, Sugarcane"
                       />
@@ -645,10 +644,10 @@ const Profile = () => {
 
                     <div className="space-y-1.5">
                       <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Farming Experience (in Years)</label>
-                      <input 
-                        type="number" 
-                        value={experienceYears} 
-                        onChange={(e) => setExperienceYears(e.target.value)} 
+                      <input
+                        type="number"
+                        value={experienceYears}
+                        onChange={(e) => setExperienceYears(e.target.value)}
                         className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
                         placeholder="e.g. 12"
                       />
@@ -657,17 +656,17 @@ const Profile = () => {
 
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Farm Geographical Coordinates / Location</label>
-                    <input 
-                      type="text" 
-                      value={locationName} 
-                      onChange={(e) => setLocationName(e.target.value)} 
+                    <input
+                      type="text"
+                      value={locationName}
+                      onChange={(e) => setLocationName(e.target.value)}
                       className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
                       placeholder="e.g. Lat: 27.56, Lon: 80.68 | Sitapur Rural"
                     />
                   </div>
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={saveLoading}
                     className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50"
                   >
@@ -682,7 +681,7 @@ const Profile = () => {
             {activeTab === "history" && (
               <div>
                 <h3 className="text-xl font-bold text-white mb-6 border-b border-slate-800/80 pb-4">Soil Testing Registry</h3>
-                
+
                 {loadingTests ? (
                   <div className="flex justify-center items-center py-12">
                     <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
@@ -696,7 +695,7 @@ const Profile = () => {
                   <div className="space-y-6">
                     {soilTests.map((test) => (
                       <div key={test._id} className="bg-slate-900/60 p-5 rounded-2xl border border-slate-800/60 space-y-4">
-                        
+
                         {/* Test Meta Header */}
                         <div className="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800/60 pb-3">
                           <div className="space-y-0.5">
@@ -743,7 +742,7 @@ const Profile = () => {
                                 <span>Report Approved & Published</span>
                               </h5>
                               {test.labReportUrl && (
-                                <button 
+                                <button
                                   onClick={() => handleDownloadPDF(test.labReportUrl, `Soil_Report_${test._id}.pdf`)}
                                   className="flex items-center space-x-1 px-2.5 py-1 rounded bg-slate-900 border border-slate-800 hover:border-emerald-500/20 text-[10px] font-bold text-emerald-400 hover:text-white"
                                 >
@@ -797,10 +796,10 @@ const Profile = () => {
                 <form onSubmit={handlePasswordChange} className="space-y-6 max-w-md">
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Current Password</label>
-                    <input 
-                      type="password" 
-                      value={oldPassword} 
-                      onChange={(e) => setOldPassword(e.target.value)} 
+                    <input
+                      type="password"
+                      value={oldPassword}
+                      onChange={(e) => setOldPassword(e.target.value)}
                       className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
                       placeholder="Enter current password"
                       required
@@ -809,10 +808,10 @@ const Profile = () => {
 
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">New Password</label>
-                    <input 
-                      type="password" 
-                      value={newPassword} 
-                      onChange={(e) => setNewPassword(e.target.value)} 
+                    <input
+                      type="password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
                       className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
                       placeholder="Enter new password"
                       required
@@ -821,18 +820,18 @@ const Profile = () => {
 
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Confirm New Password</label>
-                    <input 
-                      type="password" 
-                      value={confirmPassword} 
-                      onChange={(e) => setConfirmPassword(e.target.value)} 
+                    <input
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                       className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
                       placeholder="Confirm new password"
                       required
                     />
                   </div>
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={saveLoading}
                     className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50"
                   >

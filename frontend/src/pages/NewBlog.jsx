@@ -18,7 +18,7 @@ const NewBlog = () => {
     setSubmitting(true);
 
     try {
-      const response = await fetch("/api/blognew", {
+      const response = await fetch("/blognew", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -48,8 +48,8 @@ const NewBlog = () => {
   return (
     <div className="min-h-[80vh] py-8 animate-fade-in-up">
       <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800/80 max-w-2xl mx-auto space-y-6">
-        <button 
-          onClick={() => navigate(-1)} 
+        <button
+          onClick={() => navigate(-1)}
           className="flex items-center space-x-1.5 text-slate-400 hover:text-emerald-400 font-semibold mb-2 transition-colors text-xs"
         >
           <ArrowLeft size={14} />
@@ -70,59 +70,59 @@ const NewBlog = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
             <label htmlFor="title" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Blog Title</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
               placeholder="e.g. Modern Soil Conservation Techniques"
-              required 
+              required
             />
           </div>
 
           <div className="space-y-1.5">
             <label htmlFor="description" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Content</label>
-            <textarea 
+            <textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none h-44 resize-none"
               placeholder="Type your blog content here..."
-              required 
+              required
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label htmlFor="publishedon" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Publish Date</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 id="publishedon"
                 value={publishedon}
                 onChange={(e) => setPublishedon(e.target.value)}
                 className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
                 placeholder="e.g. 24 May 2026"
-                required 
+                required
               />
             </div>
 
             <div className="space-y-1.5">
               <label htmlFor="image" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Banner Image URL</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 id="image"
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
                 className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
                 placeholder="Paste banner image link"
-                required 
+                required
               />
             </div>
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={submitting}
             className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50 text-xs mt-4"
           >

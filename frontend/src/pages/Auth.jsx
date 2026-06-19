@@ -57,7 +57,7 @@ const Auth = () => {
     setResendLoading(true);
     setSignupError("");
     try {
-      const response = await fetch("/api/send-otp", {
+      const response = await fetch("/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: signupEmail })
@@ -139,7 +139,7 @@ const Auth = () => {
     }
 
     try {
-      const response = await fetch("/api/forgot-password", {
+      const response = await fetch("/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: forgotEmail })
@@ -176,7 +176,7 @@ const Auth = () => {
     }
 
     try {
-      const response = await fetch("/api/reset-password", {
+      const response = await fetch("/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

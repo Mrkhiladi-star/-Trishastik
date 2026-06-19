@@ -5,7 +5,7 @@ const About = () => {
   return (
     <div className="min-h-[80vh] py-8 animate-fade-in-up">
       <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-800/80 max-w-4xl mx-auto space-y-12">
-        
+
         {/* Title */}
         <div className="text-center space-y-4">
           <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto">
@@ -24,7 +24,7 @@ const About = () => {
           <p>
             Our journey begins with the farmers. By empowering local farmers with knowledge and tools to implement sustainable farming techniques, we help them improve their yields, reduce dependency on harmful chemicals, and create more resilient crops. In return, we build a healthier ecosystem, promote biodiversity, and contribute to the overall well-being of the community. Trishastik Bharat Sustainable Farms isn't just a business; it's a movement towards a more sustainable and harmonious world.
           </p>
-          
+
           <p>
             We take pride in offering a wide range of organic products that are not only good for you but are also grown in ways that protect and regenerate the land. When you shop with us, you’re not just supporting a farm – you’re investing in the future of sustainable agriculture and a better world for all.
           </p>

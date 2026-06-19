@@ -20,7 +20,7 @@ const Education = () => {
 
   const fetchEducation = async () => {
     try {
-      const response = await fetch("/api/education");
+      const response = await fetch("/education");
       const data = await response.json();
       setEducation(data.allListings || []);
     } catch (err) {
@@ -62,7 +62,7 @@ const Education = () => {
 
     setSubmitting(true);
     try {
-      const response = await fetch("/api/educationnew", {
+      const response = await fetch("/educationnew", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -120,7 +120,7 @@ const Education = () => {
   return (
     <div className="min-h-[80vh] py-8 animate-fade-in-up">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        
+
         {/* Header Action Row */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="space-y-2">
@@ -135,7 +135,7 @@ const Education = () => {
           </div>
 
           {isAdmin && (
-            <button 
+            <button
               onClick={() => setShowAdminForm(!showAdminForm)}
               className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl shadow-lg flex items-center space-x-2 transition-all transform active:scale-95 text-xs self-start"
             >
@@ -174,14 +174,14 @@ const Education = () => {
             <form onSubmit={handleAdminSubmit} className="space-y-4">
               <div className="space-y-1.5">
                 <label htmlFor="title" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Module / Crop Title</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   id="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
                   placeholder="e.g. Organic Tomato Farming Techniques"
-                  required 
+                  required
                 />
               </div>
 
@@ -192,31 +192,31 @@ const Education = () => {
                     {getWordCount(description)} / 100 words
                   </span>
                 </div>
-                <textarea 
+                <textarea
                   id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none h-24 resize-none"
                   placeholder="Summarize the core learnings and crop guidelines in about 100 words..."
-                  required 
+                  required
                 />
               </div>
 
               <div className="space-y-1.5">
                 <label htmlFor="video" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">YouTube Video / Resource Link</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   id="video"
                   value={video}
                   onChange={(e) => setVideo(e.target.value)}
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
                   placeholder="e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                  required 
+                  required
                 />
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={submitting}
                 className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50 text-xs mt-2"
               >
@@ -231,8 +231,8 @@ const Education = () => {
         <div className="glass-panel p-4 rounded-2xl border border-slate-800/80 max-w-md">
           <div className="relative">
             <Search className="absolute left-3 top-2.5 text-slate-500" size={16} />
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by crop, disease, or topic (e.g. Tomato)..."
@@ -250,7 +250,7 @@ const Education = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredEducation.map((item) => {
               const embedUrl = getYouTubeEmbedUrl(item.video);
-              
+
               return (
                 <div key={item._id} className="bg-slate-900/40 border border-slate-850 p-6 rounded-2xl shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group">
                   <div className="space-y-4">
@@ -282,12 +282,12 @@ const Education = () => {
 
                     <p className="text-slate-400 text-xs leading-relaxed line-clamp-4 min-h-[4.5rem]">{item.description}</p>
                   </div>
-                  
+
                   <div className="mt-6 border-t border-slate-900/60 pt-4 flex space-x-2">
-                    <a 
-                      href={item.video} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+                    <a
+                      href={item.video}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="w-full bg-slate-950 border border-slate-850 hover:bg-slate-900 text-emerald-400 font-bold py-2.5 px-4 rounded-xl flex items-center justify-center space-x-1.5 transition-all text-xs"
                     >
                       <span>Open Original Resource</span>

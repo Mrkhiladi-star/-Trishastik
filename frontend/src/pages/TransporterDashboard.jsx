@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import L from "leaflet";
-import { 
-  Truck, MapPin, Phone, User, ShoppingBag, DollarSign, 
+import {
+  Truck, MapPin, Phone, User, ShoppingBag, DollarSign,
   Map, CheckCircle, Navigation, ChevronRight, Activity, Calendar, X
 } from "lucide-react";
 
@@ -37,14 +37,14 @@ const TransporterDashboard = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      
-      const jobsRes = await fetch("/api/transporter/jobs");
+
+      const jobsRes = await fetch("/transporter/jobs");
       if (jobsRes.ok) {
         const jobsData = await jobsRes.json();
         setJobs(jobsData.orders || []);
       }
-      
-      const activeRes = await fetch("/api/transporter/active");
+
+      const activeRes = await fetch("/transporter/active");
       if (activeRes.ok) {
         const activeData = await activeRes.json();
         setActiveDeliveries(activeData.orders || []);
@@ -68,7 +68,7 @@ const TransporterDashboard = () => {
   const handleAcceptJob = async (orderId) => {
     setActionLoading(true);
     try {
-      const response = await fetch(`/api/orders/${orderId}/accept-delivery`, {
+      const response = await fetch(`/orders/${orderId}/accept-delivery`, {
         method: "POST"
       });
       const data = await response.json();
@@ -91,7 +91,7 @@ const TransporterDashboard = () => {
     if (!trackingOrderId) return;
     setActionLoading(true);
     try {
-      const response = await fetch(`/api/orders/${trackingOrderId}/track`, {
+      const response = await fetch(`/orders/${trackingOrderId}/track`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -120,7 +120,7 @@ const TransporterDashboard = () => {
   const handleDeliverOrder = async (orderId) => {
     setActionLoading(true);
     try {
-      const response = await fetch(`/api/orders/${orderId}/track`, {
+      const response = await fetch(`/orders/${orderId}/track`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -192,14 +192,14 @@ const TransporterDashboard = () => {
 
       {/* Tabs */}
       <div className="flex space-x-4 border-b border-slate-800 pb-4">
-        <button 
+        <button
           onClick={() => { setActiveTab("jobs"); setTrackingOrderId(null); }}
           className={`pb-2 text-sm font-bold border-b-2 transition-all flex items-center space-x-2 ${activeTab === "jobs" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
         >
           <Navigation size={16} />
           <span>Available Jobs ({jobs.length})</span>
         </button>
-        <button 
+        <button
           onClick={() => { setActiveTab("active"); setTrackingOrderId(null); }}
           className={`pb-2 text-sm font-bold border-b-2 transition-all flex items-center space-x-2 ${activeTab === "active" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
         >
@@ -222,13 +222,13 @@ const TransporterDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {jobs.map((job) => (
                 <div key={job._id} className="bg-slate-900/40 p-6 rounded-2xl border border-slate-850 hover:border-slate-800 transition-all flex flex-col justify-between space-y-6">
-                  
+
                   {/* Job Header */}
                   <div className="flex justify-between items-start gap-4 border-b border-slate-850 pb-3">
                     <div>
                       <h4 className="font-extrabold text-white text-base">{job.product?.title}</h4>
                       <p className="text-[10px] text-slate-500 mt-1 uppercase font-bold flex items-center space-x-1">
-                        <Calendar size={10} /> 
+                        <Calendar size={10} />
                         <span>Ordered: {new Date(job.createdAt).toLocaleDateString()}</span>
                       </p>
                     </div>
@@ -255,7 +255,7 @@ const TransporterDashboard = () => {
                   </div>
 
                   {/* Accept action button */}
-                  <button 
+                  <button
                     onClick={() => handleAcceptJob(job._id)}
                     disabled={actionLoading}
                     className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 text-xs shadow-lg"
@@ -285,7 +285,7 @@ const TransporterDashboard = () => {
             <div className="space-y-6">
               {activeDeliveries.map((delivery) => (
                 <div key={delivery._id} className="bg-slate-900/40 p-6 rounded-2xl border border-slate-850 space-y-4">
-                  
+
                   {/* Row Header */}
                   <div className="flex flex-wrap justify-between items-center gap-4 border-b border-slate-850 pb-3">
                     <div className="space-y-0.5">
@@ -296,11 +296,10 @@ const TransporterDashboard = () => {
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border ${
-                        delivery.status === "Delivered" 
-                          ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400" 
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border ${delivery.status === "Delivered"
+                          ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400"
                           : "bg-sky-500/10 border-sky-500/25 text-sky-400 animate-pulse"
-                      }`}>
+                        }`}>
                         {delivery.status}
                       </span>
                     </div>
@@ -328,7 +327,7 @@ const TransporterDashboard = () => {
                   {/* Actions row */}
                   {delivery.status !== "Delivered" && (
                     <div className="flex flex-wrap items-center justify-end gap-3 pt-3 border-t border-slate-900/60 mt-2">
-                      <button 
+                      <button
                         onClick={() => {
                           setTrackingOrderId(delivery._id);
                           setTrackingLocationName(delivery.currentLocation?.name || "");
@@ -342,7 +341,7 @@ const TransporterDashboard = () => {
                         <span>Update Tracking Location</span>
                       </button>
 
-                      <button 
+                      <button
                         onClick={() => handleDeliverOrder(delivery._id)}
                         disabled={actionLoading}
                         className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold py-2 px-5 rounded-xl text-xs flex items-center space-x-1.5"
@@ -369,19 +368,19 @@ const TransporterDashboard = () => {
                 <MapPin className="text-emerald-400" size={16} />
                 <span>Update Active Tracking Coordinates</span>
               </h3>
-              <button 
+              <button
                 onClick={() => setTrackingOrderId(null)}
                 className="text-slate-400 hover:text-white"
               >
                 <X size={18} />
               </button>
             </div>
-            
+
             <form onSubmit={handleUpdateLocation} className="space-y-4 text-xs">
               <div className="space-y-1.5">
                 <label htmlFor="trackLoc" className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Current Location Description</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   id="trackLoc"
                   value={trackingLocationName}
                   onChange={(e) => setTrackingLocationName(e.target.value)}
@@ -411,14 +410,14 @@ const TransporterDashboard = () => {
               </div>
 
               <div className="flex justify-end space-x-3 pt-2">
-                <button 
+                <button
                   type="button"
                   onClick={() => setTrackingOrderId(null)}
                   className="px-4 py-2 text-slate-400 hover:bg-slate-800 rounded-xl font-semibold"
                 >
                   Cancel
                 </button>
-                <button 
+                <button
                   type="submit"
                   disabled={actionLoading}
                   className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold px-4 py-2 rounded-xl"

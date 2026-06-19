@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { 
-  PlusCircle, ShoppingBag, DollarSign, Store, Tag, Clock, 
-  CheckCircle, Truck, Package, X, MapPin, User, Navigation 
+import {
+  PlusCircle, ShoppingBag, DollarSign, Store, Tag, Clock,
+  CheckCircle, Truck, Package, X, MapPin, User, Navigation
 } from "lucide-react";
 
 const SellerDashboard = () => {
@@ -12,7 +12,7 @@ const SellerDashboard = () => {
 
   // Tab state: "listings" | "orders"
   const [dashboardTab, setDashboardTab] = useState("listings");
-  
+
   const [myListings, setMyListings] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ const SellerDashboard = () => {
 
   const fetchSellerData = async () => {
     try {
-      const response = await fetch("/api/seller/listings");
+      const response = await fetch("/seller/listings");
       if (!response.ok) {
         if (response.status === 401 || response.status === 403) {
           navigate("/");
@@ -38,7 +38,7 @@ const SellerDashboard = () => {
       setMyListings(data.myListings || []);
 
       // Fetch customer orders placed on seller's products
-      const ordersResponse = await fetch("/api/seller/orders");
+      const ordersResponse = await fetch("/seller/orders");
       if (ordersResponse.ok) {
         const ordersData = await ordersResponse.json();
         setOrders(ordersData.orders || []);
@@ -53,12 +53,12 @@ const SellerDashboard = () => {
 
   useEffect(() => {
     // Check if the user has any of the seller roles or is admin
-    if (user && 
-        user.role !== "farmer" && 
-        user.role !== "fertilizer_seller" && 
-        user.role !== "instrument_seller" && 
-        user.role !== "admin" &&
-        user.email !== "freeforfire15@gmail.com") {
+    if (user &&
+      user.role !== "farmer" &&
+      user.role !== "fertilizer_seller" &&
+      user.role !== "instrument_seller" &&
+      user.role !== "admin" &&
+      user.email !== "freeforfire15@gmail.com") {
       navigate("/");
       return;
     }
@@ -67,7 +67,7 @@ const SellerDashboard = () => {
 
   const handleAcceptOrder = async (orderId) => {
     try {
-      const response = await fetch(`/api/orders/${orderId}/accept`, {
+      const response = await fetch(`/orders/${orderId}/accept`, {
         method: "POST"
       });
       const data = await response.json();
@@ -88,7 +88,7 @@ const SellerDashboard = () => {
     if (!transitOrderId) return;
     setTransitSubmitting(true);
     try {
-      const response = await fetch(`/api/orders/${transitOrderId}/request-transit`, {
+      const response = await fetch(`/orders/${transitOrderId}/request-transit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ vehicleType })
@@ -145,8 +145,8 @@ const SellerDashboard = () => {
               Register stock items, manage your listings, accept inbound customer purchases, and request transit shipping dispatches.
             </p>
           </div>
-          <Link 
-            to="/new" 
+          <Link
+            to="/new"
             className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl shadow-lg flex items-center space-x-2 transition-all transform active:scale-95 text-xs self-start"
           >
             <PlusCircle size={16} />
@@ -182,13 +182,13 @@ const SellerDashboard = () => {
 
       {/* Tabs */}
       <div className="flex space-x-4 border-b border-slate-800 pb-4">
-        <button 
+        <button
           onClick={() => setDashboardTab("listings")}
           className={`pb-2 text-sm font-bold border-b-2 transition-all ${dashboardTab === "listings" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
         >
           My Listed Products
         </button>
-        <button 
+        <button
           onClick={() => setDashboardTab("orders")}
           className={`pb-2 text-sm font-bold border-b-2 transition-all ${dashboardTab === "orders" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
         >
@@ -221,9 +221,9 @@ const SellerDashboard = () => {
                 <div key={item._id} className="bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group">
                   <div>
                     <div className="h-44 overflow-hidden relative bg-slate-950">
-                      <img 
-                        src={item.image} 
-                        alt={item.title} 
+                      <img
+                        src={item.image}
+                        alt={item.title}
                         className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
                         onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
                       />
@@ -269,17 +269,16 @@ const SellerDashboard = () => {
                       <div>
                         <h4 className="font-extrabold text-white text-base">{order.product?.title}</h4>
                         <p className="text-[10px] text-slate-500 mt-1 uppercase font-bold flex items-center space-x-1">
-                          <Clock size={10} /> 
+                          <Clock size={10} />
                           <span>Ordered: {new Date(order.createdAt).toLocaleDateString()}</span>
                         </p>
                       </div>
-                      
-                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border uppercase tracking-wider ${
-                        order.status === "Delivered" ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400" :
+
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border uppercase tracking-wider ${order.status === "Delivered" ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400" :
                         order.status === "Cancelled" ? "bg-red-500/10 border-red-500/25 text-red-400" :
-                        order.status === "Transit Requested" || order.status === "In Transit" ? "bg-sky-500/10 border-sky-500/25 text-sky-400 animate-pulse" :
-                        "bg-amber-500/10 border-amber-500/25 text-amber-400"
-                      }`}>
+                          order.status === "Transit Requested" || order.status === "In Transit" ? "bg-sky-500/10 border-sky-500/25 text-sky-400 animate-pulse" :
+                            "bg-amber-500/10 border-amber-500/25 text-amber-400"
+                        }`}>
                         {order.status}
                       </span>
                     </div>
@@ -308,7 +307,7 @@ const SellerDashboard = () => {
                   {/* Actions depending on status */}
                   <div className="flex items-center justify-end space-x-3 pt-3 border-t border-slate-900/60 mt-4">
                     {order.status === "Pending" && (
-                      <button 
+                      <button
                         onClick={() => handleAcceptOrder(order._id)}
                         className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 px-4 rounded-xl flex items-center space-x-1.5 text-xs shadow-lg"
                       >
@@ -318,7 +317,7 @@ const SellerDashboard = () => {
                     )}
 
                     {order.status === "Accepted" && (
-                      <button 
+                      <button
                         onClick={() => setTransitOrderId(order._id)}
                         className="bg-sky-500 hover:bg-sky-600 text-slate-950 font-bold py-2 px-4 rounded-xl flex items-center space-x-1.5 text-xs shadow-lg"
                       >
@@ -352,7 +351,7 @@ const SellerDashboard = () => {
       {transitOrderId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 animate-fade-in">
           <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl relative">
-            <button 
+            <button
               onClick={() => setTransitOrderId(null)}
               className="absolute top-4 right-4 text-slate-400 hover:text-white"
             >
@@ -370,10 +369,10 @@ const SellerDashboard = () => {
             <form onSubmit={handleRequestTransit} className="space-y-4 text-xs">
               <div className="space-y-1.5">
                 <label htmlFor="vehicleType" className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Vehicle Category</label>
-                <select 
+                <select
                   id="vehicleType"
-                  value={vehicleType} 
-                  onChange={(e) => setVehicleType(e.target.value)} 
+                  value={vehicleType}
+                  onChange={(e) => setVehicleType(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-850 text-white rounded-xl px-4 py-2.5 focus:outline-none"
                 >
                   <option value="motorcycle">Motorcycle (Small parcels / letters)</option>
@@ -385,14 +384,14 @@ const SellerDashboard = () => {
               </div>
 
               <div className="flex justify-end space-x-3 pt-2">
-                <button 
+                <button
                   type="button"
                   onClick={() => setTransitOrderId(null)}
                   className="px-4 py-2 text-slate-400 hover:bg-slate-800 rounded-xl font-semibold"
                 >
                   Cancel
                 </button>
-                <button 
+                <button
                   type="submit"
                   disabled={transitSubmitting}
                   className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold px-4 py-2 rounded-xl"

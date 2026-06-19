@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
-import { 
-  Trash2, ShoppingBag, CreditCard, ChevronRight, CheckCircle2, 
+import {
+  Trash2, ShoppingBag, CreditCard, ChevronRight, CheckCircle2,
   ArrowRight, Search, Clock, ShieldAlert, Star, Cpu, MapPin, X
 } from "lucide-react";
 
@@ -36,7 +36,7 @@ const Shop = () => {
 
   const fetchShopData = async () => {
     try {
-      const response = await fetch("/api/shop");
+      const response = await fetch("/shop");
       if (!response.ok) {
         if (response.status === 401) {
           navigate("/login");
@@ -49,9 +49,9 @@ const Shop = () => {
       setTotalAmount(data.totalAmount || 0);
       setCartTitles(data.cartTitles || "");
       setListings(data.allListings || []);
-      
+
       // Fetch user's orders from detailed order model
-      const ordersResponse = await fetch("/api/orders");
+      const ordersResponse = await fetch("/orders");
       if (ordersResponse.ok) {
         const ordersData = await ordersResponse.json();
         setMyOrders(ordersData.orders || []);
@@ -70,7 +70,7 @@ const Shop = () => {
 
   const handleAddToCart = async (id) => {
     try {
-      const response = await fetch(`/api/addtocart/${id}`);
+      const response = await fetch(`/addtocart/${id}`);
       const data = await response.json();
       if (response.ok && data.success) {
         setMessage("Product added to cart!");
@@ -90,7 +90,7 @@ const Shop = () => {
 
   const handleRemoveFromCart = async (id) => {
     try {
-      const response = await fetch(`/api/remove-from-cart/${id}`);
+      const response = await fetch(`/remove-from-cart/${id}`);
       const data = await response.json();
       if (response.ok && data.success) {
         await refreshUser();
@@ -111,7 +111,7 @@ const Shop = () => {
   const handleCancelOrder = async (orderId) => {
     if (!window.confirm("Are you sure you want to cancel this order?")) return;
     try {
-      const response = await fetch(`/api/orders/${orderId}/cancel`, {
+      const response = await fetch(`/orders/${orderId}/cancel`, {
         method: "POST"
       });
       const data = await response.json();
@@ -130,7 +130,7 @@ const Shop = () => {
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`/api/orders/${reviewOrderId}/review`, {
+      const response = await fetch(`/orders/${reviewOrderId}/review`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -156,7 +156,7 @@ const Shop = () => {
 
   // Filter Catalog
   const filteredListings = listings.filter(item => {
-    const matchesSearch = 
+    const matchesSearch =
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = activeCategory === "all" || item.category === activeCategory;
@@ -203,19 +203,19 @@ const Shop = () => {
 
       {/* Sub tabs */}
       <div className="flex space-x-4 border-b border-slate-800 pb-4">
-        <button 
+        <button
           onClick={() => setShopTab("catalog")}
           className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "catalog" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
         >
           Explore Catalog
         </button>
-        <button 
+        <button
           onClick={() => setShopTab("cart")}
           className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "cart" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
         >
           My Cart ({cart.length})
         </button>
-        <button 
+        <button
           onClick={() => setShopTab("orders")}
           className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "orders" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
         >
@@ -228,12 +228,12 @@ const Shop = () => {
         <div className="space-y-6">
           {/* Filters Row */}
           <div className="flex flex-col md:flex-row justify-between gap-4 items-center">
-            
+
             {/* Search Bar */}
             <div className="relative w-full md:w-80">
               <Search className="absolute left-3 top-2.5 text-slate-500" size={16} />
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search products..."
@@ -253,11 +253,10 @@ const Shop = () => {
                 <button
                   key={c.id}
                   onClick={() => setActiveCategory(c.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
-                    activeCategory === c.id 
-                      ? "bg-emerald-500 border-emerald-400 text-slate-950 shadow" 
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${activeCategory === c.id
+                      ? "bg-emerald-500 border-emerald-400 text-slate-950 shadow"
                       : "bg-slate-900 border-slate-800 text-slate-300 hover:text-white"
-                  }`}
+                    }`}
                 >
                   {c.label}
                 </button>
@@ -274,23 +273,22 @@ const Shop = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {filteredListings.map((item) => {
                 const isOwnItem = user && item.owner?._id === user._id;
-                
+
                 return (
                   <div key={item._id} className="bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group">
                     <div>
                       <div className="relative h-44 overflow-hidden bg-slate-950">
-                        <img 
-                          src={item.image} 
-                          alt={item.title} 
-                          className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300" 
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
                           onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
                         />
-                        <span className={`absolute top-2 right-2 text-[8px] font-extrabold px-2 py-0.5 rounded-md border uppercase ${
-                          item.category === "organic_product" ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400" :
-                          item.category === "medicine_fertilizer" ? "bg-purple-500/10 border-purple-500/25 text-purple-400" :
-                          item.category === "instrument_sale" ? "bg-amber-500/10 border-amber-500/25 text-amber-400" :
-                          "bg-sky-500/10 border-sky-500/25 text-sky-400"
-                        }`}>
+                        <span className={`absolute top-2 right-2 text-[8px] font-extrabold px-2 py-0.5 rounded-md border uppercase ${item.category === "organic_product" ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400" :
+                            item.category === "medicine_fertilizer" ? "bg-purple-500/10 border-purple-500/25 text-purple-400" :
+                              item.category === "instrument_sale" ? "bg-amber-500/10 border-amber-500/25 text-amber-400" :
+                                "bg-sky-500/10 border-sky-500/25 text-sky-400"
+                          }`}>
                           {item.category?.replace("_", " ")}
                         </span>
                       </div>
@@ -305,22 +303,22 @@ const Shop = () => {
                         )}
                       </div>
                     </div>
-                    
+
                     <div className="p-4 pt-0 space-y-3 mt-2">
                       <p className="text-lg font-extrabold text-emerald-400">
                         ₹{item.price}{item.category === "instrument_rent" && " / day"}
                       </p>
-                      
+
                       {canBuy && (
                         isOwnItem ? (
-                          <button 
-                            disabled 
+                          <button
+                            disabled
                             className="w-full bg-slate-900 text-slate-500 font-bold py-2 rounded-xl text-xs border border-slate-800 cursor-not-allowed"
                           >
                             My Product Listing
                           </button>
                         ) : (
-                          <button 
+                          <button
                             onClick={() => handleAddToCart(item._id)}
                             className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 px-4 rounded-xl flex items-center justify-center space-x-1.5 transition-all text-xs active:scale-95"
                           >
@@ -353,8 +351,8 @@ const Shop = () => {
                 <p className="text-2xl font-extrabold text-slate-950">Total Invoice: ₹{totalAmount.toFixed(2)}</p>
                 <p className="text-xs font-medium text-emerald-950/80 truncate max-w-lg">Products: {cartTitles}</p>
               </div>
-              <Link 
-                to="/checkout" 
+              <Link
+                to="/checkout"
                 className="bg-slate-950 text-white hover:bg-slate-900 font-bold px-6 py-3 rounded-xl flex items-center space-x-2 shadow-xl transition-all transform active:scale-95 text-xs"
               >
                 <CreditCard size={14} />
@@ -368,7 +366,7 @@ const Shop = () => {
             {cart.length === 0 ? (
               <div className="text-center py-16 bg-slate-900/20 rounded-2xl border border-dashed border-slate-800 text-slate-400 space-y-3">
                 <p className="text-sm font-semibold">Your shopping cart is empty.</p>
-                <button 
+                <button
                   onClick={() => setShopTab("catalog")}
                   className="text-emerald-400 hover:text-emerald-300 font-bold flex items-center justify-center space-x-1 text-xs mx-auto"
                 >
@@ -382,9 +380,9 @@ const Shop = () => {
                   <div key={item._id} className="bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg flex flex-col justify-between group">
                     <div>
                       <div className="h-44 overflow-hidden bg-slate-950">
-                        <img 
-                          src={item.image} 
-                          alt={item.title} 
+                        <img
+                          src={item.image}
+                          alt={item.title}
                           className="w-full h-full object-cover"
                           onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
                         />
@@ -396,7 +394,7 @@ const Shop = () => {
                     </div>
                     <div className="p-4 pt-0 flex justify-between items-center mt-4 border-t border-slate-900/60 pt-3">
                       <span className="text-base font-extrabold text-emerald-400">₹{item.price}</span>
-                      <button 
+                      <button
                         onClick={() => handleRemoveFromCart(item._id)}
                         className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-2 rounded-xl transition-all"
                         title="Remove item"
@@ -426,10 +424,10 @@ const Shop = () => {
             <div className="space-y-6">
               {myOrders.map((order) => {
                 const canCancel = order.status === "Pending" || order.status === "Accepted";
-                
+
                 return (
                   <div key={order._id} className="bg-slate-900/40 p-6 rounded-2xl border border-slate-850 space-y-4 hover:border-slate-800 transition-all">
-                    
+
                     {/* Header */}
                     <div className="flex flex-wrap justify-between items-start gap-4 border-b border-slate-850 pb-3">
                       <div>
@@ -438,18 +436,17 @@ const Shop = () => {
                           Seller: {order.seller?.fullName || order.seller?.username} | Price: ₹{order.price}
                         </p>
                       </div>
-                      
+
                       <div className="flex items-center space-x-3">
-                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold border uppercase tracking-wider ${
-                          order.status === "Delivered" ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" :
-                          order.status === "Cancelled" ? "bg-red-500/10 border-red-500/20 text-red-400" :
-                          "bg-sky-500/10 border-sky-500/20 text-sky-400 animate-pulse"
-                        }`}>
+                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold border uppercase tracking-wider ${order.status === "Delivered" ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" :
+                            order.status === "Cancelled" ? "bg-red-500/10 border-red-500/20 text-red-400" :
+                              "bg-sky-500/10 border-sky-500/20 text-sky-400 animate-pulse"
+                          }`}>
                           {order.status}
                         </span>
-                        
+
                         {canCancel && (
-                          <button 
+                          <button
                             onClick={() => handleCancelOrder(order._id)}
                             className="bg-red-500/10 hover:bg-red-500/25 border border-red-500/20 text-red-400 font-bold px-3 py-1 rounded-lg text-[10px] transition-all"
                           >
@@ -458,7 +455,7 @@ const Shop = () => {
                         )}
 
                         {order.status === "Delivered" && !order.review?.rating && (
-                          <button 
+                          <button
                             onClick={() => setReviewOrderId(order._id)}
                             className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-3 py-1 rounded-lg text-[10px] transition-all"
                           >
@@ -511,9 +508,9 @@ const Shop = () => {
                             <p className="text-slate-400 text-[11px]">Transporter: {order.transporter?.fullName || order.transporter?.username} ({order.transporter?.phone})</p>
                           )}
                         </div>
-                        
+
                         {order.status !== "Pending" && (
-                          <button 
+                          <button
                             onClick={() => setTrackingOrder(order)}
                             className="bg-slate-900 border border-slate-850 hover:border-emerald-500/20 text-emerald-400 hover:text-white px-4 py-2 rounded-xl font-bold flex items-center space-x-1.5"
                           >
@@ -556,43 +553,43 @@ const Shop = () => {
                 </h3>
                 <p className="text-[10px] text-slate-400">Tracking coordinates from {trackingOrder.seller?.fullName} to Destination Address</p>
               </div>
-              <button 
+              <button
                 onClick={() => setTrackingOrder(null)}
                 className="text-slate-400 hover:text-white"
               >
                 <X size={18} />
               </button>
             </div>
-            
+
             <div className="h-96 w-full rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 relative">
-              <MapContainer 
+              <MapContainer
                 center={[
-                  trackingOrder.currentLocation?.latitude || 27.56, 
+                  trackingOrder.currentLocation?.latitude || 27.56,
                   trackingOrder.currentLocation?.longitude || 80.68
-                ]} 
-                zoom={10} 
-                scrollWheelZoom={false} 
+                ]}
+                zoom={10}
+                scrollWheelZoom={false}
                 className="h-full w-full"
               >
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-                
+
                 {/* Marker for Origin */}
-                <Marker 
+                <Marker
                   position={[
-                    trackingOrder.product?.latitude || 27.56, 
+                    trackingOrder.product?.latitude || 27.56,
                     trackingOrder.product?.longitude || 80.68
-                  ]} 
+                  ]}
                 />
 
                 {/* Marker for current transport location */}
-                <Marker 
+                <Marker
                   position={[
-                    trackingOrder.currentLocation?.latitude || 27.56, 
+                    trackingOrder.currentLocation?.latitude || 27.56,
                     trackingOrder.currentLocation?.longitude || 80.68
-                  ]} 
+                  ]}
                 />
               </MapContainer>
             </div>
@@ -621,14 +618,14 @@ const Shop = () => {
                 <Star className="text-emerald-400" size={16} />
                 <span>Rate & Review Product</span>
               </h3>
-              <button 
+              <button
                 onClick={() => setReviewOrderId(null)}
                 className="text-slate-400 hover:text-white"
               >
                 <X size={18} />
               </button>
             </div>
-            
+
             <form onSubmit={handleReviewSubmit} className="space-y-4 text-xs">
               <div className="space-y-1.5 text-left">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Rating Star Scale</label>
@@ -648,7 +645,7 @@ const Shop = () => {
 
               <div className="space-y-1.5 text-left">
                 <label htmlFor="revCom" className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Review Comments</label>
-                <textarea 
+                <textarea
                   id="revCom"
                   value={reviewComment}
                   onChange={(e) => setReviewComment(e.target.value)}
@@ -659,14 +656,14 @@ const Shop = () => {
               </div>
 
               <div className="flex justify-end space-x-3 pt-2">
-                <button 
+                <button
                   type="button"
                   onClick={() => setReviewOrderId(null)}
                   className="px-4 py-2 text-slate-400 hover:bg-slate-800 rounded-xl font-semibold"
                 >
                   Cancel
                 </button>
-                <button 
+                <button
                   type="submit"
                   className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-2 rounded-xl"
                 >

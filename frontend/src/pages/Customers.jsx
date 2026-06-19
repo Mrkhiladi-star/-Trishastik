@@ -13,7 +13,7 @@ const Customers = () => {
 
   const fetchCustomerData = async () => {
     try {
-      const response = await fetch("/api/customer");
+      const response = await fetch("/customer");
       if (!response.ok) {
         if (response.status === 401 || response.status === 403) {
           navigate("/");
@@ -53,7 +53,7 @@ const Customers = () => {
   return (
     <div className="min-h-[80vh] py-8 space-y-8 animate-fade-in-up">
       <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800/80 max-w-5xl mx-auto space-y-8">
-        
+
         {/* Header */}
         <div className="text-center space-y-2 border-b border-slate-800 pb-4">
           <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center justify-center space-x-2">
@@ -86,7 +86,7 @@ const Customers = () => {
                   <p><span className="font-semibold text-slate-500">Address:</span> {c.address}</p>
                   <p><span className="font-semibold text-slate-500">Contact:</span> +91 {c.phone}</p>
                   <p><span className="font-semibold text-slate-500">Purchased:</span> {c.products}</p>
-                  
+
                   <div className="border-t border-slate-900/60 pt-3 mt-3 flex justify-between items-center text-sm">
                     <span className="font-bold text-slate-500">Amount Paid:</span>
                     <span className="font-extrabold text-emerald-400 text-base">₹{c.totalamount}</span>

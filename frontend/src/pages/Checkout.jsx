@@ -15,7 +15,7 @@ const Checkout = () => {
   // Form fields
   const [fullName, setFullName] = useState(user?.fullName || "");
   const [address, setAddress] = useState(
-    user?.address 
+    user?.address
       ? `${user.address.street || ""}, ${user.address.city || ""}, ${user.address.state || ""} - ${user.address.pincode || ""}`.replace(/^,\s*/, "")
       : ""
   );
@@ -25,7 +25,7 @@ const Checkout = () => {
 
   const fetchCheckoutData = async () => {
     try {
-      const response = await fetch("/api/checkout");
+      const response = await fetch("/checkout");
       if (!response.ok) {
         if (response.status === 401) {
           navigate("/login");
@@ -72,7 +72,7 @@ const Checkout = () => {
         productIds: cart.map(item => item._id)
       };
 
-      const response = await fetch("/api/checkout", {
+      const response = await fetch("/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
@@ -108,7 +108,7 @@ const Checkout = () => {
   return (
     <div className="min-h-[80vh] py-8 animate-fade-in-up">
       <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800/80 max-w-5xl mx-auto space-y-8">
-        
+
         {/* Header */}
         <div className="text-center space-y-2 border-b border-slate-800 pb-4">
           <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center justify-center space-x-2">
@@ -126,14 +126,14 @@ const Checkout = () => {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          
+
           {/* Cart Summary Panel */}
           <div className="bg-slate-900/40 border border-slate-850 p-6 rounded-2xl space-y-6">
             <h3 className="text-base font-bold text-white border-b border-slate-800/80 pb-3 flex items-center space-x-2">
               <ShoppingBag className="text-emerald-400" size={16} />
               <span>Cart Summary</span>
             </h3>
-            
+
             <div className="space-y-4 text-xs">
               <div className="flex justify-between items-center text-slate-400">
                 <span>Total Items:</span>
@@ -145,9 +145,9 @@ const Checkout = () => {
                   {cartTitles || "None"}
                 </span>
               </div>
-              
+
               <div className="border-t border-slate-800/80 my-3"></div>
-              
+
               <div className="flex justify-between items-center text-sm font-extrabold text-emerald-400">
                 <span>Grand Total:</span>
                 <span className="text-lg">₹{totalAmount.toFixed(2)}</span>
@@ -165,42 +165,42 @@ const Checkout = () => {
             <form onSubmit={handleCheckoutSubmit} className="space-y-4">
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Recipient Name</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
-                  placeholder="Enter full name" 
-                  required 
+                  placeholder="Enter full name"
+                  required
                 />
               </div>
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Delivery Address</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
-                  placeholder="Street address, city, state, pincode" 
-                  required 
+                  placeholder="Street address, city, state, pincode"
+                  required
                 />
               </div>
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Contact Phone</label>
-                <input 
-                  type="tel" 
+                <input
+                  type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
-                  placeholder="Recipient telephone" 
-                  required 
+                  placeholder="Recipient telephone"
+                  required
                 />
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={submitting}
                 className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg hover:shadow-emerald-500/10 transition-all transform active:scale-95 disabled:opacity-50 text-xs mt-6"
               >
