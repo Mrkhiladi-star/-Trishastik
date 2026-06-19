@@ -31,7 +31,6 @@ jobs:
           ATLASDB_URL: mongodb://localhost:27017/trishastik
         run: |
           cd backend
-          node seed.js
           node index.js &
           sleep 5
           node e2e_test.js
