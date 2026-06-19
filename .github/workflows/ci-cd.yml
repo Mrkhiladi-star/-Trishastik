@@ -9,14 +9,14 @@ on:
 jobs:
   backend-test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-id: '20'
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
           cache-dependency-path: 'backend/package-lock.json'
 
@@ -31,25 +31,21 @@ jobs:
           ATLASDB_URL: mongodb://localhost:27017/trishastik
         run: |
           cd backend
-          # Run DB seeding
           node seed.js
-          # Start server in background
           node index.js &
-          # Wait for server startup
           sleep 5
-          # Run E2E test script
           node e2e_test.js
 
   frontend-build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-id: '20'
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
           cache-dependency-path: 'frontend/package-lock.json'
 
