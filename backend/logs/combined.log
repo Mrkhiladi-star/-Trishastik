@@ -94,3 +94,100 @@
 {"level":"info","message":"User logged in: admin","timestamp":"2026-06-07 11:25:22"}
 {"level":"info","message":"User logged out: admin","timestamp":"2026-06-07 11:25:47"}
 {"level":"info","message":"User logged in: RamuYadav","timestamp":"2026-06-07 11:25:59"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-11 16:21:49"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 17:45:44"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:01:01"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:01:22"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:16:54"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-06-16 18:18:14"}
+{"level":"info","message":"Profile updated for user: Shri Krishna. Completeness status: false","timestamp":"2026-06-16 18:18:43"}
+{"level":"error","message":"413 - request entity too large - /profile/photo - POST - 127.0.0.1","stack":"PayloadTooLargeError: request entity too large\n    at readStream (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:163:17)\n    at getRawBody (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\read.js:79:3)\n    at jsonParser (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\types\\json.js:138:5)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express-session\\index.js:514:7","timestamp":"2026-06-16 18:18:54"}
+{"level":"info","message":"Profile updated for user: Shri Krishna. Completeness status: false","timestamp":"2026-06-16 18:19:18"}
+{"level":"error","message":"413 - request entity too large - /profile/photo - POST - 127.0.0.1","stack":"PayloadTooLargeError: request entity too large\n    at readStream (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:163:17)\n    at getRawBody (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\read.js:79:3)\n    at jsonParser (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\types\\json.js:138:5)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express-session\\index.js:514:7","timestamp":"2026-06-16 18:19:38"}
+{"level":"info","message":"Profile updated for user: Shri Krishna. Completeness status: true","timestamp":"2026-06-16 18:23:49"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-06-16 18:23:58"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-06-16 18:24:09"}
+{"level":"error","message":"413 - request entity too large - /profile/photo - POST - 127.0.0.1","stack":"PayloadTooLargeError: request entity too large\n    at readStream (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:163:17)\n    at getRawBody (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\read.js:79:3)\n    at jsonParser (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\types\\json.js:138:5)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express-session\\index.js:514:7","timestamp":"2026-06-16 18:24:19"}
+{"level":"info","message":"Soil test request created by farmer Shri Krishna","timestamp":"2026-06-16 18:26:56"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-06-16 18:27:03"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:30:28"}
+{"level":"info","message":"Email sent successfully via Nodemailer to sramu1090@gmail.com","timestamp":"2026-06-16 18:30:43"}
+{"level":"info","message":"Generated and stored OTP for email: sramu1090@gmail.com","timestamp":"2026-06-16 18:30:43"}
+{"level":"info","message":"Forgot password OTP generated for email: sramu1090@gmail.com","timestamp":"2026-06-16 18:30:43"}
+{"level":"info","message":"OTP verified successfully for email: sramu1090@gmail.com","timestamp":"2026-06-16 18:31:18"}
+{"level":"info","message":"Password successfully reset for user: RamuYadav","timestamp":"2026-06-16 18:31:18"}
+{"level":"info","message":"User logged in: RamuYadav","timestamp":"2026-06-16 18:33:24"}
+{"level":"info","message":"User logged out: RamuYadav","timestamp":"2026-06-16 18:34:31"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 18:34:42"}
+{"level":"info","message":"Agent 6a16dadeee701f8f2eae116f assigned to Soil Test 6a314818060015ff8d71798c","timestamp":"2026-06-16 18:35:20"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 18:35:43"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-16 18:35:54"}
+{"level":"info","message":"Soil Test 6a314818060015ff8d71798c status updated to Sample Collected by agent/admin","timestamp":"2026-06-16 18:36:10"}
+{"level":"info","message":"Soil Test 6a314818060015ff8d71798c status updated to Testing by agent/admin","timestamp":"2026-06-16 18:36:14"}
+{"level":"info","message":"Report details updated for Soil Test 6a314818060015ff8d71798c","timestamp":"2026-06-16 18:37:30"}
+{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-16 18:37:41"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 18:37:53"}
+{"level":"info","message":"GROK_API_KEY env not configured, generating mock response...","timestamp":"2026-06-16 18:38:38"}
+{"level":"info","message":"Grok AI soil analysis report completed for request 6a314818060015ff8d71798c","timestamp":"2026-06-16 18:38:38"}
+{"level":"info","message":"Soil Test 6a314818060015ff8d71798c published by admin","timestamp":"2026-06-16 18:38:44"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 18:38:52"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-06-16 18:39:02"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:43:08"}
+{"level":"info","message":"Soil test request created by farmer Shri Krishna","timestamp":"2026-06-16 18:48:16"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-06-16 18:48:19"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 18:48:28"}
+{"level":"info","message":"Agent 6a16dadeee701f8f2eae116f assigned to Soil Test 6a314d18cc433663dd418a98","timestamp":"2026-06-16 18:48:48"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 18:48:52"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-16 18:49:05"}
+{"level":"info","message":"Soil Test 6a314d18cc433663dd418a98 status updated to Sample Collected by agent/admin","timestamp":"2026-06-16 18:49:11"}
+{"level":"info","message":"Soil Test 6a314d18cc433663dd418a98 status updated to Testing by agent/admin","timestamp":"2026-06-16 18:49:13"}
+{"level":"info","message":"Report details updated for Soil Test 6a314d18cc433663dd418a98","timestamp":"2026-06-16 18:49:49"}
+{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-16 18:50:01"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 18:50:12"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 18:50:38"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-16 18:50:46"}
+{"level":"info","message":"Report details updated for Soil Test 6a314d18cc433663dd418a98","timestamp":"2026-06-16 18:51:25"}
+{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-16 18:51:30"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 18:51:39"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:57:41"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 19:34:32"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 19:35:34"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-16 19:35:41"}
+{"level":"info","message":"Report details updated for Soil Test 6a314d18cc433663dd418a98","timestamp":"2026-06-16 19:36:10"}
+{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-16 19:36:14"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 19:36:23"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 19:38:57"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-06-16 19:39:09"}
+{"level":"info","message":"Soil test request created by farmer Shri Krishna","timestamp":"2026-06-16 19:39:34"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-06-16 19:39:39"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 19:39:50"}
+{"level":"info","message":"Agent 6a16dadeee701f8f2eae116f assigned to Soil Test 6a31591edc06e105c8195708","timestamp":"2026-06-16 19:40:07"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 19:40:11"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-16 19:40:24"}
+{"level":"info","message":"Soil Test 6a31591edc06e105c8195708 status updated to Sample Collected by agent/admin","timestamp":"2026-06-16 19:40:30"}
+{"level":"info","message":"Soil Test 6a31591edc06e105c8195708 status updated to Testing by agent/admin","timestamp":"2026-06-16 19:40:33"}
+{"level":"info","message":"Report details updated for Soil Test 6a31591edc06e105c8195708","timestamp":"2026-06-16 19:41:02"}
+{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-16 19:41:07"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 19:41:19"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-17 10:26:29"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 16:43:49"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 16:52:53"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 16:53:13"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-06-19 16:54:04"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 16:54:38"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-06-19 16:56:25"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-19 16:56:34"}
+{"level":"error","message":"413 - request entity too large - /profile/photo - POST - 127.0.0.1","stack":"PayloadTooLargeError: request entity too large\n    at readStream (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:163:17)\n    at getRawBody (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\read.js:79:3)\n    at jsonParser (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\types\\json.js:138:5)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express-session\\index.js:514:7","timestamp":"2026-06-19 16:56:49"}
+{"level":"info","message":"Profile photo updated for user: admin","timestamp":"2026-06-19 17:00:24"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 17:00:45"}
+{"level":"info","message":"Email sent successfully via Nodemailer to farmer_1781868650518@test.com","timestamp":"2026-06-19 17:00:55"}
+{"level":"info","message":"Generated and stored OTP for email: farmer_1781868650518@test.com","timestamp":"2026-06-19 17:00:55"}
+{"level":"info","message":"Email sent successfully via Nodemailer to agent_1781868650518@test.com","timestamp":"2026-06-19 17:00:59"}
+{"level":"info","message":"Generated and stored OTP for email: agent_1781868650518@test.com","timestamp":"2026-06-19 17:00:59"}
+{"level":"info","message":"Email sent successfully via Nodemailer to freeforfire15@gmail.com","timestamp":"2026-06-19 17:01:02"}
+{"level":"info","message":"Generated and stored OTP for email: freeforfire15@gmail.com","timestamp":"2026-06-19 17:01:02"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 17:02:39"}
+{"level":"info","message":"Profile photo updated for user: Badal","timestamp":"2026-06-19 17:02:55"}
+{"level":"info","message":"Profile updated for user: Badal. Completeness status: true","timestamp":"2026-06-19 17:03:00"}
+{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-19 17:03:06"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-19 17:03:15"}

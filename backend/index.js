@@ -70,8 +70,8 @@ const sessionOptions = {
 
 // Express Middlewares
 app.use(session(sessionOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Passport Configuration
 app.use(passport.initialize());
@@ -86,8 +86,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static files from public/uploads
-app.use("/uploads", express.static(uploadDir));
+
 
 // Mount Modular Routes
 app.use("/", routes);

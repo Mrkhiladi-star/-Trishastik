@@ -42,104 +42,104 @@ function App() {
                 <Route path="/education" element={<Education />} />
 
                 {/* Authenticated Routes */}
-                <Route 
-                  path="/profile" 
+                <Route
+                  path="/profile"
                   element={
                     <ProtectedRoute>
                       <Profile />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
-                
-                <Route 
-                  path="/shop" 
+
+                <Route
+                  path="/shop"
                   element={
                     <ProtectedRoute nonAdminOnly={true}>
                       <Shop />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
 
-                <Route 
-                  path="/checkout" 
+                <Route
+                  path="/checkout"
                   element={
                     <ProtectedRoute>
                       <Checkout />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
 
-                <Route 
-                  path="/newreview" 
+                <Route
+                  path="/newreview"
                   element={
                     <ProtectedRoute nonAdminOnly={true}>
                       <NewReview />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
 
-                <Route 
-                  path="/soil-test" 
+                <Route
+                  path="/soil-test"
                   element={
                     <ProtectedRoute>
                       <SoilTest />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
 
-                <Route 
-                  path="/seller-dashboard" 
+                <Route
+                  path="/seller-dashboard"
                   element={
                     <ProtectedRoute allowedRoles={["admin", "farmer", "fertilizer_seller", "instrument_seller"]}>
                       <SellerDashboard />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
 
-                <Route 
-                  path="/transporter-dashboard" 
+                <Route
+                  path="/transporter-dashboard"
                   element={
                     <ProtectedRoute allowedRoles={["admin", "transporter"]}>
                       <TransporterDashboard />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
 
                 {/* Admin Only Routes */}
-                <Route 
-                  path="/customer" 
+                <Route
+                  path="/customer"
                   element={
                     <ProtectedRoute adminOnly={true}>
                       <Customers />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
-                
-                <Route 
-                  path="/new" 
+
+                <Route
+                  path="/new"
                   element={
                     <ProtectedRoute allowedRoles={["admin", "farmer", "fertilizer_seller", "instrument_seller"]}>
                       <NewListing />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
 
-                <Route 
-                  path="/blognew" 
+                <Route
+                  path="/blognew"
                   element={
                     <ProtectedRoute adminOnly={true}>
                       <NewBlog />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
 
-                <Route 
-                  path="/educationnew" 
+                <Route
+                  path="/educationnew"
                   element={
                     <ProtectedRoute adminOnly={true}>
                       <NewEducation />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
               </Routes>
             </main>

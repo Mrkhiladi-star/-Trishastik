@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { 
-  MapContainer, TileLayer, Marker, useMapEvents 
+import {
+  MapContainer, TileLayer, Marker, useMapEvents
 } from "react-leaflet";
 import L from "leaflet";
-import { 
-  Sprout, Phone, MapPin, Clipboard, CheckCircle2, Clock, Truck, 
-  FileText, Send, UserCheck, RefreshCw, Upload, Download, Search, 
+import {
+  Sprout, Phone, MapPin, Clipboard, CheckCircle2, Clock, Truck,
+  FileText, Send, UserCheck, RefreshCw, Upload, Download, Search,
   Map, UserPlus, ListFilter, SlidersHorizontal, AlertCircle, Cpu,
   Bookmark, Award, Droplets, ArrowRight, Activity, Users, X
 } from "lucide-react";
@@ -57,7 +57,7 @@ const SoilTest = () => {
   const [reportStatus, setReportStatus] = useState("Testing");
   const [reportContent, setReportContent] = useState("");
   const [recommendedFertilizers, setRecommendedFertilizers] = useState("");
-  
+
   // File upload state
   const [uploadFile, setUploadFile] = useState(null);
   const [actionLoading, setActionLoading] = useState(false);
@@ -433,7 +433,7 @@ const SoilTest = () => {
 
   // Filter requests
   const filteredRequests = tests.filter(test => {
-    const matchesSearch = 
+    const matchesSearch =
       test.farmerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       test.cropPlanned.toLowerCase().includes(searchQuery.toLowerCase()) ||
       test.address.toLowerCase().includes(searchQuery.toLowerCase());
@@ -454,7 +454,7 @@ const SoilTest = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up">
-      
+
       {/* Header Banner */}
       <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-800 mb-8 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
@@ -474,7 +474,7 @@ const SoilTest = () => {
 
       {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
+
         {/* LEFT COLUMN: Request Form (Farmers only) */}
         {isFarmer && !isAdmin && (
           <div className="lg:col-span-5 space-y-6">
@@ -484,8 +484,8 @@ const SoilTest = () => {
                   <Clipboard className="text-emerald-400" size={20} />
                   <span>Request Soil Test</span>
                 </h2>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={handleGetCurrentLocation}
                   className="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[10px] font-bold text-emerald-400 flex items-center space-x-1 hover:border-emerald-500/30 transition-all"
                 >
@@ -495,11 +495,10 @@ const SoilTest = () => {
               </div>
 
               {formMessage.text && (
-                <div className={`p-4 rounded-xl text-center text-xs font-semibold border ${
-                  formMessage.type === "success" 
-                    ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" 
-                    : "bg-red-500/10 border-red-500/20 text-red-400"
-                }`}>
+                <div className={`p-4 rounded-xl text-center text-xs font-semibold border ${formMessage.type === "success"
+                  ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
+                  : "bg-red-500/10 border-red-500/20 text-red-400"
+                  }`}>
                   {formMessage.text}
                 </div>
               )}
@@ -508,10 +507,10 @@ const SoilTest = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Farmer Name</label>
-                    <input 
-                      type="text" 
-                      value={farmerName} 
-                      onChange={(e) => setFarmerName(e.target.value)} 
+                    <input
+                      type="text"
+                      value={farmerName}
+                      onChange={(e) => setFarmerName(e.target.value)}
                       className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
                       required
                     />
@@ -519,10 +518,10 @@ const SoilTest = () => {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Phone Number</label>
-                    <input 
-                      type="tel" 
-                      value={phone} 
-                      onChange={(e) => setPhone(e.target.value)} 
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
                       className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
                       placeholder="10-digit number"
                       required
@@ -533,11 +532,11 @@ const SoilTest = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Farm Area (in Acres)</label>
-                    <input 
-                      type="number" 
+                    <input
+                      type="number"
                       step="0.1"
-                      value={farmArea} 
-                      onChange={(e) => setFarmArea(e.target.value)} 
+                      value={farmArea}
+                      onChange={(e) => setFarmArea(e.target.value)}
                       className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
                       placeholder="e.g. 4.5"
                       required
@@ -546,10 +545,10 @@ const SoilTest = () => {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Gata Number (Plot / Survey No.)</label>
-                    <input 
-                      type="text" 
-                      value={gataNumber} 
-                      onChange={(e) => setGataNumber(e.target.value)} 
+                    <input
+                      type="text"
+                      value={gataNumber}
+                      onChange={(e) => setGataNumber(e.target.value)}
                       className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
                       placeholder="e.g. 123/4"
                       required
@@ -558,10 +557,10 @@ const SoilTest = () => {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Planned Crop Type</label>
-                    <input 
-                      type="text" 
-                      value={cropPlanned} 
-                      onChange={(e) => setCropPlanned(e.target.value)} 
+                    <input
+                      type="text"
+                      value={cropPlanned}
+                      onChange={(e) => setCropPlanned(e.target.value)}
                       className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
                       placeholder="e.g. Wheat / Rice"
                       required
@@ -572,9 +571,9 @@ const SoilTest = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Soil Type</label>
-                    <select 
-                      value={soilType} 
-                      onChange={(e) => setSoilType(e.target.value)} 
+                    <select
+                      value={soilType}
+                      onChange={(e) => setSoilType(e.target.value)}
                       className="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-3.5 py-2.5 text-xs focus:outline-none font-semibold"
                       required
                     >
@@ -590,10 +589,10 @@ const SoilTest = () => {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Village / District / State</label>
-                    <input 
-                      type="text" 
-                      value={stateDistrictVillage} 
-                      onChange={(e) => setStateDistrictVillage(e.target.value)} 
+                    <input
+                      type="text"
+                      value={stateDistrictVillage}
+                      onChange={(e) => setStateDistrictVillage(e.target.value)}
                       className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
                       placeholder="e.g. Sitapur, UP"
                       required
@@ -603,10 +602,10 @@ const SoilTest = () => {
 
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Full Address</label>
-                  <input 
-                    type="text" 
-                    value={address} 
-                    onChange={(e) => setAddress(e.target.value)} 
+                  <input
+                    type="text"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
                     className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
                     placeholder="Enter manual address details"
                     required
@@ -618,7 +617,7 @@ const SoilTest = () => {
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                     Map Pinpoint location (Click map to drag/re-pin)
                   </label>
-                  
+
                   {/* Leaflet map implementation */}
                   <div className="h-44 w-full rounded-2xl overflow-hidden border border-slate-800">
                     <MapContainer center={mapCenter} zoom={11} scrollWheelZoom={false} className="h-full w-full">
@@ -630,7 +629,7 @@ const SoilTest = () => {
                       <MapClickHandler />
                     </MapContainer>
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4 text-[10px] text-slate-400 mt-2">
                     <span className="bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-850">Latitude: <strong className="text-white">{latitude.toFixed(5)}</strong></span>
                     <span className="bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-850">Longitude: <strong className="text-white">{longitude.toFixed(5)}</strong></span>
@@ -639,16 +638,16 @@ const SoilTest = () => {
 
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Additional Notes</label>
-                  <textarea 
-                    value={additionalNotes} 
-                    onChange={(e) => setAdditionalNotes(e.target.value)} 
+                  <textarea
+                    value={additionalNotes}
+                    onChange={(e) => setAdditionalNotes(e.target.value)}
                     className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none h-16 resize-none"
                     placeholder="Any specific requests or observations..."
                   />
                 </div>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={formSubmitting}
                   className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50 text-xs mt-2"
                 >
@@ -662,17 +661,17 @@ const SoilTest = () => {
 
         {/* RIGHT COLUMN / MAIN PANEL (Farmers: Request History | Admins: Tests List & Management) */}
         <div className={`${isFarmer && !isAdmin ? "lg:col-span-7" : "lg:col-span-12"} space-y-6`}>
-          
+
           {/* ADMIN SUB-TABS */}
           {isAdmin && (
             <div className="flex space-x-4 border-b border-slate-800 pb-4">
-              <button 
+              <button
                 onClick={() => setActiveSubTab("requests")}
                 className={`pb-2 text-sm font-bold border-b-2 transition-all ${activeSubTab === "requests" ? "border-emerald-500 text-emerald-400" : "border-transparent text-slate-400 hover:text-white"}`}
               >
                 Soil Testing Requests
               </button>
-              <button 
+              <button
                 onClick={() => setActiveSubTab("users")}
                 className={`pb-2 text-sm font-bold border-b-2 transition-all ${activeSubTab === "users" ? "border-emerald-500 text-emerald-400" : "border-transparent text-slate-400 hover:text-white"}`}
               >
@@ -684,27 +683,27 @@ const SoilTest = () => {
           {/* TABLE / LIST OF REQUESTS */}
           {(!isAdmin || activeSubTab === "requests") && (
             <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
-              
+
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-4">
                 <h2 className="text-xl font-bold text-white flex items-center space-x-2">
                   <FileText className="text-emerald-400" size={20} />
                   <span>{isAdmin ? "Soil Analysis Registry" : isAgent ? "My Collections Dashboard" : "Soil Test Request History"}</span>
                 </h2>
-                
+
                 {/* Search & Filters (For Admins / Agents) */}
                 {(isAdmin || isAgent) && (
                   <div className="flex flex-wrap items-center gap-3">
                     <div className="relative">
                       <Search className="absolute left-3 top-2.5 text-slate-500" size={14} />
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search Farmer..."
                         className="pl-9 pr-4 py-2 bg-slate-900 border border-slate-800 text-white rounded-lg text-xs focus:outline-none w-40 sm:w-48"
                       />
                     </div>
-                    <select 
+                    <select
                       value={statusFilter}
                       onChange={(e) => setStatusFilter(e.target.value)}
                       className="bg-slate-900 border border-slate-800 text-white rounded-lg text-xs p-2 font-semibold"
@@ -730,7 +729,7 @@ const SoilTest = () => {
                 <div className="space-y-6">
                   {filteredRequests.map((test) => (
                     <div key={test._id} className="bg-slate-900/60 p-6 rounded-2xl border border-slate-800/80 hover:border-slate-700/80 transition-all space-y-4">
-                      
+
                       {/* Request Header */}
                       <div className="flex flex-wrap justify-between items-start gap-4 border-b border-slate-800/50 pb-4">
                         <div className="space-y-1">
@@ -789,10 +788,10 @@ const SoilTest = () => {
                             const statuses = ["Pending", "Assigned", "Sample Collected", "Testing", "Report Ready", "Completed"];
                             const currentIdx = statuses.indexOf(test.status);
                             const stageIdx = statuses.indexOf(stage);
-                            
+
                             const isPast = stageIdx < currentIdx;
                             const isCurrent = stageIdx === currentIdx;
-                            
+
                             let circleBg = "bg-slate-950 border-slate-800 text-slate-500";
                             if (isPast) circleBg = "bg-emerald-500 border-emerald-400 text-slate-950";
                             if (isCurrent) circleBg = "bg-emerald-400 border-emerald-300 text-slate-950 animate-pulse";
@@ -812,97 +811,99 @@ const SoilTest = () => {
                       </div>
 
                       {/* Report Section */}
-                      {((test.status === "Report Ready" || test.status === "Completed") && 
+                      {((test.status === "Report Ready" || test.status === "Completed") &&
                         (isAdmin || isAgent || test.isPublished)) && (
-                        <div className="border-t border-slate-800/80 pt-4 mt-2 space-y-3">
-                          <div className="flex flex-wrap items-center justify-between gap-4">
-                            <h4 className="text-sm font-bold text-white flex items-center space-x-1.5">
-                              <FileText className="text-emerald-400" size={16} />
-                              <span>Soil Diagnostic Report Available</span>
-                            </h4>
-                            
-                            {test.labReportUrl && (
-                              <a 
-                                href={test.labReportUrl}
-                                download={`Soil_Report_${test._id}.pdf`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-emerald-500/20 text-xs font-semibold text-emerald-400 hover:text-white"
-                              >
-                                <Download size={12} />
-                                <span>Download Lab Report</span>
-                              </a>
+                          <div className="border-t border-slate-800/80 pt-4 mt-2 space-y-3">
+                            <div className="flex flex-wrap items-center justify-between gap-4">
+                              <h4 className="text-sm font-bold text-white flex items-center space-x-1.5">
+                                <FileText className="text-emerald-400" size={16} />
+                                <span>Soil Diagnostic Report Available</span>
+                              </h4>
+
+                              {test.labReportUrl && (
+                                <button
+                                  onClick={() =>
+                                    handleDownloadPDF(
+                                      test.labReportUrl,
+                                      `Soil_Report_${test._id}.pdf`
+                                    )
+                                  }
+                                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-emerald-500/20 text-xs font-semibold text-emerald-400 hover:text-white"
+                                >
+                                  <Download size={12} />
+                                  <span>Download Lab Report</span>
+                                </button>
+                              )}
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-850">
+                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Macronutrient Summary</span>
+                                <p className="text-slate-300 text-xs whitespace-pre-wrap">{test.reportContent || "Diagnostic testing in progress."}</p>
+                              </div>
+                              <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-850">
+                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Recommended Inputs</span>
+                                <p className="text-slate-300 text-xs whitespace-pre-wrap">{test.recommendedFertilizers || "Lab recommendations pending."}</p>
+                              </div>
+                            </div>
+
+                            {/* Grok AI Analysis Results Block */}
+                            {test.aiAnalysis && test.aiAnalysis.npkAnalysis && (
+                              <div className="bg-emerald-500/5 border border-emerald-500/10 p-5 rounded-xl space-y-4">
+                                <div className="flex items-center space-x-2 border-b border-emerald-500/10 pb-2">
+                                  <Cpu className="text-emerald-400 animate-pulse-glow" size={16} />
+                                  <h5 className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
+                                    Grok-AI Cognitive Agronomy Recommendations
+                                  </h5>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+                                  <div className="space-y-3">
+                                    <div>
+                                      <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><Award size={12} /> <span>NPK Assessment</span></span>
+                                      <p className="text-slate-300">{test.aiAnalysis.npkAnalysis}</p>
+                                    </div>
+                                    <div>
+                                      <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><AlertCircle size={12} /> <span>Deficiencies</span></span>
+                                      <p className="text-slate-300">{test.aiAnalysis.deficiencyExplanation}</p>
+                                    </div>
+                                    <div>
+                                      <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><SlidersHorizontal size={12} /> <span>Fertilizer Plan</span></span>
+                                      <p className="text-slate-300">{test.aiAnalysis.fertilizerRecommendation}</p>
+                                    </div>
+                                  </div>
+                                  <div className="space-y-3">
+                                    <div>
+                                      <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><Sprout size={12} /> <span>Organic Carbon Upgrade</span></span>
+                                      <p className="text-slate-300">{test.aiAnalysis.organicImprovement}</p>
+                                    </div>
+                                    <div>
+                                      <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><Droplets size={12} /> <span>Hydration & Drainage</span></span>
+                                      <p className="text-slate-300">{test.aiAnalysis.waterManagement}</p>
+                                    </div>
+                                    <div>
+                                      <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><ArrowRight size={12} /> <span>Crop Rotations</span></span>
+                                      <p className="text-slate-300">{test.aiAnalysis.bestCrops}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Grok AI analysis trigger (Admin only) */}
+                            {isAdmin && (!test.aiAnalysis || !test.aiAnalysis.npkAnalysis) && (
+                              <div className="flex justify-end pt-2">
+                                <button
+                                  onClick={() => handleTriggerGrokAI(test._id)}
+                                  disabled={actionLoading}
+                                  className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold py-2 px-4 rounded-xl text-xs flex items-center space-x-1.5 shadow-md shadow-emerald-500/5 hover:scale-[1.02] active:scale-95 transition-all"
+                                >
+                                  <Cpu size={14} />
+                                  <span>{actionLoading ? "Generating Suggestions..." : "Generate AI Suggestions with Grok"}</span>
+                                </button>
+                              </div>
                             )}
                           </div>
-
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-850">
-                              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Macronutrient Summary</span>
-                              <p className="text-slate-300 text-xs whitespace-pre-wrap">{test.reportContent || "Diagnostic testing in progress."}</p>
-                            </div>
-                            <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-850">
-                              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Recommended Inputs</span>
-                              <p className="text-slate-300 text-xs whitespace-pre-wrap">{test.recommendedFertilizers || "Lab recommendations pending."}</p>
-                            </div>
-                          </div>
-
-                          {/* Grok AI Analysis Results Block */}
-                          {test.aiAnalysis && test.aiAnalysis.npkAnalysis && (
-                            <div className="bg-emerald-500/5 border border-emerald-500/10 p-5 rounded-xl space-y-4">
-                              <div className="flex items-center space-x-2 border-b border-emerald-500/10 pb-2">
-                                <Cpu className="text-emerald-400 animate-pulse-glow" size={16} />
-                                <h5 className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
-                                  Grok-AI Cognitive Agronomy Recommendations
-                                </h5>
-                              </div>
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
-                                <div className="space-y-3">
-                                  <div>
-                                    <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><Award size={12} /> <span>NPK Assessment</span></span>
-                                    <p className="text-slate-300">{test.aiAnalysis.npkAnalysis}</p>
-                                  </div>
-                                  <div>
-                                    <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><AlertCircle size={12} /> <span>Deficiencies</span></span>
-                                    <p className="text-slate-300">{test.aiAnalysis.deficiencyExplanation}</p>
-                                  </div>
-                                  <div>
-                                    <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><SlidersHorizontal size={12} /> <span>Fertilizer Plan</span></span>
-                                    <p className="text-slate-300">{test.aiAnalysis.fertilizerRecommendation}</p>
-                                  </div>
-                                </div>
-                                <div className="space-y-3">
-                                  <div>
-                                    <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><Sprout size={12} /> <span>Organic Carbon Upgrade</span></span>
-                                    <p className="text-slate-300">{test.aiAnalysis.organicImprovement}</p>
-                                  </div>
-                                  <div>
-                                    <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><Droplets size={12} /> <span>Hydration & Drainage</span></span>
-                                    <p className="text-slate-300">{test.aiAnalysis.waterManagement}</p>
-                                  </div>
-                                  <div>
-                                    <span className="font-bold text-emerald-400 flex items-center space-x-1 mb-0.5"><ArrowRight size={12} /> <span>Crop Rotations</span></span>
-                                    <p className="text-slate-300">{test.aiAnalysis.bestCrops}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Grok AI analysis trigger (Admin only) */}
-                          {isAdmin && (!test.aiAnalysis || !test.aiAnalysis.npkAnalysis) && (
-                            <div className="flex justify-end pt-2">
-                              <button 
-                                onClick={() => handleTriggerGrokAI(test._id)}
-                                disabled={actionLoading}
-                                className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold py-2 px-4 rounded-xl text-xs flex items-center space-x-1.5 shadow-md shadow-emerald-500/5 hover:scale-[1.02] active:scale-95 transition-all"
-                              >
-                                <Cpu size={14} />
-                                <span>{actionLoading ? "Generating Suggestions..." : "Generate AI Suggestions with Grok"}</span>
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      )}
+                        )}
 
                       {/* Report Pending Admin Approval Notification */}
                       {isFarmer && !isAdmin && !isAgent && (test.status === "Report Ready" || test.status === "Completed") && !test.isPublished && (
@@ -917,7 +918,7 @@ const SoilTest = () => {
                         <div className="flex flex-wrap items-center justify-end gap-3 pt-3 border-t border-slate-800/60 mt-2">
                           {test.status !== "Completed" ? (
                             <>
-                              <button 
+                              <button
                                 onClick={() => setAssigningTestId(test._id)}
                                 className="bg-slate-900 hover:bg-slate-850 text-white font-semibold py-1.5 px-3 rounded-lg text-xs border border-slate-800 flex items-center space-x-1.5"
                               >
@@ -926,7 +927,7 @@ const SoilTest = () => {
                               </button>
 
                               {test.labReportUrl && !test.isPublished && (
-                                <button 
+                                <button
                                   onClick={() => handlePublishReport(test._id)}
                                   disabled={actionLoading}
                                   className="bg-teal-500 hover:bg-teal-600 disabled:opacity-50 text-slate-950 font-bold py-1.5 px-4 rounded-lg text-xs flex items-center space-x-1"
@@ -935,8 +936,8 @@ const SoilTest = () => {
                                   <span>Approve & Publish</span>
                                 </button>
                               )}
-                              
-                              <button 
+
+                              <button
                                 onClick={() => {
                                   setReportingTest(test);
                                   setReportStatus(test.status);
@@ -963,7 +964,7 @@ const SoilTest = () => {
                       {isAgent && (
                         <div className="flex flex-wrap items-center justify-end gap-3 pt-3 border-t border-slate-800/60 mt-2">
                           {test.status === "Assigned" && (
-                            <button 
+                            <button
                               onClick={() => handleAgentStatusUpdate(test._id, "Sample Collected")}
                               disabled={actionLoading}
                               className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold py-1.5 px-4 rounded-lg text-xs flex items-center space-x-1"
@@ -973,7 +974,7 @@ const SoilTest = () => {
                             </button>
                           )}
                           {test.status === "Sample Collected" && (
-                            <button 
+                            <button
                               onClick={() => handleAgentStatusUpdate(test._id, "Testing")}
                               disabled={actionLoading}
                               className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-1.5 px-4 rounded-lg text-xs flex items-center space-x-1"
@@ -983,7 +984,7 @@ const SoilTest = () => {
                             </button>
                           )}
                           {(test.status === "Testing" || test.status === "Report Ready") && (
-                            <button 
+                            <button
                               onClick={() => {
                                 setReportingTest(test);
                                 setReportStatus(test.status);
@@ -1034,26 +1035,25 @@ const SoilTest = () => {
                         <td className="py-3.5 px-4 text-slate-400">{u.email}</td>
                         <td className="py-3.5 px-4">{u.fullName || "Not added"}</td>
                         <td className="py-3.5 px-4">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold border ${
-                            u.role === "admin" ? "bg-red-500/10 border-red-500/20 text-red-400" :
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold border ${u.role === "admin" ? "bg-red-500/10 border-red-500/20 text-red-400" :
                             u.role === "farmer" ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" :
-                            u.role === "agent" ? "bg-sky-500/10 border-sky-500/20 text-sky-400" :
-                            u.role === "transporter" ? "bg-purple-500/10 border-purple-500/20 text-purple-400" :
-                            u.role === "fertilizer_seller" ? "bg-amber-500/10 border-amber-500/20 text-amber-400" :
-                            u.role === "instrument_seller" ? "bg-teal-500/10 border-teal-500/20 text-teal-400" :
-                            "bg-slate-500/10 border-slate-500/20 text-slate-400"
-                          }`}>
+                              u.role === "agent" ? "bg-sky-500/10 border-sky-500/20 text-sky-400" :
+                                u.role === "transporter" ? "bg-purple-500/10 border-purple-500/20 text-purple-400" :
+                                  u.role === "fertilizer_seller" ? "bg-amber-500/10 border-amber-500/20 text-amber-400" :
+                                    u.role === "instrument_seller" ? "bg-teal-500/10 border-teal-500/20 text-teal-400" :
+                                      "bg-slate-500/10 border-slate-500/20 text-slate-400"
+                            }`}>
                             {u.role?.replace("_", " ")}
                           </span>
                         </td>
                         <td className="py-3.5 px-4 text-slate-400">
-                          {u.role === "farmer" && u.landDetails?.farmArea 
+                          {u.role === "farmer" && u.landDetails?.farmArea
                             ? `${u.landDetails.farmArea} ac | ${u.landDetails.soilType || ""}`
                             : "N/A"}
                         </td>
                         <td className="py-3.5 px-4 text-right">
-                          <select 
-                            value={u.role} 
+                          <select
+                            value={u.role}
                             onChange={(e) => handleUserRoleUpdate(u._id, e.target.value)}
                             disabled={actionLoading}
                             className="bg-slate-950 border border-slate-800 text-[10px] font-bold rounded-lg p-1.5 text-white focus:outline-none"
@@ -1087,21 +1087,21 @@ const SoilTest = () => {
                 <UserCheck className="text-emerald-400" size={16} />
                 <span>Assign Field Agent & Lab Facility</span>
               </h3>
-              <button 
+              <button
                 onClick={() => { setAssigningTestId(null); setAssignAgentId(""); setAssignLabFacility(""); }}
                 className="text-slate-400 hover:text-white"
               >
                 <X size={18} />
               </button>
             </div>
-            
+
             <div className="space-y-4">
               <p className="text-xs text-slate-400">Select a registered agronomist dispatcher and their nearest laboratory facility to run the soil sample test.</p>
-              
+
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Nearest Lab Testing Facility</label>
-                <select 
-                  value={assignLabFacility} 
+                <select
+                  value={assignLabFacility}
                   onChange={(e) => setAssignLabFacility(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white dark:bg-slate-950 bg-white text-slate-900 dark:text-white"
                 >
@@ -1116,8 +1116,8 @@ const SoilTest = () => {
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Field Agents Available</label>
-                <select 
-                  value={assignAgentId} 
+                <select
+                  value={assignAgentId}
                   onChange={(e) => setAssignAgentId(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white dark:bg-slate-950 bg-white text-slate-900 dark:text-white"
                 >
@@ -1129,13 +1129,13 @@ const SoilTest = () => {
               </div>
 
               <div className="flex justify-end space-x-3 pt-2">
-                <button 
+                <button
                   onClick={() => { setAssigningTestId(null); setAssignAgentId(""); setAssignLabFacility(""); }}
                   className="px-4 py-2 text-slate-400 hover:bg-slate-800 rounded-lg text-xs font-semibold"
                 >
                   Cancel
                 </button>
-                <button 
+                <button
                   onClick={() => handleAssignAgent(assigningTestId)}
                   disabled={actionLoading || !assignAgentId || !assignLabFacility}
                   className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs"
@@ -1157,19 +1157,19 @@ const SoilTest = () => {
                 <FileText className="text-emerald-400" size={16} />
                 <span>Publish Soil Diagnostics & Recommendations</span>
               </h3>
-              <button 
+              <button
                 onClick={() => setReportingTest(null)}
                 className="text-slate-400 hover:text-white"
               >
                 <X size={18} />
               </button>
             </div>
-            
+
             <form onSubmit={handleReportDetailsSubmit} className="space-y-4 text-xs">
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Testing Progress Status</label>
-                <select 
-                  value={reportStatus} 
+                <select
+                  value={reportStatus}
                   onChange={(e) => setReportStatus(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white font-semibold"
                 >
@@ -1183,13 +1183,13 @@ const SoilTest = () => {
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Lab Report File (PDF / Image)</label>
                 <div className="flex items-center space-x-2">
-                  <input 
-                    type="file" 
+                  <input
+                    type="file"
                     onChange={(e) => setUploadFile(e.target.files[0])}
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-slate-300"
                     accept="image/*,application/pdf"
                   />
-                  <button 
+                  <button
                     type="button"
                     onClick={() => handleReportFileUpload(reportingTest._id)}
                     disabled={actionLoading || !uploadFile}
@@ -1205,8 +1205,8 @@ const SoilTest = () => {
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Soil Macronutrient Analysis Summary</label>
-                <textarea 
-                  value={reportContent} 
+                <textarea
+                  value={reportContent}
                   onChange={(e) => setReportContent(e.target.value)}
                   placeholder="e.g. pH: 6.8. Nitrogen: 120 ppm (Low), Phosphorus: 30 ppm (Moderate), Potassium: 280 ppm (High)."
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 h-24 focus:outline-none"
@@ -1216,8 +1216,8 @@ const SoilTest = () => {
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Recommended Soil Inputs & Additives</label>
-                <textarea 
-                  value={recommendedFertilizers} 
+                <textarea
+                  value={recommendedFertilizers}
                   onChange={(e) => setRecommendedFertilizers(e.target.value)}
                   placeholder="e.g. Incorporate 50kg Urea per acre during primary tillage. Apply organic compost."
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 h-24 focus:outline-none"
@@ -1227,10 +1227,10 @@ const SoilTest = () => {
 
               {isAdmin && (
                 <div className="flex items-center space-x-2 py-1 bg-slate-950/40 p-3 rounded-xl border border-slate-850/80">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     id="publishImmediately"
-                    checked={publishImmediately} 
+                    checked={publishImmediately}
                     onChange={(e) => setPublishImmediately(e.target.checked)}
                     className="rounded bg-slate-950 border-slate-800 text-emerald-500 focus:ring-emerald-500 w-4 h-4 cursor-pointer"
                   />
@@ -1242,8 +1242,8 @@ const SoilTest = () => {
 
               <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
                 {isAdmin && (
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => handleTriggerGrokAI(reportingTest._id)}
                     disabled={actionLoading || !reportContent}
                     className="bg-slate-950 hover:bg-slate-900 border border-emerald-500/20 text-emerald-400 font-bold py-2 px-4 rounded-xl flex items-center space-x-1.5 shadow"
@@ -1254,14 +1254,14 @@ const SoilTest = () => {
                 )}
 
                 <div className="flex space-x-2">
-                  <button 
+                  <button
                     type="button"
                     onClick={() => setReportingTest(null)}
                     className="px-4 py-2 text-slate-400 hover:bg-slate-800 rounded-xl font-semibold"
                   >
                     Cancel
                   </button>
-                  <button 
+                  <button
                     type="submit"
                     disabled={actionLoading}
                     className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold px-4 py-2 rounded-xl"
