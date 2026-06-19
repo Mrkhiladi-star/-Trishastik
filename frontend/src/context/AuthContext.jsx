@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   // Fetch status on mount
   const checkAuthStatus = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/auth-status`, {
+      const response = await fetch(`${API_URL}/auth-status`, {
         credentials: "include",
       });
 
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     setError(null);
 
     try {
-      const response = await fetch(`${API_URL}/api/login`, {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
 
       if (otp) bodyPayload.otp = otp;
 
-      const response = await fetch(`${API_URL}/api/register`, {
+      const response = await fetch(`${API_URL}/register`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -129,7 +129,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/logout`, {
+      const response = await fetch(`${API_URL}/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -149,7 +149,7 @@ export const AuthProvider = ({ children }) => {
 
   const refreshUser = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/profile`, {
+      const response = await fetch(`${API_URL}/profile`, {
         credentials: "include",
       });
 
