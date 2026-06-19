@@ -1,6 +1,8 @@
 const SoilTest = require("../models/soilTest");
 const User = require("../models/user");
 const logger = require("../utils/logger");
+const cloudinary = require("../config/cloudinary");
+const streamifier = require("streamifier");
 
 const getSoilTests = async (req, res, next) => {
   try {
@@ -76,18 +78,18 @@ const adminAssignAgent = async (req, res, next) => {
     if (!test) {
       return res.status(404).json({ error: "Soil test not found." });
     }
-    
+
     test.agent = agentId;
     if (labFacility) {
       test.labFacility = labFacility;
     }
     test.status = "Assigned";
     await test.save();
-    
+
     const updatedTest = await SoilTest.findById(req.params.id)
       .populate("farmer", "username email fullName")
       .populate("agent", "username email fullName phone");
-      
+
     logger.info(`Agent ${agentId} assigned to Soil Test ${req.params.id}`);
     res.json({ success: true, soilTest: updatedTest });
   } catch (err) {
@@ -97,28 +99,65 @@ const adminAssignAgent = async (req, res, next) => {
 
 const uploadReport = async (req, res, next) => {
   try {
+
     if (!req.file) {
-      return res.status(400).json({ error: "Please upload a file." });
+      return res.status(400).json({
+        error: "Please upload a PDF report"
+      });
     }
+
     const test = await SoilTest.findById(req.params.id);
+
     if (!test) {
-      return res.status(404).json({ error: "Soil test not found." });
+      return res.status(404).json({
+        error: "Soil test not found"
+      });
     }
-    test.labReportUrl = `/uploads/${req.file.filename}`;
-    if (test.status !== "Completed" && test.status !== "Report Ready") {
-      test.status = "Report Ready";
-    }
+
+    const uploadToCloudinary = () =>
+      new Promise((resolve, reject) => {
+
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: "trishastik/soil-reports",
+            resource_type: "auto"
+          },
+          (error, result) => {
+
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            }
+          }
+        );
+
+        streamifier.createReadStream(req.file.buffer)
+          .pipe(stream);
+      });
+
+    const result = await uploadToCloudinary();
+
+    test.labReportUrl = result.secure_url;
+
+    test.status = "Report Ready";
+
     if (req.user.role === "agent") {
       test.isPublished = false;
     }
+
     await test.save();
-    logger.info(`Report file uploaded for Soil Test ${req.params.id}`);
-    res.json({ success: true, labReportUrl: test.labReportUrl, status: test.status });
+
+    res.json({
+      success: true,
+      labReportUrl: test.labReportUrl,
+      status: test.status
+    });
+
   } catch (err) {
     next(err);
   }
 };
-
 const updateReport = async (req, res, next) => {
   try {
     const { status, reportContent, recommendedFertilizers, isPublished } = req.body;
@@ -134,7 +173,7 @@ const updateReport = async (req, res, next) => {
     }
     if (reportContent !== undefined) test.reportContent = reportContent;
     if (recommendedFertilizers !== undefined) test.recommendedFertilizers = recommendedFertilizers;
-    
+
     if (req.user.role === "agent") {
       test.isPublished = false;
     } else if (req.user.role === "admin" || req.user.email === "freeforfire15@gmail.com") {
@@ -142,7 +181,7 @@ const updateReport = async (req, res, next) => {
         test.isPublished = isPublished;
       }
     }
-    
+
     await test.save();
     logger.info(`Report details updated for Soil Test ${req.params.id}`);
     res.json({ success: true, soilTest: test });
@@ -231,14 +270,14 @@ const analyzeReport = async (req, res, next) => {
       const pHMatch = reportContent.match(/pH\s*[:=]\s*([0-9.]+)/i);
       const pHVal = pHMatch ? parseFloat(pHMatch[1]) : 6.5;
       const isAcidic = pHVal < 6.0;
-      
+
       const nMatch = reportContent.toLowerCase().includes("nitrogen") || reportContent.toLowerCase().includes("low n") || reportContent.toLowerCase().includes("deficien");
       const pMatch = reportContent.toLowerCase().includes("phosphorus") || reportContent.toLowerCase().includes("low p");
 
       let npkStr = "Nitrogen: Optimal. Phosphorus: Moderate. Potassium: High.";
       let deficiencyStr = "No significant deficiencies found. Soil is well balanced.";
       let fertStr = `Apply general organic compost. Standard dosage: 2-3 tons per acre for a farm area of ${farmArea} acres.`;
-      
+
       if (nMatch || isAcidic) {
         npkStr = "Nitrogen (N): Low. Phosphorus (P): Medium. Potassium (K): High.";
         deficiencyStr = "Nitrogen deficiency detected, which can stunt vegetative growth and cause yellowing leaves.";
@@ -259,7 +298,7 @@ const analyzeReport = async (req, res, next) => {
       };
     } else {
       logger.info("Calling Grok API...");
-      
+
       const prompt = `You are a professional agricultural scientist and soil expert. 
 Analyze the following soil testing report details:
 Planned Crop: ${cropPlanned}
@@ -300,7 +339,7 @@ Ensure the JSON is valid and only return the JSON block, nothing else. Do not wr
 
       const responseJson = await apiResponse.json();
       let text = responseJson.choices[0].message.content.trim();
-      
+
       if (text.startsWith("```")) {
         text = text.replace(/^```json\s*/, "").replace(/```$/, "").trim();
       }

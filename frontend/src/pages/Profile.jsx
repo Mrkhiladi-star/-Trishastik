@@ -181,29 +181,26 @@ const Profile = () => {
     setPhotoUploading(true);
     setMessage({ text: "", type: "" });
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = async () => {
-      try {
-        const base64data = reader.result;
-        const response = await fetch("/api/profile/photo", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ photo: base64data })
-        });
-        const data = await response.json();
-        if (response.ok && data.success) {
-          setMessage({ text: "Profile photo uploaded successfully!", type: "success" });
-          await refreshUser();
-        } else {
-          setMessage({ text: data.error || "Photo upload failed.", type: "error" });
-        }
-      } catch (err) {
-        setMessage({ text: "Failed to upload photo.", type: "error" });
-      } finally {
-        setPhotoUploading(false);
+    try {
+      const formData = new FormData();
+      formData.append("photo", file);
+
+      const response = await fetch("/api/profile/photo", {
+        method: "POST",
+        body: formData
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setMessage({ text: "Profile photo uploaded successfully!", type: "success" });
+        await refreshUser();
+      } else {
+        setMessage({ text: data.error || "Photo upload failed.", type: "error" });
       }
-    };
+    } catch (err) {
+      setMessage({ text: "Failed to upload photo.", type: "error" });
+    } finally {
+      setPhotoUploading(false);
+    }
   };
 
   const handlePasswordChange = async (e) => {

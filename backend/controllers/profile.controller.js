@@ -1,5 +1,7 @@
 const User = require("../models/user");
 const logger = require("../utils/logger");
+const cloudinary = require("../config/cloudinary");
+const streamifier = require("streamifier");
 
 const checkIsProfileComplete = (user) => {
   // Common required fields
@@ -68,9 +70,32 @@ const updatePhoto = async (req, res, next) => {
     }
     
     if (req.file) {
-      user.profilePhoto = `/uploads/${req.file.filename}`;
+      const uploadToCloudinary = () =>
+        new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            {
+              folder: "trishastik/profile-photos",
+              resource_type: "auto"
+            },
+            (error, result) => {
+              if (error) {
+                reject(error);
+              } else {
+                resolve(result);
+              }
+            }
+          );
+          streamifier.createReadStream(req.file.buffer).pipe(stream);
+        });
+
+      const result = await uploadToCloudinary();
+      user.profilePhoto = result.secure_url;
     } else if (req.body.photo) {
-      user.profilePhoto = req.body.photo; // Base64 upload support
+      const result = await cloudinary.uploader.upload(req.body.photo, {
+        folder: "trishastik/profile-photos",
+        resource_type: "auto"
+      });
+      user.profilePhoto = result.secure_url;
     }
     
     await user.save();
