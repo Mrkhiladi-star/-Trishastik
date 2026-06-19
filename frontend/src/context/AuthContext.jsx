@@ -1,8 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 
 const AuthContext = createContext(null);
-const API_URL = import.meta.env.VITE_API_URL;
-
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -11,10 +9,7 @@ export const AuthProvider = ({ children }) => {
   // Fetch status on mount
   const checkAuthStatus = async () => {
     try {
-      const response = await fetch(`${API_URL}/auth-status`, {
-        credentials: "include",
-      });
-
+      const response = await fetch("/api/auth-status");
       const data = await response.json();
 
       if (data.authenticated) {
@@ -38,9 +33,8 @@ export const AuthProvider = ({ children }) => {
     setError(null);
 
     try {
-      const response = await fetch(`${API_URL}/login`, {
+      const response = await fetch("/api/login", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -87,9 +81,8 @@ export const AuthProvider = ({ children }) => {
 
       if (otp) bodyPayload.otp = otp;
 
-      const response = await fetch(`${API_URL}/register`, {
+      const response = await fetch("/api/register", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -129,9 +122,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch(`${API_URL}/logout`, {
-        method: "POST",
-        credentials: "include",
+      const response = await fetch("/api/logout", {
+        method: "POST"
       });
 
       const data = await response.json();
@@ -149,9 +141,7 @@ export const AuthProvider = ({ children }) => {
 
   const refreshUser = async () => {
     try {
-      const response = await fetch(`${API_URL}/profile`, {
-        credentials: "include",
-      });
+      const response = await fetch("/api/profile");
 
       if (response.ok) {
         const data = await response.json();

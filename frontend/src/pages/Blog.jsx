@@ -10,7 +10,7 @@ const Blog = () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await fetch("/blog");
+      const response = await fetch("/api/blog");
       const data = await response.json();
       setBlogs(data.allListings || []);
     } catch (err) {

@@ -36,7 +36,7 @@ const Shop = () => {
 
   const fetchShopData = async () => {
     try {
-      const response = await fetch("/shop");
+      const response = await fetch("/api/shop");
       if (!response.ok) {
         if (response.status === 401) {
           navigate("/login");
@@ -51,7 +51,7 @@ const Shop = () => {
       setListings(data.allListings || []);
 
       // Fetch user's orders from detailed order model
-      const ordersResponse = await fetch("/orders");
+      const ordersResponse = await fetch("/api/orders");
       if (ordersResponse.ok) {
         const ordersData = await ordersResponse.json();
         setMyOrders(ordersData.orders || []);
@@ -70,7 +70,7 @@ const Shop = () => {
 
   const handleAddToCart = async (id) => {
     try {
-      const response = await fetch(`/addtocart/${id}`);
+      const response = await fetch(`/api/addtocart/${id}`);
       const data = await response.json();
       if (response.ok && data.success) {
         setMessage("Product added to cart!");
@@ -90,7 +90,7 @@ const Shop = () => {
 
   const handleRemoveFromCart = async (id) => {
     try {
-      const response = await fetch(`/remove-from-cart/${id}`);
+      const response = await fetch(`/api/remove-from-cart/${id}`);
       const data = await response.json();
       if (response.ok && data.success) {
         await refreshUser();
@@ -111,7 +111,7 @@ const Shop = () => {
   const handleCancelOrder = async (orderId) => {
     if (!window.confirm("Are you sure you want to cancel this order?")) return;
     try {
-      const response = await fetch(`/orders/${orderId}/cancel`, {
+      const response = await fetch(`/api/orders/${orderId}/cancel`, {
         method: "POST"
       });
       const data = await response.json();
@@ -130,7 +130,7 @@ const Shop = () => {
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`/orders/${reviewOrderId}/review`, {
+      const response = await fetch(`/api/orders/${reviewOrderId}/review`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

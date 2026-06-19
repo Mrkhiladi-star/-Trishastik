@@ -17,7 +17,7 @@ const NewReview = () => {
     setSubmitting(true);
 
     try {
-      const response = await fetch("/newReview", {
+      const response = await fetch("/api/newReview", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -17,7 +17,7 @@ const NewEducation = () => {
     setSubmitting(true);
 
     try {
-      const response = await fetch("/educationnew", {
+      const response = await fetch("/api/educationnew", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

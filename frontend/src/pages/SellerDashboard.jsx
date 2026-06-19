@@ -26,7 +26,7 @@ const SellerDashboard = () => {
 
   const fetchSellerData = async () => {
     try {
-      const response = await fetch("/seller/listings");
+      const response = await fetch("/api/seller/listings");
       if (!response.ok) {
         if (response.status === 401 || response.status === 403) {
           navigate("/");
@@ -38,7 +38,7 @@ const SellerDashboard = () => {
       setMyListings(data.myListings || []);
 
       // Fetch customer orders placed on seller's products
-      const ordersResponse = await fetch("/seller/orders");
+      const ordersResponse = await fetch("/api/seller/orders");
       if (ordersResponse.ok) {
         const ordersData = await ordersResponse.json();
         setOrders(ordersData.orders || []);
@@ -67,7 +67,7 @@ const SellerDashboard = () => {
 
   const handleAcceptOrder = async (orderId) => {
     try {
-      const response = await fetch(`/orders/${orderId}/accept`, {
+      const response = await fetch(`/api/orders/${orderId}/accept`, {
         method: "POST"
       });
       const data = await response.json();
@@ -88,7 +88,7 @@ const SellerDashboard = () => {
     if (!transitOrderId) return;
     setTransitSubmitting(true);
     try {
-      const response = await fetch(`/orders/${transitOrderId}/request-transit`, {
+      const response = await fetch(`/api/orders/${transitOrderId}/request-transit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ vehicleType })

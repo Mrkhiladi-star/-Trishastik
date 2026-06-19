@@ -38,13 +38,13 @@ const TransporterDashboard = () => {
     try {
       setLoading(true);
 
-      const jobsRes = await fetch("/transporter/jobs");
+      const jobsRes = await fetch("/api/transporter/jobs");
       if (jobsRes.ok) {
         const jobsData = await jobsRes.json();
         setJobs(jobsData.orders || []);
       }
 
-      const activeRes = await fetch("/transporter/active");
+      const activeRes = await fetch("/api/transporter/active");
       if (activeRes.ok) {
         const activeData = await activeRes.json();
         setActiveDeliveries(activeData.orders || []);
@@ -68,7 +68,7 @@ const TransporterDashboard = () => {
   const handleAcceptJob = async (orderId) => {
     setActionLoading(true);
     try {
-      const response = await fetch(`/orders/${orderId}/accept-delivery`, {
+      const response = await fetch(`/api/orders/${orderId}/accept-delivery`, {
         method: "POST"
       });
       const data = await response.json();
@@ -91,7 +91,7 @@ const TransporterDashboard = () => {
     if (!trackingOrderId) return;
     setActionLoading(true);
     try {
-      const response = await fetch(`/orders/${trackingOrderId}/track`, {
+      const response = await fetch(`/api/orders/${trackingOrderId}/track`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -120,7 +120,7 @@ const TransporterDashboard = () => {
   const handleDeliverOrder = async (orderId) => {
     setActionLoading(true);
     try {
-      const response = await fetch(`/orders/${orderId}/track`, {
+      const response = await fetch(`/api/orders/${orderId}/track`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

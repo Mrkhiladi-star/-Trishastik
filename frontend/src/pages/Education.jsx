@@ -20,7 +20,7 @@ const Education = () => {
 
   const fetchEducation = async () => {
     try {
-      const response = await fetch("/education");
+      const response = await fetch("/api/education");
       const data = await response.json();
       setEducation(data.allListings || []);
     } catch (err) {
@@ -62,7 +62,7 @@ const Education = () => {
 
     setSubmitting(true);
     try {
-      const response = await fetch("/educationnew", {
+      const response = await fetch("/api/educationnew", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -25,7 +25,7 @@ const Checkout = () => {
 
   const fetchCheckoutData = async () => {
     try {
-      const response = await fetch("/checkout");
+      const response = await fetch("/api/checkout");
       if (!response.ok) {
         if (response.status === 401) {
           navigate("/login");
@@ -72,7 +72,7 @@ const Checkout = () => {
         productIds: cart.map(item => item._id)
       };
 
-      const response = await fetch("/checkout", {
+      const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)

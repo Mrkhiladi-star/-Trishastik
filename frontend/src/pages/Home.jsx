@@ -42,7 +42,7 @@ const Home = () => {
 
   const fetchHomeData = async () => {
     try {
-      const response = await fetch("/");
+      const response = await fetch("/api/");
       const data = await response.json();
       setListings(data.allListings || []);
       setReviews(data.allReviews || []);
@@ -66,7 +66,7 @@ const Home = () => {
     }
 
     try {
-      const response = await fetch(`/addtocart/${id}`);
+      const response = await fetch(`/api/addtocart/${id}`);
       const data = await response.json();
       if (response.ok && data.success) {
         setMessage({ type: "success", text: "Added to cart successfully!" });

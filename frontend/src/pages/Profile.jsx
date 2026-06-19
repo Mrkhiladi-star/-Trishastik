@@ -64,7 +64,7 @@ const Profile = () => {
   const fetchSoilTests = async () => {
     try {
       setLoadingTests(true);
-      const response = await fetch("/soil-tests");
+      const response = await fetch("/api/soil-tests");
       if (response.ok) {
         const data = await response.json();
         setSoilTests(data.soilTests || []);
@@ -84,21 +84,21 @@ const Profile = () => {
     }
 
     if (user.role === "customer") {
-      fetch("/orders")
+      fetch("/api/orders")
         .then(res => res.ok ? res.json() : null)
         .then(data => { if (data) setOrdersCount(data.orders?.length || 0); })
         .catch(err => console.error(err));
     }
 
     if (user.role === "fertilizer_seller" || user.role === "instrument_seller") {
-      fetch("/seller/listings")
+      fetch("/api/seller/listings")
         .then(res => res.ok ? res.json() : null)
         .then(data => { if (data) setListingsCount(data.myListings?.length || 0); })
         .catch(err => console.error(err));
     }
 
     if (user.role === "transporter") {
-      fetch("/transporter/active")
+      fetch("/api/transporter/active")
         .then(res => res.ok ? res.json() : null)
         .then(data => {
           if (data) {
@@ -135,7 +135,7 @@ const Profile = () => {
     setMessage({ text: "", type: "" });
 
     try {
-      const response = await fetch("/profile", {
+      const response = await fetch("/api/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -185,7 +185,7 @@ const Profile = () => {
       const formData = new FormData();
       formData.append("photo", file);
 
-      const response = await fetch("/profile/photo", {
+      const response = await fetch("/api/profile/photo", {
         method: "POST",
         body: formData
       });
@@ -214,7 +214,7 @@ const Profile = () => {
 
     setSaveLoading(true);
     try {
-      const response = await fetch("/profile/change-password", {
+      const response = await fetch("/api/profile/change-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ oldPassword, newPassword })

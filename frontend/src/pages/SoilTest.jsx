@@ -90,7 +90,7 @@ const SoilTest = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const endpoint = isAdmin ? "/admin/soil-tests" : "/soil-tests";
+      const endpoint = isAdmin ? "/api/admin/soil-tests" : "/api/soil-tests";
       const response = await fetch(endpoint);
       if (response.ok) {
         const data = await response.json();
@@ -99,14 +99,14 @@ const SoilTest = () => {
 
       if (isAdmin) {
         // Fetch agents list
-        const agentsRes = await fetch("/admin/agents");
+        const agentsRes = await fetch("/api/admin/agents");
         if (agentsRes.ok) {
           const agentsData = await agentsRes.json();
           setAgents(agentsData.agents || []);
         }
 
         // Fetch users registry
-        const usersRes = await fetch("/admin/users");
+        const usersRes = await fetch("/api/admin/users");
         if (usersRes.ok) {
           const usersData = await usersRes.json();
           setAllUsers(usersData.users || []);
@@ -148,7 +148,7 @@ const SoilTest = () => {
     setFormMessage({ text: "", type: "" });
 
     try {
-      const response = await fetch("/soil-tests", {
+      const response = await fetch("/api/soil-tests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -209,7 +209,7 @@ const SoilTest = () => {
     }
     setActionLoading(true);
     try {
-      const response = await fetch(`/admin/soil-tests/${testId}/assign`, {
+      const response = await fetch(`/api/admin/soil-tests/${testId}/assign`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ agentId: assignAgentId, labFacility: assignLabFacility })
@@ -234,7 +234,7 @@ const SoilTest = () => {
   const handleAgentStatusUpdate = async (testId, newStatus) => {
     setActionLoading(true);
     try {
-      const response = await fetch(`/agent/soil-tests/${testId}/status`, {
+      const response = await fetch(`/api/agent/soil-tests/${testId}/status`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus })
@@ -260,7 +260,7 @@ const SoilTest = () => {
     formData.append("report", uploadFile);
 
     try {
-      const response = await fetch(`/admin/soil-tests/${testId}/report-upload`, {
+      const response = await fetch(`/api/admin/soil-tests/${testId}/report-upload`, {
         method: "POST",
         body: formData
       });
@@ -294,7 +294,7 @@ const SoilTest = () => {
     e.preventDefault();
     setActionLoading(true);
     try {
-      const response = await fetch(`/admin/soil-tests/${reportingTest._id}/report`, {
+      const response = await fetch(`/api/admin/soil-tests/${reportingTest._id}/report`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -332,7 +332,7 @@ const SoilTest = () => {
   const handlePublishReport = async (testId) => {
     setActionLoading(true);
     try {
-      const response = await fetch(`/admin/soil-tests/${testId}/publish`, {
+      const response = await fetch(`/api/admin/soil-tests/${testId}/publish`, {
         method: "POST"
       });
       if (response.ok) {
@@ -365,7 +365,7 @@ const SoilTest = () => {
         recommendedFertilizers
       } : {};
 
-      const response = await fetch(`/soil-tests/${testId}/analyze`, {
+      const response = await fetch(`/api/soil-tests/${testId}/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bodyPayload)
@@ -396,7 +396,7 @@ const SoilTest = () => {
   const handleUserRoleUpdate = async (userId, newRole) => {
     setActionLoading(true);
     try {
-      const response = await fetch(`/admin/users/${userId}/role`, {
+      const response = await fetch(`/api/admin/users/${userId}/role`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role: newRole })

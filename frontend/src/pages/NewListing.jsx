@@ -24,7 +24,7 @@ const NewListing = () => {
     setSubmitting(true);
 
     try {
-      const response = await fetch("/new", {
+      const response = await fetch("/api/new", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

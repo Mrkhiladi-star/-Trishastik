@@ -13,7 +13,7 @@ const Customers = () => {
 
   const fetchCustomerData = async () => {
     try {
-      const response = await fetch("/customer");
+      const response = await fetch("/api/customer");
       if (!response.ok) {
         if (response.status === 401 || response.status === 403) {
           navigate("/");
