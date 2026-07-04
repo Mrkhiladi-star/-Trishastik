@@ -289,18 +289,17 @@ const getCustomersCheckout = async (req, res, next) => {
 };
 
 const createListingReview = async (req, res, next) => {
-  const allowedEmail = "sramu1090@gmail.com";
-  if (req.user && req.user.email !== allowedEmail) {
+  if (req.user && req.user.role === "farmer") {
     try {
       const newReview = new Review(req.body.histing || req.body);
       await newReview.save();
-      logger.info(`New review created by ${req.user.username}`);
+      logger.info(`New Kisan testimonial created by ${req.user.username}`);
       res.json({ success: true, review: newReview });
     } catch (err) {
       next(err);
     }
   } else {
-    res.status(403).json({ error: "Access denied: You are not authorized to perform this action." });
+    res.status(403).json({ error: "Access denied: Only farmers are authorized to submit testimonials." });
   }
 };
 

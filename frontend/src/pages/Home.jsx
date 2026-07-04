@@ -18,6 +18,36 @@ const Home = () => {
   // Search and modal state
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedTag, setSelectedTag] = useState("All");
+
+  const getHomeTags = () => {
+    if (user && user.role === "farmer") {
+      return [
+        { name: "All Inputs", value: "All" },
+        { name: "Fertilizers & Medicines (खाद और दवा)", value: "fertilizer" },
+        { name: "Equipment for Sale (बिक्री हेतु)", value: "sale" },
+        { name: "Equipment for Rent (किराए हेतु)", value: "rent" }
+      ];
+    }
+    if (user && user.role === "fertilizer_seller") {
+      return [{ name: "All Fertilizers", value: "All" }];
+    }
+    if (user && user.role === "instrument_seller") {
+      return [
+        { name: "All Equipment", value: "All" },
+        { name: "For Sale", value: "sale" },
+        { name: "For Rent", value: "rent" }
+      ];
+    }
+    // Guest or customer
+    return [
+      { name: "All Products", value: "All" },
+      { name: "Wheat & Rice (गेहूं और चावल)", value: "grains" },
+      { name: "Vegetables (सब्जियां)", value: "vegetables" },
+      { name: "Sugarcane (गन्ना)", value: "sugarcane" },
+      { name: "Other Crops (अन्य)", value: "other" }
+    ];
+  };
 
   // Hinglish to English translation map
   const hinglishMap = {
@@ -105,8 +135,51 @@ const Home = () => {
   };
 
   const filteredListings = listings.filter((item) => {
-    if (user && user.role === "customer" && item.category !== "organic_product") {
-      return false;
+    // 1. If not logged in, show ONLY organic products
+    if (!user) {
+      if (item.category !== "organic_product") return false;
+    } else {
+      // 2. If logged in, filter based on role authorization
+      if (user.role === "customer") {
+        if (item.category !== "organic_product") return false;
+      } else if (user.role === "farmer") {
+        // Farmers buy fertilizers and tools, not organic crops
+        if (item.category === "organic_product") return false;
+      } else if (user.role === "fertilizer_seller") {
+        // Fertilizer sellers see only fertilizers
+        if (item.category !== "medicine_fertilizer") return false;
+      } else if (user.role === "instrument_seller") {
+        // Instrument sellers see only equipment
+        if (item.category !== "instrument_sale" && item.category !== "instrument_rent") return false;
+      }
+    }
+
+    // Tag-based filtering
+    if (selectedTag !== "All") {
+      const title = item.title.toLowerCase();
+      const desc = item.description.toLowerCase();
+      
+      if (selectedTag === "grains") {
+        const isGrain = ["wheat", "rice", "gehu", "chawal", "dhan", "wheet"].some(kw => title.includes(kw) || desc.includes(kw));
+        if (!isGrain) return false;
+      } else if (selectedTag === "vegetables") {
+        const isVeg = ["vegetable", "sabji", "potato", "onion", "tomato", "aloo", "pyaj", "tamatar"].some(kw => title.includes(kw) || desc.includes(kw));
+        if (!isVeg) return false;
+      } else if (selectedTag === "sugarcane") {
+        const isSugarcane = ["sugarcane", "ganna"].some(kw => title.includes(kw) || desc.includes(kw));
+        if (!isSugarcane) return false;
+      } else if (selectedTag === "other") {
+        const isGrain = ["wheat", "rice", "gehu", "chawal", "dhan", "wheet"].some(kw => title.includes(kw) || desc.includes(kw));
+        const isVeg = ["vegetable", "sabji", "potato", "onion", "tomato", "aloo", "pyaj", "tamatar"].some(kw => title.includes(kw) || desc.includes(kw));
+        const isSugarcane = ["sugarcane", "ganna"].some(kw => title.includes(kw) || desc.includes(kw));
+        if (isGrain || isVeg || isSugarcane) return false;
+      } else if (selectedTag === "fertilizer") {
+        if (item.category !== "medicine_fertilizer") return false;
+      } else if (selectedTag === "sale") {
+        if (item.category !== "instrument_sale") return false;
+      } else if (selectedTag === "rent") {
+        if (item.category !== "instrument_rent") return false;
+      }
     }
 
     if (!searchQuery) return true;
@@ -179,13 +252,13 @@ const Home = () => {
                 <span>List New Product</span>
               </Link>
             )}
-            {isCustomer && (
+            {isFarmer && (
               <Link
                 to="/newreview"
-                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2 transition-all transform active:scale-95 text-sm"
+                className="bg-slate-900 hover:bg-slate-850 border border-slate-800 text-white font-semibold px-6 py-3 rounded-xl flex items-center space-x-2 transition-all text-sm"
               >
-                <MessageSquare size={18} />
-                <span>Leave Feedback</span>
+                <MessageSquare size={18} className="text-emerald-400" />
+                <span>Write Testimonial</span>
               </Link>
             )}
             {!user && (
@@ -241,11 +314,17 @@ const Home = () => {
 
       {/* Featured Products Section */}
       <section className="glass-panel py-16 px-6 sm:px-8 rounded-3xl border border-slate-800/80">
-        <div className="max-w-7xl mx-auto space-y-12">
+        <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 border-b border-slate-800 pb-6">
             <div className="text-left space-y-2">
-              <h2 className="text-3xl font-extrabold text-white tracking-tight animate-fade-in">Featured Organic Inputs</h2>
-              <p className="text-sm text-slate-400">Biofertilizers, organic seeds, and crop enhancers listed by verified agronomists</p>
+              <h2 className="text-3xl font-extrabold text-white tracking-tight animate-fade-in">
+                {user && user.role === "farmer" ? "Recommended Farming Inputs" : "Featured Organic Marketplace"}
+              </h2>
+              <p className="text-sm text-slate-400">
+                {user && user.role === "farmer"
+                  ? "Top fertilizers, dynamic tool rents, and equipment listed by verified agronomists"
+                  : "Fresh organic crops, grains, and vegetables directly from certified farms"}
+              </p>
             </div>
 
             {/* Search Bar with Hinglish capabilities */}
@@ -259,6 +338,26 @@ const Home = () => {
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-800 text-white rounded-xl text-xs focus:outline-none focus:border-emerald-500"
               />
             </div>
+          </div>
+
+          {/* Flipkart Category Tag Pills */}
+          <div className="flex flex-wrap gap-2 pb-2 justify-start">
+            {getHomeTags().map((tag) => (
+              <button
+                key={tag.value}
+                onClick={() => {
+                  setSelectedTag(tag.value);
+                  setSearchQuery("");
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 border ${
+                  selectedTag === tag.value 
+                    ? "bg-emerald-500 text-slate-950 border-emerald-400 font-extrabold shadow-md shadow-emerald-500/10 scale-105" 
+                    : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-850"
+                }`}
+              >
+                {tag.name}
+              </button>
+            ))}
           </div>
 
           {filteredListings.length === 0 ? (
@@ -280,16 +379,34 @@ const Home = () => {
                         onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
                       />
                     </div>
-                    <div className="p-4 space-y-2 text-left">
-                      <h3 className="text-sm font-bold text-white line-clamp-1 group-hover:text-emerald-400 transition-colors">{item.title}</h3>
+                    <div className="p-4 space-y-1.5 text-left">
+                      <span className="text-[10px] text-emerald-400 font-extrabold bg-emerald-500/5 border border-emerald-500/10 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                        {item.category?.replace("_", " ")}
+                      </span>
+                      <h3 className="text-sm font-bold text-white line-clamp-1 group-hover:text-emerald-400 transition-colors pt-1">{item.title}</h3>
                       <p className="text-xs text-slate-400 line-clamp-2 min-h-[2rem] leading-relaxed">{item.description}</p>
+                      
+                      {/* Star Rating Mockup */}
+                      <div className="flex items-center space-x-1 text-amber-400 pt-0.5">
+                        <div className="flex space-x-0.5">
+                          {[...Array(4)].map((_, i) => <Star key={i} size={11} fill="currentColor" />)}
+                          <Star size={11} className="text-slate-700" />
+                        </div>
+                        <span className="text-[9px] text-slate-500 font-bold">(15)</span>
+                      </div>
                     </div>
                   </div>
 
                   <div className="p-4 pt-0 space-y-3">
-                    <p className="text-lg font-extrabold text-emerald-400 text-left">
-                      ₹{item.price} <span className="text-xs text-slate-500 font-bold">/ {item.priceUnit || "kg"}</span>
-                    </p>
+                    {/* Strikethrough Pricing Layout */}
+                    <div className="space-y-0.5 text-left">
+                      <div className="flex items-baseline space-x-1.5">
+                        <span className="text-lg font-extrabold text-emerald-400">₹{item.price}</span>
+                        <span className="text-xs text-slate-500 line-through">₹{Math.round(item.price * 1.25)}</span>
+                        <span className="text-[9px] text-emerald-500 font-extrabold bg-emerald-500/10 px-1 rounded-md">20% OFF</span>
+                      </div>
+                      <span className="text-[10px] text-slate-500 font-bold block">per {item.priceUnit || "kg"}</span>
+                    </div>
 
                     {(canBuy || !user) && (
                       <button
@@ -309,12 +426,24 @@ const Home = () => {
       </section>
 
       {/* Customer Testimonials Section */}
-      <section className="glass-panel py-16 px-6 sm:px-8 rounded-3xl border border-slate-800/80">
+      <section className="glass-panel py-16 px-6 sm:px-8 rounded-3xl border border-slate-800/80 relative">
         <div className="max-w-7xl mx-auto space-y-12">
-          <div className="text-center space-y-2">
+          <div className="text-center space-y-2 relative">
             <h2 className="text-3xl font-extrabold text-white tracking-tight">Kisan Testimonials</h2>
             <p className="text-sm text-slate-400">Real stories from farmers across Bharat implementing sustainable tech tools</p>
             <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-green-600 mx-auto rounded-full mt-4"></div>
+            
+            {isFarmer && (
+              <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
+                <Link
+                  to="/newreview"
+                  className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-2 rounded-xl shadow-md text-xs flex items-center space-x-1.5 transition-all transform active:scale-95"
+                >
+                  <PlusCircle size={14} />
+                  <span>Share Your Story</span>
+                </Link>
+              </div>
+            )}
           </div>
 
           {reviews.length === 0 ? (
@@ -344,30 +473,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* YouTube Story Video Section */}
-      <section className="glass-panel py-16 px-6 sm:px-8 rounded-3xl border border-slate-800/80">
-        <div className="container mx-auto max-w-4xl text-center space-y-8">
-          <div className="flex justify-center text-emerald-400 animate-float">
-            <Video size={40} />
-          </div>
-          <div className="space-y-2">
-            <h2 className="text-3xl font-extrabold text-white tracking-tight">Watch Our Story</h2>
-            <p className="text-sm text-slate-400 max-w-xl mx-auto">
-              See how Trishastik sustainable technology and Grok-AI help farmers increase crop yield and restore soil health.
-            </p>
-          </div>
-          <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-800 bg-slate-950">
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/wougJaN_Ha0?si=lN7RVmwTcM0FuV_P"
-              title="Trishastik Story"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
-      </section>
+
 
       {/* OVERLAY MODAL: Product details display */}
       {selectedProduct && (

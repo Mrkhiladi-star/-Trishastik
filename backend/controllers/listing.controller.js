@@ -6,19 +6,9 @@ const logger = require("../utils/logger");
 
 const getHomeData = async (req, res, next) => {
   try {
-    const cacheKey = "marketplace:home";
-    const cachedData = await cacheService.getCache(cacheKey);
-    if (cachedData) {
-      return res.json(cachedData);
-    }
-
     const allListings = await Listing.find({}).populate("owner", "username email");
     const allReviews = await Review.find({});
-    
-    const homeData = { allReviews, allListings };
-    await cacheService.setCache(cacheKey, homeData, 300); // Cache for 5 mins
-    
-    res.json(homeData);
+    res.json({ allReviews, allListings });
   } catch (err) {
     next(err);
   }
@@ -26,8 +16,8 @@ const getHomeData = async (req, res, next) => {
 
 const checkNewListingPermission = async (req, res) => {
   const isAuthorized = req.user && (
-    req.user.role === "farmer" || 
-    req.user.role === "fertilizer_seller" || 
+    req.user.role === "farmer" ||
+    req.user.role === "fertilizer_seller" ||
     req.user.role === "instrument_seller"
   );
   if (isAuthorized) {
@@ -59,13 +49,13 @@ const createListing = async (req, res, next) => {
       video: video || "",
       owner: req.user._id,
     });
-    
+
     await newListing.save();
-    
+
     // Invalidate home data and listing caches
     await cacheService.delCache("marketplace:home");
     await cacheService.delCache("marketplace:listings");
-    
+
     logger.info(`Listing created successfully: ${title} by ${req.user.username}`);
     res.json({ success: true, listing: newListing });
   } catch (err) {
@@ -127,15 +117,7 @@ const getShopData = async (req, res, next) => {
       let user = await User.findById(req.user._id).populate("cart");
       let users = await User.findById(req.user._id).populate("order");
       const totalAmount = user.cart ? user.cart.reduce((sum, item) => sum + (item.price || 0), 0) : 0;
-      
-      const listingsCacheKey = "marketplace:listings";
-      let allListings = await cacheService.getCache(listingsCacheKey);
-      
-      if (!allListings) {
-        allListings = await Listing.find({}).populate("owner", "username email");
-        await cacheService.setCache(listingsCacheKey, allListings, 300);
-      }
-      
+      const allListings = await Listing.find({}).populate("owner", "username email");
       const cartTitles = user.cart ? user.cart.map(item => item.title).join(", ") : "";
       res.json({ user, users, totalAmount, cartTitles, allListings });
     } catch (err) {
@@ -192,11 +174,11 @@ const deleteListing = async (req, res, next) => {
     }
 
     await Listing.findByIdAndDelete(listingId);
-    
+
     // Invalidate home data and listing caches
     await cacheService.delCache("marketplace:home");
     await cacheService.delCache("marketplace:listings");
-    
+
     logger.info(`Listing deleted successfully: ${listing.title} by ${req.user.username}`);
     res.json({ success: true, message: "Listing deleted successfully." });
   } catch (err) {

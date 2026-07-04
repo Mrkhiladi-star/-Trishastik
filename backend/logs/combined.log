@@ -147,3 +147,7 @@
 {"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 12:54:25"}
 {"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 12:54:39"}
 {"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:59:44"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 16:59:22"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 17:04:03"}
+{"level":"info","message":"New Kisan testimonial created by Shri Krishna","timestamp":"2026-07-04 17:06:21"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-04 17:06:35"}

@@ -57,6 +57,26 @@ const About = () => {
           </div>
         </div>
 
+        {/* Watch Our Story Video Section */}
+        <div className="border-t border-slate-800/80 pt-10 space-y-6">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl font-extrabold text-white tracking-tight">Watch Our Story</h2>
+            <p className="text-xs text-slate-400 max-w-xl mx-auto">
+              See how Trishastik sustainable technology and Grok-AI help farmers increase crop yield and restore soil health.
+            </p>
+          </div>
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-slate-850 bg-slate-950">
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/wougJaN_Ha0?si=lN7RVmwTcM0FuV_P"
+              title="Trishastik Story"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+
       </div>
     </div>
   );
