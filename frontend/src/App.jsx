@@ -12,6 +12,7 @@ import Auth from "./pages/Auth";
 import Blog from "./pages/Blog";
 import Education from "./pages/Education";
 import Shop from "./pages/Shop";
+import ProductDetails from "./pages/ProductDetails";
 import Checkout from "./pages/Checkout";
 import Customers from "./pages/Customers";
 import Profile from "./pages/Profile";
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/login" element={<Auth />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/education" element={<Education />} />
+                <Route path="/product/:id" element={<ProductDetails />} />
 
                 {/* Authenticated Routes */}
                 <Route

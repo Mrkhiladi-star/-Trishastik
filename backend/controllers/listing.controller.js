@@ -25,24 +25,26 @@ const getHomeData = async (req, res, next) => {
 };
 
 const checkNewListingPermission = async (req, res) => {
-  const allowedEmail = "freeforfire15@gmail.com";
   const isAuthorized = req.user && (
-    req.user.email === allowedEmail || 
     req.user.role === "farmer" || 
     req.user.role === "fertilizer_seller" || 
-    req.user.role === "instrument_seller" || 
-    req.user.role === "admin"
+    req.user.role === "instrument_seller"
   );
   if (isAuthorized) {
     res.json({ authorized: true });
   } else {
-    res.status(403).json({ error: "Access denied: Only farmers, sellers and admins can list products." });
+    res.status(403).json({ error: "Access denied: Only farmers and sellers can list products." });
   }
 };
 
 const createListing = async (req, res, next) => {
   try {
-    const { title, description, price, image, category, location, latitude, longitude } = req.body.listing || req.body;
+    const allowedEmail = "sramu1090@gmail.com";
+    if (req.user && (req.user.role === "admin" || req.user.email === allowedEmail)) {
+      return res.status(403).json({ error: "Access denied: Administrators cannot list products." });
+    }
+
+    const { title, description, price, image, category, location, latitude, longitude, priceUnit, images, video } = req.body.listing || req.body;
     const newListing = new Listing({
       title,
       description,
@@ -52,6 +54,9 @@ const createListing = async (req, res, next) => {
       location: location || "",
       latitude: latitude !== undefined ? Number(latitude) : 27.56,
       longitude: longitude !== undefined ? Number(longitude) : 80.68,
+      priceUnit: priceUnit || "kg",
+      images: images || [],
+      video: video || "",
       owner: req.user._id,
     });
     
@@ -78,10 +83,18 @@ const getSellerListings = async (req, res, next) => {
 };
 
 const addToCart = async (req, res, next) => {
-  const allowedEmail = "freeforfire15@gmail.com";
-  // Admin and farmers cannot buy products (standard e-commerce practice)
-  if (req.user && req.user.role !== "farmer" && req.user.email !== allowedEmail) {
+  const allowedEmail = "sramu1090@gmail.com";
+  if (req.user && req.user.role !== "admin" && req.user.role !== "transporter" && req.user.role !== "agent" && req.user.email !== allowedEmail) {
     try {
+      const product = await Listing.findById(req.params.productid);
+      if (!product) {
+        return res.status(404).json({ error: "Product not found." });
+      }
+
+      if (req.user.role === "farmer" && product.category === "organic_product") {
+        return res.status(403).json({ error: "Access denied: Farmers cannot buy organic crop products." });
+      }
+
       let user = await User.findById(req.user._id);
       user.cart.push(req.params.productid);
       await user.save();
@@ -91,7 +104,7 @@ const addToCart = async (req, res, next) => {
       next(err);
     }
   } else {
-    res.status(403).json({ error: "Access denied: Sellers and administrators cannot buy products." });
+    res.status(403).json({ error: "Access denied: You are not authorized to buy products." });
   }
 };
 
@@ -108,14 +121,13 @@ const removeFromCart = async (req, res, next) => {
 };
 
 const getShopData = async (req, res, next) => {
-  const allowedEmail = "freeforfire15@gmail.com";
-  if (req.user && req.user.role !== "farmer" && req.user.email !== allowedEmail) {
+  const allowedEmail = "sramu1090@gmail.com";
+  if (req.user && req.user.role !== "admin" && req.user.role !== "transporter" && req.user.role !== "agent" && req.user.email !== allowedEmail) {
     try {
       let user = await User.findById(req.user._id).populate("cart");
       let users = await User.findById(req.user._id).populate("order");
-      const totalAmount = user.cart.reduce((sum, item) => sum + item.price, 0);
+      const totalAmount = user.cart ? user.cart.reduce((sum, item) => sum + (item.price || 0), 0) : 0;
       
-      // Cache the all listings query
       const listingsCacheKey = "marketplace:listings";
       let allListings = await cacheService.getCache(listingsCacheKey);
       
@@ -124,13 +136,71 @@ const getShopData = async (req, res, next) => {
         await cacheService.setCache(listingsCacheKey, allListings, 300);
       }
       
-      const cartTitles = user.cart.map(item => item.title).join(", ");
+      const cartTitles = user.cart ? user.cart.map(item => item.title).join(", ") : "";
       res.json({ user, users, totalAmount, cartTitles, allListings });
     } catch (err) {
       next(err);
     }
   } else {
-    res.status(403).json({ error: "Access denied: Shop views are restricted to customers." });
+    res.status(403).json({ error: "Access denied: Shop views are restricted." });
+  }
+};
+
+const getListingDetails = async (req, res, next) => {
+  try {
+    const listingId = req.params.id;
+    const listing = await Listing.findById(listingId).populate("owner", "username email fullName");
+    if (!listing) {
+      return res.status(404).json({ error: "Product not found." });
+    }
+
+    const Order = require("../models/order");
+    const completedOrders = await Order.find({
+      product: listingId,
+      status: "Delivered",
+      "review.rating": { $gt: 0 }
+    }).populate("buyer", "username fullName");
+
+    const reviews = completedOrders.map(order => ({
+      _id: order._id,
+      rating: order.review.rating,
+      comment: order.review.comment,
+      createdAt: order.review.createdAt || order.createdAt,
+      reviewer: order.buyer ? (order.buyer.fullName || order.buyer.username) : "Anonymous"
+    }));
+
+    res.json({ listing, reviews });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteListing = async (req, res, next) => {
+  try {
+    const listingId = req.params.id;
+    const listing = await Listing.findById(listingId);
+    if (!listing) {
+      return res.status(404).json({ error: "Product listing not found." });
+    }
+
+    const allowedEmail = "sramu1090@gmail.com";
+    const isOwner = listing.owner && listing.owner.toString() === req.user._id.toString();
+    const isAdmin = req.user.role === "admin" || req.user.email === allowedEmail;
+
+    if (!isOwner && !isAdmin) {
+      return res.status(403).json({ error: "Access denied: You are not authorized to delete this listing." });
+    }
+
+    await Listing.findByIdAndDelete(listingId);
+    
+    // Invalidate home data and listing caches
+    await cacheService.delCache("marketplace:home");
+    await cacheService.delCache("marketplace:listings");
+    
+    logger.info(`Listing deleted successfully: ${listing.title} by ${req.user.username}`);
+    res.json({ success: true, message: "Listing deleted successfully." });
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -142,4 +212,6 @@ module.exports = {
   addToCart,
   removeFromCart,
   getShopData,
+  getListingDetails,
+  deleteListing,
 };

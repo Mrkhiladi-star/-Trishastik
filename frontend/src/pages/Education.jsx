@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { PlusCircle, ExternalLink, BookOpen, Search, Video, FileText, Check, AlertCircle } from "lucide-react";
+import { PlusCircle, ExternalLink, BookOpen, Search, Video, FileText, Check, AlertCircle, X } from "lucide-react";
 
 const Education = () => {
   const { user } = useAuth();
   const [education, setEducation] = useState([]);
+  const [selectedModule, setSelectedModule] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -34,7 +35,7 @@ const Education = () => {
     fetchEducation();
   }, []);
 
-  const isAdmin = user && (user.role === "admin" || user.email === "freeforfire15@gmail.com");
+  const isAdmin = user && (user.role === "admin" || user.email === "sramu1090@gmail.com");
 
   // Helper to extract YouTube ID and build embed URL
   const getYouTubeEmbedUrl = (url) => {
@@ -123,7 +124,7 @@ const Education = () => {
 
         {/* Header Action Row */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div className="space-y-2">
+          <div className="space-y-2 text-left">
             <div className="flex items-center space-x-2 text-emerald-400 font-bold tracking-wider text-xs uppercase">
               <BookOpen size={14} />
               <span>Agri-Academy</span>
@@ -149,12 +150,12 @@ const Education = () => {
         {isAdmin && showAdminForm && (
           <div className="glass-panel p-6 rounded-3xl border border-slate-800/80 max-w-3xl mx-auto space-y-6 relative overflow-hidden animate-fade-in">
             <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
-            <div>
+            <div className="text-left">
               <h2 className="text-xl font-bold text-white flex items-center space-x-2">
                 <PlusCircle className="text-emerald-400" size={18} />
                 <span>Create New Educational Module</span>
               </h2>
-              <p className="text-xs text-slate-400 mt-1">Paste a video link and write an summary description (recommended under 100 words).</p>
+              <p className="text-xs text-slate-400 mt-1">Paste a video link and write a summary description (recommended under 100 words).</p>
             </div>
 
             {uploadError && (
@@ -172,7 +173,7 @@ const Education = () => {
             )}
 
             <form onSubmit={handleAdminSubmit} className="space-y-4">
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 text-left">
                 <label htmlFor="title" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Module / Crop Title</label>
                 <input
                   type="text"
@@ -185,7 +186,7 @@ const Education = () => {
                 />
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 text-left">
                 <div className="flex justify-between items-center">
                   <label htmlFor="description" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Description Summary</label>
                   <span className={`text-[9px] font-bold ${getWordCount(description) > 100 ? "text-amber-500" : "text-slate-500"}`}>
@@ -202,7 +203,7 @@ const Education = () => {
                 />
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 text-left">
                 <label htmlFor="video" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">YouTube Video / Resource Link</label>
                 <input
                   type="text"
@@ -228,7 +229,7 @@ const Education = () => {
         )}
 
         {/* Search Bar / Filter Input */}
-        <div className="glass-panel p-4 rounded-2xl border border-slate-800/80 max-w-md">
+        <div className="glass-panel p-4 rounded-2xl border border-slate-800/80 max-w-md text-left">
           <div className="relative">
             <Search className="absolute left-3 top-2.5 text-slate-500" size={16} />
             <input
@@ -252,8 +253,12 @@ const Education = () => {
               const embedUrl = getYouTubeEmbedUrl(item.video);
 
               return (
-                <div key={item._id} className="bg-slate-900/40 border border-slate-850 p-6 rounded-2xl shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group">
-                  <div className="space-y-4">
+                <div
+                  key={item._id}
+                  onClick={() => setSelectedModule(item)}
+                  className="cursor-pointer bg-slate-900/40 border border-slate-850 p-6 rounded-2xl shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group"
+                >
+                  <div className="space-y-4 text-left">
                     {/* Header icon/title */}
                     <div className="flex items-center space-x-3">
                       <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
@@ -265,10 +270,12 @@ const Education = () => {
                     {/* YouTube Embed Frame */}
                     {embedUrl ? (
                       <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-950 border border-slate-850">
+                        {/* We use an overlay to capture click on the card rather than playing video inside catalog if user clicks the frame area */}
+                        <div className="absolute inset-0 z-10" />
                         <iframe
                           src={embedUrl}
                           title={item.title}
-                          className="w-full h-full"
+                          className="w-full h-full relative z-0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         ></iframe>
@@ -288,6 +295,7 @@ const Education = () => {
                       href={item.video}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                       className="w-full bg-slate-950 border border-slate-850 hover:bg-slate-900 text-emerald-400 font-bold py-2.5 px-4 rounded-xl flex items-center justify-center space-x-1.5 transition-all text-xs"
                     >
                       <span>Open Original Resource</span>
@@ -300,9 +308,73 @@ const Education = () => {
           </div>
         )}
       </div>
+
+      {/* Education Detail Overlay Modal */}
+      {selectedModule && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md p-4 animate-fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]">
+            {/* Close button */}
+            <button
+              onClick={() => setSelectedModule(null)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-xl bg-slate-950/80 border border-slate-800 z-10 hover:scale-105 transition-all"
+            >
+              <X size={18} />
+            </button>
+
+            {/* Video embed frame */}
+            <div className="relative aspect-video w-full bg-slate-950 border-b border-slate-800 shrink-0">
+              {getYouTubeEmbedUrl(selectedModule.video) ? (
+                <iframe
+                  src={getYouTubeEmbedUrl(selectedModule.video)}
+                  title={selectedModule.title}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center text-slate-500">
+                  <Video size={48} className="mb-2" />
+                  <span className="text-xs uppercase font-bold tracking-wider">No Video Player Available</span>
+                </div>
+              )}
+            </div>
+
+            {/* Details panel */}
+            <div className="p-6 overflow-y-auto space-y-4 text-left flex-grow">
+              <div className="flex items-center space-x-2 text-emerald-400 font-bold tracking-wider text-xs uppercase">
+                <BookOpen size={14} />
+                <span>Agri-Academy Guide</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
+                {selectedModule.title}
+              </h2>
+              <div className="w-16 h-1 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full"></div>
+              
+              <div className="space-y-2 pt-2">
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Guide Summary & Instructions</h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap">
+                  {selectedModule.description}
+                </p>
+              </div>
+
+              <div className="pt-4">
+                <a
+                  href={selectedModule.video}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="inline-flex bg-slate-950 border border-slate-850 hover:bg-slate-900 text-emerald-400 font-bold py-2.5 px-6 rounded-xl items-center space-x-1.5 transition-all text-xs"
+                >
+                  <span>Open Original Resource Link</span>
+                  <ExternalLink size={12} />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Education;
-

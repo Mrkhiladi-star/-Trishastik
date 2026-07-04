@@ -32,7 +32,7 @@ const Customers = () => {
   };
 
   useEffect(() => {
-    if (user && user.email !== "freeforfire15@gmail.com") {
+    if (user && user.email !== "sramu1090@gmail.com" && user.role !== "admin") {
       navigate("/");
       return;
     }

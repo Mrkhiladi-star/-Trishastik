@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import {
@@ -10,6 +10,7 @@ import {
 const Shop = () => {
   const { user, refreshUser } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Tab selection: "catalog" | "cart" | "orders"
   const [shopTab, setShopTab] = useState("catalog");
@@ -67,6 +68,16 @@ const Shop = () => {
   useEffect(() => {
     fetchShopData();
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tabParam = params.get("tab");
+    if (tabParam && ["catalog", "cart", "orders"].includes(tabParam)) {
+      setShopTab(tabParam);
+    } else {
+      setShopTab("catalog");
+    }
+  }, [location.search]);
 
   const handleAddToCart = async (id) => {
     try {
@@ -154,12 +165,27 @@ const Shop = () => {
     }
   };
 
-  // Filter Catalog
+  // Filter Catalog based on search, category, and user role
   const filteredListings = listings.filter(item => {
     const matchesSearch =
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = activeCategory === "all" || item.category === activeCategory;
+      
+    let matchesCategory = false;
+    if (activeCategory === "all") {
+      if (user && user.role === "customer") {
+        matchesCategory = item.category === "organic_product";
+      } else {
+        matchesCategory = true;
+      }
+    } else {
+      matchesCategory = item.category === activeCategory;
+    }
+
+    if (user && user.role === "customer" && item.category !== "organic_product") {
+      return false;
+    }
+
     return matchesSearch && matchesCategory;
   });
 
@@ -201,27 +227,29 @@ const Shop = () => {
         </div>
       </div>
 
-      {/* Sub tabs */}
-      <div className="flex space-x-4 border-b border-slate-800 pb-4">
-        <button
-          onClick={() => setShopTab("catalog")}
-          className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "catalog" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
-        >
-          Explore Catalog
-        </button>
-        <button
-          onClick={() => setShopTab("cart")}
-          className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "cart" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
-        >
-          My Cart ({cart.length})
-        </button>
-        <button
-          onClick={() => setShopTab("orders")}
-          className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "orders" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
-        >
-          My Purchases & Tracking ({myOrders.length})
-        </button>
-      </div>
+      {/* Sub tabs - hidden for standard customers */}
+      {user && user.role !== "customer" && (
+        <div className="flex space-x-4 border-b border-slate-800 pb-4">
+          <button
+            onClick={() => setShopTab("catalog")}
+            className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "catalog" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
+          >
+            Explore Catalog
+          </button>
+          <button
+            onClick={() => setShopTab("cart")}
+            className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "cart" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
+          >
+            My Cart ({cart.length})
+          </button>
+          <button
+            onClick={() => setShopTab("orders")}
+            className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "orders" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
+          >
+            My Purchases & Tracking ({myOrders.length})
+          </button>
+        </div>
+      )}
 
       {/* EXPLORE CATALOG TAB */}
       {shopTab === "catalog" && (
@@ -249,7 +277,12 @@ const Shop = () => {
                 { id: "medicine_fertilizer", label: "Fertilizers & Medicines" },
                 { id: "instrument_sale", label: "Equipment (Buy)" },
                 { id: "instrument_rent", label: "Equipment (Rent)" }
-              ].map((c) => (
+              ].filter((c) => {
+                if (user && user.role === "customer") {
+                  return c.id === "all" || c.id === "organic_product";
+                }
+                return true;
+              }).map((c) => (
                 <button
                   key={c.id}
                   onClick={() => setActiveCategory(c.id)}
@@ -275,7 +308,11 @@ const Shop = () => {
                 const isOwnItem = user && item.owner?._id === user._id;
 
                 return (
-                  <div key={item._id} className="bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group">
+                  <div
+                    key={item._id}
+                    onClick={() => navigate(`/product/${item._id}`)}
+                    className="cursor-pointer bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group"
+                  >
                     <div>
                       <div className="relative h-44 overflow-hidden bg-slate-950">
                         <img
@@ -306,26 +343,58 @@ const Shop = () => {
 
                     <div className="p-4 pt-0 space-y-3 mt-2">
                       <p className="text-lg font-extrabold text-emerald-400">
-                        ₹{item.price}{item.category === "instrument_rent" && " / day"}
+                        ₹{item.price} <span className="text-xs text-slate-500 font-bold">/ {item.priceUnit || "kg"}</span>
                       </p>
 
                       {canBuy && (
                         isOwnItem ? (
                           <button
                             disabled
+                            onClick={(e) => e.stopPropagation()}
                             className="w-full bg-slate-900 text-slate-500 font-bold py-2 rounded-xl text-xs border border-slate-800 cursor-not-allowed"
                           >
                             My Product Listing
                           </button>
                         ) : (
                           <button
-                            onClick={() => handleAddToCart(item._id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAddToCart(item._id);
+                            }}
                             className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 px-4 rounded-xl flex items-center justify-center space-x-1.5 transition-all text-xs active:scale-95"
                           >
                             <ShoppingBag size={14} />
                             <span>Add to Cart</span>
                           </button>
                         )
+                      )}
+
+                      {user && (user.role === "admin" || user.email === "sramu1090@gmail.com") && (
+                        <button
+                          onClick={async (e) => {
+                            e.stopPropagation();
+                            if (window.confirm("Are you sure you want to delete this listing from the portal?")) {
+                              try {
+                                const res = await fetch(`/api/listings/${item._id}`, { method: "DELETE" });
+                                const data = await res.json();
+                                if (res.ok && data.success) {
+                                  setMessage("Listing deleted successfully!");
+                                  await fetchShopData();
+                                  setTimeout(() => setMessage(""), 3000);
+                                } else {
+                                  alert(data.error || "Failed to delete listing.");
+                                }
+                              } catch (err) {
+                                console.error(err);
+                                alert("Failed to delete listing.");
+                              }
+                            }
+                          }}
+                          className="w-full bg-red-500/10 hover:bg-red-500/25 border border-red-500/20 text-red-400 font-bold py-2 rounded-xl text-xs transition-all active:scale-95 flex items-center justify-center space-x-1.5"
+                        >
+                          <Trash2 size={14} />
+                          <span>Delete Listing</span>
+                        </button>
                       )}
                     </div>
                   </div>

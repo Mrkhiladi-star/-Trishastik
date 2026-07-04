@@ -14,6 +14,19 @@ const listingSchema = new Schema({
   location: { type: String, default: "" },
   latitude: { type: Number, default: 27.56 },
   longitude: { type: Number, default: 80.68 },
+  priceUnit: {
+    type: String,
+    enum: ["kg", "quintal", "gram", "piece", "hour", "day"],
+    default: "kg"
+  },
+  images: {
+    type: [String],
+    default: []
+  },
+  video: {
+    type: String,
+    default: ""
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

@@ -1,193 +1,149 @@
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-05 12:17:52"}
-{"level":"error","message":"400 - \"username\" must only contain alpha-numeric characters - /register - POST - 127.0.0.1","stack":"Error: \"username\" must only contain alpha-numeric characters\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\middleware\\validate.js:17:19\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)","timestamp":"2026-06-05 12:17:59"}
-{"level":"error","message":"400 - \"username\" must only contain alpha-numeric characters - /register - POST - 127.0.0.1","stack":"Error: \"username\" must only contain alpha-numeric characters\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\middleware\\validate.js:17:19\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)","timestamp":"2026-06-05 12:18:10"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-05 12:18:26"}
-{"level":"info","message":"User registered successfully: farmer_1780642124673","timestamp":"2026-06-05 12:18:45"}
-{"level":"info","message":"User registered successfully: agent_1780642124673","timestamp":"2026-06-05 12:18:45"}
-{"level":"info","message":"User registered successfully: admin_1780642124673","timestamp":"2026-06-05 12:18:48"}
-{"level":"info","message":"Soil test request created by farmer farmer_1780642124673","timestamp":"2026-06-05 12:18:48"}
-{"level":"info","message":"Agent 6a22714da5cd6184172d445b assigned to Soil Test 6a227150a5cd6184172d4464","timestamp":"2026-06-05 12:18:49"}
-{"level":"info","message":"Soil Test 6a227150a5cd6184172d4464 status updated to Sample Collected by agent/admin","timestamp":"2026-06-05 12:18:50"}
-{"level":"info","message":"Report details updated for Soil Test 6a227150a5cd6184172d4464","timestamp":"2026-06-05 12:18:50"}
-{"level":"info","message":"GROK_API_KEY env not configured, generating mock response...","timestamp":"2026-06-05 12:18:50"}
-{"level":"info","message":"Grok AI soil analysis report completed for request 6a227150a5cd6184172d4464","timestamp":"2026-06-05 12:18:51"}
-{"level":"info","message":"Soil Test 6a227150a5cd6184172d4464 published by admin","timestamp":"2026-06-05 12:18:52"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-05 12:26:10"}
-{"level":"error","message":"400 - Username can only contain alphanumeric characters, underscores, and periods. - /register - POST - 127.0.0.1","stack":"Error: Username can only contain alphanumeric characters, underscores, and periods.\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\middleware\\validate.js:17:19\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)","timestamp":"2026-06-05 12:27:55"}
-{"level":"info","message":"Generated and stored OTP for email: mrkhiladi9794@gmail.com","timestamp":"2026-06-05 12:28:08"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-05 12:31:23"}
-{"level":"info","message":"Generated and stored OTP for email: mrkhiladi9794@gmail.com","timestamp":"2026-06-05 12:34:35"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 08:52:38"}
-{"level":"info","message":"User registered successfully: farmer_1780802569504","timestamp":"2026-06-07 08:52:50"}
-{"level":"info","message":"User registered successfully: agent_1780802569504","timestamp":"2026-06-07 08:52:50"}
-{"level":"info","message":"User registered successfully: admin_1780802569504","timestamp":"2026-06-07 08:52:51"}
-{"level":"info","message":"Soil test request created by farmer farmer_1780802569504","timestamp":"2026-06-07 08:52:51"}
-{"level":"info","message":"Agent 6a24e40a7a3e70f8c66635e0 assigned to Soil Test 6a24e40b7a3e70f8c66635e9","timestamp":"2026-06-07 08:52:52"}
-{"level":"info","message":"Soil Test 6a24e40b7a3e70f8c66635e9 status updated to Sample Collected by agent/admin","timestamp":"2026-06-07 08:52:53"}
-{"level":"info","message":"Report details updated for Soil Test 6a24e40b7a3e70f8c66635e9","timestamp":"2026-06-07 08:52:53"}
-{"level":"info","message":"GROK_API_KEY env not configured, generating mock response...","timestamp":"2026-06-07 08:52:53"}
-{"level":"info","message":"Grok AI soil analysis report completed for request 6a24e40b7a3e70f8c66635e9","timestamp":"2026-06-07 08:52:53"}
-{"level":"info","message":"Soil Test 6a24e40b7a3e70f8c66635e9 published by admin","timestamp":"2026-06-07 08:52:54"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 08:54:07"}
-{"code":"EAUTH","command":"AUTH PLAIN","level":"error","message":"Nodemailer sending failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-c85df043ce0sm11683806a12.11 - gsmtp","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-c85df043ce0sm11683806a12.11 - gsmtp","responseCode":535,"stack":"Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-c85df043ce0sm11683806a12.11 - gsmtp\n    at SMTPConnection._formatError (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:905:19)\n    at SMTPConnection._actionAUTHComplete (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:1726:34)\n    at SMTPConnection.<anonymous> (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:644:26)\n    at SMTPConnection._processResponse (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:1099:20)\n    at SMTPConnection._onData (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:865:14)\n    at SMTPConnection._onSocketData (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:224:44)\n    at TLSSocket.emit (node:events:519:28)\n    at addChunk (node:internal/streams/readable:561:12)\n    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)\n    at Readable.push (node:internal/streams/readable:392:5)","timestamp":"2026-06-07 08:55:06"}
-{"level":"info","message":"Generated and stored OTP for email: sramu1090@gmail.com","timestamp":"2026-06-07 08:55:06"}
-{"level":"info","message":"OTP verified successfully for email: sramu1090@gmail.com","timestamp":"2026-06-07 08:57:54"}
-{"level":"info","message":"User registered successfully: RamuYadav","timestamp":"2026-06-07 08:57:55"}
-{"level":"info","message":"Product 6a16d713ee701f8f2eae1092 added to cart for user RamuYadav","timestamp":"2026-06-07 08:58:19"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 09:00:23"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 09:00:30"}
-{"level":"info","message":"User logged out: RamuYadav","timestamp":"2026-06-07 09:01:46"}
-{"code":"EAUTH","command":"AUTH PLAIN","level":"error","message":"Nodemailer sending failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-c85df0b315esm11369599a12.26 - gsmtp","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-c85df0b315esm11369599a12.26 - gsmtp","responseCode":535,"stack":"Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-c85df0b315esm11369599a12.26 - gsmtp\n    at SMTPConnection._formatError (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:905:19)\n    at SMTPConnection._actionAUTHComplete (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:1726:34)\n    at SMTPConnection.<anonymous> (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:644:26)\n    at SMTPConnection._processResponse (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:1099:20)\n    at SMTPConnection._onData (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:865:14)\n    at SMTPConnection._onSocketData (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:224:44)\n    at TLSSocket.emit (node:events:519:28)\n    at addChunk (node:internal/streams/readable:561:12)\n    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)\n    at Readable.push (node:internal/streams/readable:392:5)","timestamp":"2026-06-07 09:02:49"}
-{"level":"info","message":"Generated and stored OTP for email: bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 09:02:49"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 10:03:03"}
-{"code":"EAUTH","command":"AUTH PLAIN","level":"error","message":"Nodemailer sending failed: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-842828fa877sm14081538b3a.51 - gsmtp","response":"535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-842828fa877sm14081538b3a.51 - gsmtp","responseCode":535,"stack":"Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-842828fa877sm14081538b3a.51 - gsmtp\n    at SMTPConnection._formatError (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:905:19)\n    at SMTPConnection._actionAUTHComplete (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:1726:34)\n    at SMTPConnection.<anonymous> (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:644:26)\n    at SMTPConnection._processResponse (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:1099:20)\n    at SMTPConnection._onData (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:865:14)\n    at SMTPConnection._onSocketData (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:224:44)\n    at TLSSocket.emit (node:events:519:28)\n    at addChunk (node:internal/streams/readable:561:12)\n    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)\n    at Readable.push (node:internal/streams/readable:392:5)","timestamp":"2026-06-07 10:07:12"}
-{"level":"info","message":"Generated and stored OTP for email: bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 10:07:12"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 10:08:00"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 10:08:03"}
-{"level":"info","message":"Email sent successfully via Nodemailer to bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 10:09:13"}
-{"level":"info","message":"Generated and stored OTP for email: bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 10:09:13"}
-{"level":"warn","message":"OTP verification attempt failed: Invalid OTP entered for bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 10:10:24"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 10:14:07"}
-{"level":"info","message":"Email sent successfully via Nodemailer to bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 10:14:57"}
-{"level":"info","message":"Generated and stored OTP for email: bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 10:14:57"}
-{"level":"info","message":"OTP verified successfully for email: bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 10:15:15"}
-{"level":"info","message":"User registered successfully: Yadav","timestamp":"2026-06-07 10:15:16"}
-{"level":"info","message":"Profile updated for user: Yadav. Completeness status: false","timestamp":"2026-06-07 10:15:34"}
-{"level":"info","message":"User logged out: Yadav","timestamp":"2026-06-07 10:16:42"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 10:23:06"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-07 10:26:46"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 10:27:54"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 10:28:12"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-07 10:28:45"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-07 10:28:55"}
-{"level":"info","message":"Profile updated for user: RamuYadav. Completeness status: true","timestamp":"2026-06-07 10:29:14"}
-{"level":"info","message":"Profile photo updated for user: RamuYadav","timestamp":"2026-06-07 10:29:26"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 10:33:16"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 10:33:22"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 10:33:31"}
-{"level":"info","message":"Profile updated for user: admin. Completeness status: true","timestamp":"2026-06-07 10:34:29"}
-{"level":"info","message":"Profile photo updated for user: admin","timestamp":"2026-06-07 10:34:35"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 11:15:43"}
-{"level":"info","message":"Profile updated for user: admin. Completeness status: true","timestamp":"2026-06-07 11:16:28"}
-{"level":"info","message":"Profile photo updated for user: admin","timestamp":"2026-06-07 11:16:34"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-07 11:16:52"}
-{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-06-07 11:17:16"}
-{"level":"info","message":"Product 6a16d713ee701f8f2eae1092 added to cart for user Ramu Yadav","timestamp":"2026-06-07 11:17:33"}
-{"level":"info","message":"Checkout successful for user: Ramu Yadav","timestamp":"2026-06-07 11:17:42"}
-{"level":"info","message":"Order 6a16e4f70d41fca4c4a7271a reviewed with rating 5","timestamp":"2026-06-07 11:18:01"}
-{"level":"info","message":"Order 6a16dbd3ee701f8f2eae11d6 reviewed with rating 5","timestamp":"2026-06-07 11:18:21"}
-{"level":"info","message":"Order 6a2505fdb28f53ecec11dffd cancelled","timestamp":"2026-06-07 11:18:41"}
-{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-06-07 11:18:53"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-07 11:19:04"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-07 11:19:13"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-07 11:19:42"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-07 11:19:46"}
-{"level":"info","message":"Email sent successfully via Nodemailer to bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 11:22:09"}
-{"level":"info","message":"Generated and stored OTP for email: bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 11:22:09"}
-{"level":"info","message":"Forgot password OTP generated for email: bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 11:22:09"}
-{"level":"info","message":"OTP verified successfully for email: bt23cs035@nitmz.ac.in","timestamp":"2026-06-07 11:22:42"}
-{"level":"info","message":"Password successfully reset for user: Yadav","timestamp":"2026-06-07 11:22:42"}
-{"level":"info","message":"User logged in: RamuYadav","timestamp":"2026-06-07 11:22:56"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 11:24:09"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-07 11:24:56"}
-{"level":"info","message":"User logged out: RamuYadav","timestamp":"2026-06-07 11:25:10"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-07 11:25:22"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-07 11:25:47"}
-{"level":"info","message":"User logged in: RamuYadav","timestamp":"2026-06-07 11:25:59"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-11 16:21:49"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 17:45:44"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:01:01"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:01:22"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:16:54"}
-{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-06-16 18:18:14"}
-{"level":"info","message":"Profile updated for user: Shri Krishna. Completeness status: false","timestamp":"2026-06-16 18:18:43"}
-{"level":"error","message":"413 - request entity too large - /profile/photo - POST - 127.0.0.1","stack":"PayloadTooLargeError: request entity too large\n    at readStream (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:163:17)\n    at getRawBody (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\read.js:79:3)\n    at jsonParser (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\types\\json.js:138:5)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express-session\\index.js:514:7","timestamp":"2026-06-16 18:18:54"}
-{"level":"info","message":"Profile updated for user: Shri Krishna. Completeness status: false","timestamp":"2026-06-16 18:19:18"}
-{"level":"error","message":"413 - request entity too large - /profile/photo - POST - 127.0.0.1","stack":"PayloadTooLargeError: request entity too large\n    at readStream (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:163:17)\n    at getRawBody (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\read.js:79:3)\n    at jsonParser (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\types\\json.js:138:5)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express-session\\index.js:514:7","timestamp":"2026-06-16 18:19:38"}
-{"level":"info","message":"Profile updated for user: Shri Krishna. Completeness status: true","timestamp":"2026-06-16 18:23:49"}
-{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-06-16 18:23:58"}
-{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-06-16 18:24:09"}
-{"level":"error","message":"413 - request entity too large - /profile/photo - POST - 127.0.0.1","stack":"PayloadTooLargeError: request entity too large\n    at readStream (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:163:17)\n    at getRawBody (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\read.js:79:3)\n    at jsonParser (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\types\\json.js:138:5)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express-session\\index.js:514:7","timestamp":"2026-06-16 18:24:19"}
-{"level":"info","message":"Soil test request created by farmer Shri Krishna","timestamp":"2026-06-16 18:26:56"}
-{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-06-16 18:27:03"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:30:28"}
-{"level":"info","message":"Email sent successfully via Nodemailer to sramu1090@gmail.com","timestamp":"2026-06-16 18:30:43"}
-{"level":"info","message":"Generated and stored OTP for email: sramu1090@gmail.com","timestamp":"2026-06-16 18:30:43"}
-{"level":"info","message":"Forgot password OTP generated for email: sramu1090@gmail.com","timestamp":"2026-06-16 18:30:43"}
-{"level":"info","message":"OTP verified successfully for email: sramu1090@gmail.com","timestamp":"2026-06-16 18:31:18"}
-{"level":"info","message":"Password successfully reset for user: RamuYadav","timestamp":"2026-06-16 18:31:18"}
-{"level":"info","message":"User logged in: RamuYadav","timestamp":"2026-06-16 18:33:24"}
-{"level":"info","message":"User logged out: RamuYadav","timestamp":"2026-06-16 18:34:31"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 18:34:42"}
-{"level":"info","message":"Agent 6a16dadeee701f8f2eae116f assigned to Soil Test 6a314818060015ff8d71798c","timestamp":"2026-06-16 18:35:20"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 18:35:43"}
-{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-16 18:35:54"}
-{"level":"info","message":"Soil Test 6a314818060015ff8d71798c status updated to Sample Collected by agent/admin","timestamp":"2026-06-16 18:36:10"}
-{"level":"info","message":"Soil Test 6a314818060015ff8d71798c status updated to Testing by agent/admin","timestamp":"2026-06-16 18:36:14"}
-{"level":"info","message":"Report details updated for Soil Test 6a314818060015ff8d71798c","timestamp":"2026-06-16 18:37:30"}
-{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-16 18:37:41"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 18:37:53"}
-{"level":"info","message":"GROK_API_KEY env not configured, generating mock response...","timestamp":"2026-06-16 18:38:38"}
-{"level":"info","message":"Grok AI soil analysis report completed for request 6a314818060015ff8d71798c","timestamp":"2026-06-16 18:38:38"}
-{"level":"info","message":"Soil Test 6a314818060015ff8d71798c published by admin","timestamp":"2026-06-16 18:38:44"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 18:38:52"}
-{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-06-16 18:39:02"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:43:08"}
-{"level":"info","message":"Soil test request created by farmer Shri Krishna","timestamp":"2026-06-16 18:48:16"}
-{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-06-16 18:48:19"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 18:48:28"}
-{"level":"info","message":"Agent 6a16dadeee701f8f2eae116f assigned to Soil Test 6a314d18cc433663dd418a98","timestamp":"2026-06-16 18:48:48"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 18:48:52"}
-{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-16 18:49:05"}
-{"level":"info","message":"Soil Test 6a314d18cc433663dd418a98 status updated to Sample Collected by agent/admin","timestamp":"2026-06-16 18:49:11"}
-{"level":"info","message":"Soil Test 6a314d18cc433663dd418a98 status updated to Testing by agent/admin","timestamp":"2026-06-16 18:49:13"}
-{"level":"info","message":"Report details updated for Soil Test 6a314d18cc433663dd418a98","timestamp":"2026-06-16 18:49:49"}
-{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-16 18:50:01"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 18:50:12"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 18:50:38"}
-{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-16 18:50:46"}
-{"level":"info","message":"Report details updated for Soil Test 6a314d18cc433663dd418a98","timestamp":"2026-06-16 18:51:25"}
-{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-16 18:51:30"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 18:51:39"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 18:57:41"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-16 19:34:32"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 19:35:34"}
-{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-16 19:35:41"}
-{"level":"info","message":"Report details updated for Soil Test 6a314d18cc433663dd418a98","timestamp":"2026-06-16 19:36:10"}
-{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-16 19:36:14"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 19:36:23"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 19:38:57"}
-{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-06-16 19:39:09"}
-{"level":"info","message":"Soil test request created by farmer Shri Krishna","timestamp":"2026-06-16 19:39:34"}
-{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-06-16 19:39:39"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 19:39:50"}
-{"level":"info","message":"Agent 6a16dadeee701f8f2eae116f assigned to Soil Test 6a31591edc06e105c8195708","timestamp":"2026-06-16 19:40:07"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-16 19:40:11"}
-{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-16 19:40:24"}
-{"level":"info","message":"Soil Test 6a31591edc06e105c8195708 status updated to Sample Collected by agent/admin","timestamp":"2026-06-16 19:40:30"}
-{"level":"info","message":"Soil Test 6a31591edc06e105c8195708 status updated to Testing by agent/admin","timestamp":"2026-06-16 19:40:33"}
-{"level":"info","message":"Report details updated for Soil Test 6a31591edc06e105c8195708","timestamp":"2026-06-16 19:41:02"}
-{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-16 19:41:07"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-16 19:41:19"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-17 10:26:29"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 16:43:49"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 16:52:53"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 16:53:13"}
-{"level":"info","message":"User logged in: admin","timestamp":"2026-06-19 16:54:04"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 16:54:38"}
-{"level":"info","message":"User logged out: admin","timestamp":"2026-06-19 16:56:25"}
-{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-19 16:56:34"}
-{"level":"error","message":"413 - request entity too large - /profile/photo - POST - 127.0.0.1","stack":"PayloadTooLargeError: request entity too large\n    at readStream (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:163:17)\n    at getRawBody (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\read.js:79:3)\n    at jsonParser (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\body-parser\\lib\\types\\json.js:138:5)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express-session\\index.js:514:7","timestamp":"2026-06-19 16:56:49"}
-{"level":"info","message":"Profile photo updated for user: admin","timestamp":"2026-06-19 17:00:24"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 17:00:45"}
-{"level":"info","message":"Email sent successfully via Nodemailer to farmer_1781868650518@test.com","timestamp":"2026-06-19 17:00:55"}
-{"level":"info","message":"Generated and stored OTP for email: farmer_1781868650518@test.com","timestamp":"2026-06-19 17:00:55"}
-{"level":"info","message":"Email sent successfully via Nodemailer to agent_1781868650518@test.com","timestamp":"2026-06-19 17:00:59"}
-{"level":"info","message":"Generated and stored OTP for email: agent_1781868650518@test.com","timestamp":"2026-06-19 17:00:59"}
-{"level":"info","message":"Email sent successfully via Nodemailer to freeforfire15@gmail.com","timestamp":"2026-06-19 17:01:02"}
-{"level":"info","message":"Generated and stored OTP for email: freeforfire15@gmail.com","timestamp":"2026-06-19 17:01:02"}
-{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-06-19 17:02:39"}
-{"level":"info","message":"Profile photo updated for user: Badal","timestamp":"2026-06-19 17:02:55"}
-{"level":"info","message":"Profile updated for user: Badal. Completeness status: true","timestamp":"2026-06-19 17:03:00"}
-{"level":"info","message":"User logged out: Badal","timestamp":"2026-06-19 17:03:06"}
-{"level":"info","message":"User logged in: Badal","timestamp":"2026-06-19 17:03:15"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 10:07:18"}
+{"level":"error","message":"400 - \"title\" is required, \"description\" is required, \"price\" is required - /new - POST - 127.0.0.1","stack":"Error: \"title\" is required, \"description\" is required, \"price\" is required\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\middleware\\validate.js:17:19\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at isLoggedIn (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\middleware\\auth.js:5:3)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)","timestamp":"2026-07-04 10:15:02"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 10:45:23"}
+{"level":"info","message":"Listing created successfully: Wheet by admin","timestamp":"2026-07-04 10:46:53"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 10:47:29"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-04 10:47:43"}
+{"level":"info","message":"Product 6a48974510e8130bd8769588 added to cart for user Ramu Yadav","timestamp":"2026-07-04 10:48:00"}
+{"level":"info","message":"Checkout successful for user: Ramu Yadav","timestamp":"2026-07-04 10:50:29"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-04 10:50:46"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-04 10:50:57"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 10:55:19"}
+{"level":"info","message":"User logged in: Ashwani","timestamp":"2026-07-04 10:55:29"}
+{"level":"info","message":"Listing created successfully: Urea by Ashwani","timestamp":"2026-07-04 10:57:18"}
+{"level":"info","message":"User logged out: Ashwani","timestamp":"2026-07-04 10:57:35"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-04 10:58:28"}
+{"level":"info","message":"Product 6a16d713ee701f8f2eae1092 added to cart for user Ramu Yadav","timestamp":"2026-07-04 11:04:05"}
+{"level":"info","message":"Checkout successful for user: Ramu Yadav","timestamp":"2026-07-04 11:04:08"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-04 11:04:16"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 11:04:26"}
+{"level":"info","message":"Order 6a489b5010e8130bd876964f accepted by seller","timestamp":"2026-07-04 11:05:06"}
+{"level":"info","message":"Transit requested for Order 6a489b5010e8130bd876964f","timestamp":"2026-07-04 11:05:15"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-04 11:05:21"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-04 11:05:30"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 11:05:59"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-04 11:06:06"}
+{"level":"info","message":"Transporter Anuj accepted delivery for Order 6a489b5010e8130bd876964f","timestamp":"2026-07-04 11:06:15"}
+{"level":"info","message":"Tracking updated for Order 6a489b5010e8130bd876964f: status=Delivered","timestamp":"2026-07-04 11:06:32"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-04 11:06:36"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-04 11:06:45"}
+{"level":"info","message":"Order 6a489b5010e8130bd876964f reviewed with rating 5","timestamp":"2026-07-04 11:07:19"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-04 11:09:16"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 11:09:26"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-04 11:14:07"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-04 11:14:19"}
+{"level":"info","message":"Listing created successfully: Harvestor by Sanjay","timestamp":"2026-07-04 11:15:30"}
+{"level":"info","message":"User logged out: Sanjay","timestamp":"2026-07-04 11:17:16"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-07-04 11:17:24"}
+{"level":"info","message":"User logged out: Badal","timestamp":"2026-07-04 11:17:57"}
+{"level":"info","message":"User logged in: Ashwani","timestamp":"2026-07-04 11:20:44"}
+{"level":"info","message":"Listing created successfully: Vertaco by Ashwani","timestamp":"2026-07-04 11:21:42"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 11:34:14"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 11:34:21"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 11:34:29"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 11:34:40"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 11:34:45"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 11:34:50"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 11:37:10"}
+{"level":"info","message":"User logged out: Ashwani","timestamp":"2026-07-04 11:37:43"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 11:38:04"}
+{"level":"info","message":"Product 6a489f6e10e8130bd8769799 added to cart for user Shri Krishna","timestamp":"2026-07-04 11:38:37"}
+{"level":"info","message":"Product 6a489dfa10e8130bd8769763 added to cart for user Shri Krishna","timestamp":"2026-07-04 11:38:43"}
+{"level":"info","message":"Checkout successful for user: Shri Krishna","timestamp":"2026-07-04 11:38:54"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-04 11:39:10"}
+{"level":"info","message":"User logged in: Ashwani","timestamp":"2026-07-04 11:39:19"}
+{"level":"info","message":"Order 6a48a37605248ad2f65eea3a accepted by seller","timestamp":"2026-07-04 11:39:34"}
+{"level":"info","message":"Transit requested for Order 6a48a37605248ad2f65eea3a","timestamp":"2026-07-04 11:39:51"}
+{"level":"info","message":"User logged out: Ashwani","timestamp":"2026-07-04 11:39:58"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-04 11:40:07"}
+{"level":"info","message":"Order 6a48a37605248ad2f65eea38 accepted by seller","timestamp":"2026-07-04 11:40:13"}
+{"level":"info","message":"Transit requested for Order 6a48a37605248ad2f65eea38","timestamp":"2026-07-04 11:40:23"}
+{"level":"info","message":"User logged out: Sanjay","timestamp":"2026-07-04 11:40:28"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-04 11:40:39"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 11:40:45"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-04 11:40:53"}
+{"level":"info","message":"Transporter Anuj accepted delivery for Order 6a48a37605248ad2f65eea3a","timestamp":"2026-07-04 11:41:06"}
+{"level":"info","message":"Transporter Anuj accepted delivery for Order 6a48a37605248ad2f65eea38","timestamp":"2026-07-04 11:41:09"}
+{"level":"info","message":"Tracking updated for Order 6a48a37605248ad2f65eea3a: status=Delivered","timestamp":"2026-07-04 11:41:13"}
+{"level":"info","message":"Tracking updated for Order 6a48a37605248ad2f65eea38: status=Delivered","timestamp":"2026-07-04 11:41:17"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-04 11:41:34"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-04 11:41:47"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 11:43:44"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-04 11:51:32"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-04 11:51:42"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 11:53:48"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 11:54:02"}
+{"level":"info","message":"Listing deleted successfully: Sugarcane by Shri Krishna","timestamp":"2026-07-04 11:54:21"}
+{"level":"info","message":"Listing created successfully: SugarCane by Shri Krishna","timestamp":"2026-07-04 11:56:30"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-04 11:57:14"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-04 11:58:01"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-04 11:59:04"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 11:59:15"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-04 12:00:28"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-04 12:00:38"}
+{"level":"info","message":"Listing deleted successfully: Harvestor by Sanjay","timestamp":"2026-07-04 12:00:46"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:08:36"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:08:47"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:08:57"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:09:02"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:09:10"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:09:17"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:09:24"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:12:11"}
+{"level":"info","message":"User logged out: Sanjay","timestamp":"2026-07-04 12:12:31"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-04 12:12:52"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-04 12:14:45"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-04 12:14:55"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 12:16:04"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-04 12:18:18"}
+{"level":"info","message":"Email sent successfully via Nodemailer to farmer_1783147800777@test.com","timestamp":"2026-07-04 12:20:04"}
+{"level":"info","message":"Generated and stored OTP for email: farmer_1783147800777@test.com","timestamp":"2026-07-04 12:20:04"}
+{"level":"info","message":"Email sent successfully via Nodemailer to agent_1783147800777@test.com","timestamp":"2026-07-04 12:20:08"}
+{"level":"info","message":"Generated and stored OTP for email: agent_1783147800777@test.com","timestamp":"2026-07-04 12:20:08"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-04 12:26:13"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 12:26:25"}
+{"level":"info","message":"Soil test request created by farmer Shri Krishna","timestamp":"2026-07-04 12:26:51"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-04 12:26:55"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-04 12:27:04"}
+{"level":"info","message":"Agent 6a16dadeee701f8f2eae116f assigned to Soil Test 6a48aeb3a4bb2655bd7107d5","timestamp":"2026-07-04 12:28:38"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 12:29:02"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-07-04 12:29:11"}
+{"level":"info","message":"Soil Test 6a48aeb3a4bb2655bd7107d5 status updated to Sample Collected by agent/admin","timestamp":"2026-07-04 12:29:18"}
+{"level":"info","message":"Soil Test 6a48aeb3a4bb2655bd7107d5 status updated to Testing by agent/admin","timestamp":"2026-07-04 12:29:20"}
+{"level":"info","message":"Report details updated for Soil Test 6a48aeb3a4bb2655bd7107d5","timestamp":"2026-07-04 12:30:34"}
+{"level":"info","message":"User logged out: Badal","timestamp":"2026-07-04 12:30:40"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-04 12:30:49"}
+{"level":"info","message":"GROK_API_KEY env not configured, generating mock response...","timestamp":"2026-07-04 12:30:57"}
+{"level":"info","message":"Grok AI soil analysis report completed for request 6a48aeb3a4bb2655bd7107d5","timestamp":"2026-07-04 12:30:57"}
+{"level":"info","message":"Report details updated for Soil Test 6a48aeb3a4bb2655bd7107d5","timestamp":"2026-07-04 12:34:57"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 12:35:10"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 12:35:19"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:48:48"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:49:04"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-04 12:49:33"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-04 12:49:43"}
+{"level":"info","message":"Report details updated for Soil Test 6a48aeb3a4bb2655bd7107d5","timestamp":"2026-07-04 12:50:10"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 12:50:16"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 12:50:26"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-04 12:50:57"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-04 12:51:06"}
+{"level":"info","message":"GROK_API_KEY env not configured, generating mock response...","timestamp":"2026-07-04 12:51:19"}
+{"level":"info","message":"Grok AI soil analysis report completed for request 6a48aeb3a4bb2655bd7107d5","timestamp":"2026-07-04 12:51:19"}
+{"level":"info","message":"Report details updated for Soil Test 6a48aeb3a4bb2655bd7107d5","timestamp":"2026-07-04 12:51:44"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 12:51:49"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 12:52:05"}
+{"level":"info","message":"Soil test request created by farmer Shri Krishna","timestamp":"2026-07-04 12:52:47"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-04 12:52:50"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-04 12:52:58"}
+{"level":"info","message":"Agent 6a16dadeee701f8f2eae116f assigned to Soil Test 6a48b4c71201a7e950fc45e2","timestamp":"2026-07-04 12:53:07"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 12:53:11"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-07-04 12:53:18"}
+{"level":"info","message":"Soil Test 6a48b4c71201a7e950fc45e2 status updated to Sample Collected by agent/admin","timestamp":"2026-07-04 12:53:24"}
+{"level":"info","message":"Soil Test 6a48b4c71201a7e950fc45e2 status updated to Testing by agent/admin","timestamp":"2026-07-04 12:53:26"}
+{"level":"info","message":"Report details updated for Soil Test 6a48b4c71201a7e950fc45e2","timestamp":"2026-07-04 12:53:53"}
+{"level":"info","message":"User logged out: Badal","timestamp":"2026-07-04 12:53:58"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-04 12:54:07"}
+{"level":"info","message":"Soil Test 6a48b4c71201a7e950fc45e2 published by admin","timestamp":"2026-07-04 12:54:19"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-04 12:54:25"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 12:54:39"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-04 12:59:44"}

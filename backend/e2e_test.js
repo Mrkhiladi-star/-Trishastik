@@ -93,7 +93,7 @@ async function runTest() {
   const agentUsername = `agent_${timestamp}`;
   const agentEmail = `agent_${timestamp}@test.com`;
   const adminUsername = `admin_${timestamp}`;
-  const adminEmail = `freeforfire15@gmail.com`; // Matches admin allowed email constraint
+  const adminEmail = `sramu1090@gmail.com`; // Matches admin allowed email constraint
 
   // 1. Register Farmer
   console.log("\n[1] Registering Farmer...");
@@ -130,7 +130,7 @@ async function runTest() {
   }
 
   // 3. Register Admin
-  console.log("\n[3] Registering Admin (email: freeforfire15@gmail.com)...");
+  console.log("\n[3] Registering Admin (email: sramu1090@gmail.com)...");
   const regAdminRes = await adminSession.request({
     path: "/register",
     method: "POST"

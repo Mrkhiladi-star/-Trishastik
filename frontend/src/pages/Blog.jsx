@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { PlusCircle, Calendar, Newspaper, ArrowRight } from "lucide-react";
+import { PlusCircle, Calendar, Newspaper, ArrowRight, X } from "lucide-react";
 
 const Blog = () => {
   const { user } = useAuth();
   const [blogs, setBlogs] = useState([]);
+  const [selectedBlog, setSelectedBlog] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchBlogs = async () => {
@@ -24,7 +25,7 @@ const Blog = () => {
     fetchBlogs();
   }, []);
 
-  const isAdmin = user && (user.role === "admin" || user.email === "freeforfire15@gmail.com");
+  const isAdmin = user && (user.role === "admin" || user.email === "sramu1090@gmail.com");
 
   if (loading) {
     return (
@@ -46,7 +47,7 @@ const Blog = () => {
           <div className="space-y-2">
             <div className="flex items-center space-x-2 text-emerald-400 font-bold tracking-wider text-xs uppercase">
               <Newspaper size={14} />
-              <span>Agronomy News</span>
+              <span>Newspaper & Articles</span>
             </div>
             <h1 className="text-3xl font-extrabold text-white tracking-tight">Our Agritech Blog</h1>
             <p className="text-sm text-slate-400 max-w-xl">
@@ -73,7 +74,11 @@ const Blog = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogs.map((item) => (
-              <div key={item._id} className="bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group">
+              <div
+                key={item._id}
+                onClick={() => setSelectedBlog(item)}
+                className="cursor-pointer bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group"
+              >
                 <div>
                   <div className="h-48 overflow-hidden bg-slate-950 relative">
                     <img
@@ -87,7 +92,7 @@ const Blog = () => {
                       <span>{item.publishedon || "Recent"}</span>
                     </div>
                   </div>
-                  <div className="p-6 space-y-3">
+                  <div className="p-6 space-y-3 text-left">
                     <h3 className="text-base font-bold text-white line-clamp-1 group-hover:text-emerald-400 transition-colors">{item.title}</h3>
                     <p className="text-slate-400 text-xs leading-relaxed line-clamp-4">{item.description}</p>
                   </div>
@@ -95,16 +100,57 @@ const Blog = () => {
 
                 <div className="p-6 pt-0 border-t border-slate-900/60 mt-4 flex justify-between items-center text-xs">
                   <span className="text-slate-500 font-semibold">Author: Admin</span>
-                  <Link to="#" className="text-emerald-400 font-bold hover:text-emerald-300 flex items-center space-x-1">
+                  <span className="text-emerald-400 font-bold hover:text-emerald-300 flex items-center space-x-1">
                     <span>Read Article</span>
                     <ArrowRight size={12} />
-                  </Link>
+                  </span>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* Blog Detail Overlay Modal */}
+      {selectedBlog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md p-4 animate-fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]">
+            {/* Close button */}
+            <button
+              onClick={() => setSelectedBlog(null)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-xl bg-slate-950/80 border border-slate-800 z-10 hover:scale-105 transition-all"
+            >
+              <X size={18} />
+            </button>
+
+            {/* Banner Image */}
+            <div className="h-64 sm:h-72 w-full bg-slate-950 relative shrink-0">
+              <img
+                src={selectedBlog.image}
+                alt={selectedBlog.title}
+                className="w-full h-full object-cover"
+                onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=500"; }}
+              />
+              <div className="absolute bottom-4 left-4 bg-slate-950/85 backdrop-blur-sm px-3.5 py-1.5 rounded-xl text-xs text-slate-300 font-bold border border-slate-800/80 flex items-center space-x-1.5">
+                <Calendar size={12} />
+                <span>Published: {selectedBlog.publishedon || "Recent"}</span>
+              </div>
+            </div>
+
+            {/* Content area */}
+            <div className="p-6 overflow-y-auto space-y-4 text-left flex-grow">
+              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Author: Admin & Agronomist</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
+                {selectedBlog.title}
+              </h2>
+              <div className="w-16 h-1 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full"></div>
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap pt-2">
+                {selectedBlog.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

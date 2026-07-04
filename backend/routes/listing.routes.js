@@ -13,5 +13,7 @@ router.get("/seller/listings", isLoggedIn, authorizeRoles("farmer", "fertilizer_
 router.get("/addtocart/:productid", isLoggedIn, listingController.addToCart);
 router.get("/remove-from-cart/:productid", isLoggedIn, listingController.removeFromCart);
 router.get("/shop", isLoggedIn, listingController.getShopData);
+router.get("/listings/:id", listingController.getListingDetails);
+router.delete("/listings/:id", isLoggedIn, listingController.deleteListing);
 
 module.exports = router;

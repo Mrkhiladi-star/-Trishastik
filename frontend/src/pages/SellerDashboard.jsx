@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
   PlusCircle, ShoppingBag, DollarSign, Store, Tag, Clock,
-  CheckCircle, Truck, Package, X, MapPin, User, Navigation
+  CheckCircle, Truck, Package, X, MapPin, User, Navigation, Trash2
 } from "lucide-react";
 
 const SellerDashboard = () => {
@@ -58,7 +58,7 @@ const SellerDashboard = () => {
       user.role !== "fertilizer_seller" &&
       user.role !== "instrument_seller" &&
       user.role !== "admin" &&
-      user.email !== "freeforfire15@gmail.com") {
+      user.email !== "sramu1090@gmail.com") {
       navigate("/");
       return;
     }
@@ -240,7 +240,32 @@ const SellerDashboard = () => {
                     </div>
                   </div>
                   <div className="p-4 pt-0 mt-4 border-t border-slate-900/60 pt-3 flex justify-between items-center">
-                    <span className="text-base font-extrabold text-emerald-400">₹{item.price}</span>
+                    <span className="text-base font-extrabold text-emerald-400">₹{item.price} / {item.priceUnit || "kg"}</span>
+                    <button
+                      onClick={async (e) => {
+                        e.stopPropagation();
+                        if (window.confirm("Are you sure you want to delete this listing?")) {
+                          try {
+                            const res = await fetch(`/api/listings/${item._id}`, { method: "DELETE" });
+                            const data = await res.json();
+                            if (res.ok && data.success) {
+                              setMessage("Listing deleted successfully!");
+                              await fetchSellerData();
+                              setTimeout(() => setMessage(""), 3000);
+                            } else {
+                              alert(data.error || "Failed to delete listing.");
+                            }
+                          } catch (err) {
+                            console.error(err);
+                            alert("Failed to delete listing.");
+                          }
+                        }
+                      }}
+                      className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-2 rounded-xl transition-all"
+                      title="Delete Product"
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
                 </div>
               ))}

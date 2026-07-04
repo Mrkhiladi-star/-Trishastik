@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Menu, X, LogOut, User as UserIcon, Sprout, ShoppingBag, BookOpen, Newspaper, ShieldAlert, Users, Compass, Info, Sun, Moon, Truck } from "lucide-react";
+import { Menu, X, LogOut, User as UserIcon, Sprout, ShoppingBag, BookOpen, Newspaper, ShieldAlert, Users, Compass, Info, Sun, Moon, Truck, Clock } from "lucide-react";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -34,12 +34,13 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  const isAdmin = user && (user.role === "admin" || user.email === "freeforfire15@gmail.com");
-  const isFarmer = user && (user.role === "farmer" || user.email === "freeforfire15@gmail.com");
+  const isAdmin = user && (user.role === "admin" || user.email === "sramu1090@gmail.com");
+  const isFarmer = user && (user.role === "farmer" || user.email === "sramu1090@gmail.com");
   const isAgent = user && user.role === "agent";
   const isCustomer = user && (user.role === "customer" || user.role === "farmer" || user.role === "fertilizer_seller" || user.role === "instrument_seller");
   const isTransporter = user && user.role === "transporter";
   const isSeller = user && (user.role === "farmer" || user.role === "fertilizer_seller" || user.role === "instrument_seller");
+  const isStandardCustomer = user && user.role === "customer";
 
   return (
     <nav className="sticky top-0 z-50 w-full mb-6">
@@ -107,28 +108,61 @@ const Navbar = () => {
               </Link>
             )}
 
-            <Link 
-              to="/soil-test" 
-              className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/soil-test") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
-            >
-              <Sprout size={16} />
-              <span>Soil Health</span>
-            </Link>
-            
-            <Link 
-              to="/blog" 
-              className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/blog") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
-            >
-              <Newspaper size={16} />
-              <span>Blog</span>
-            </Link>
-            <Link 
-              to="/education" 
-              className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/education") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
-            >
-              <BookOpen size={16} />
-              <span>Education</span>
-            </Link>
+            {!isStandardCustomer && (
+              <>
+                <Link 
+                  to="/soil-test" 
+                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/soil-test") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+                >
+                  <Sprout size={16} />
+                  <span>Soil Health</span>
+                </Link>
+                
+                <Link 
+                  to="/blog" 
+                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/blog") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+                >
+                  <Newspaper size={16} />
+                  <span>Blog</span>
+                </Link>
+                <Link 
+                  to="/education" 
+                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/education") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+                >
+                  <BookOpen size={16} />
+                  <span>Education</span>
+                </Link>
+              </>
+            )}
+
+            {isStandardCustomer && (
+              <>
+                <Link 
+                  to="/shop?tab=cart" 
+                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${location.search.includes("tab=cart") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+                >
+                  <ShoppingBag size={16} />
+                  <span>My Cart</span>
+                  {user.cart && user.cart.length > 0 && (
+                    <span className="ml-1 bg-emerald-500 text-slate-950 font-extrabold text-[10px] px-1.5 py-0.5 rounded-full shrink-0">
+                      {user.cart.length}
+                    </span>
+                  )}
+                </Link>
+                <Link 
+                  to="/shop?tab=orders" 
+                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${location.search.includes("tab=orders") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+                >
+                  <Clock size={16} />
+                  <span>My Purchases</span>
+                  {user.order && user.order.length > 0 && (
+                    <span className="ml-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-extrabold text-[10px] px-1.5 py-0.5 rounded-full shrink-0">
+                      {user.order.length}
+                    </span>
+                  )}
+                </Link>
+              </>
+            )}
 
             {isAdmin && (
               <Link 
@@ -332,37 +366,80 @@ const Navbar = () => {
                   </li>
                 )}
 
-                <li>
-                  <Link 
-                    to="/soil-test" 
-                    onClick={() => setSidebarOpen(false)} 
-                    className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/soil-test") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
-                  >
-                    <Sprout size={18} />
-                    <span>Soil Testing</span>
-                  </Link>
-                </li>
-                
-                <li>
-                  <Link 
-                    to="/blog" 
-                    onClick={() => setSidebarOpen(false)} 
-                    className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/blog") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
-                  >
-                    <Newspaper size={18} />
-                    <span>Agronomy Blog</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    to="/education" 
-                    onClick={() => setSidebarOpen(false)} 
-                    className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/education") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
-                  >
-                    <BookOpen size={18} />
-                    <span>Learning Hub</span>
-                  </Link>
-                </li>
+                {!isStandardCustomer && (
+                  <>
+                    <li>
+                      <Link 
+                        to="/soil-test" 
+                        onClick={() => setSidebarOpen(false)} 
+                        className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/soil-test") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                      >
+                        <Sprout size={18} />
+                        <span>Soil Testing</span>
+                      </Link>
+                    </li>
+                    
+                    <li>
+                      <Link 
+                        to="/blog" 
+                        onClick={() => setSidebarOpen(false)} 
+                        className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/blog") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                      >
+                        <Newspaper size={18} />
+                        <span>Agronomy Blog</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        to="/education" 
+                        onClick={() => setSidebarOpen(false)} 
+                        className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/education") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                      >
+                        <BookOpen size={18} />
+                        <span>Learning Hub</span>
+                      </Link>
+                    </li>
+                  </>
+                )}
+
+                 {isStandardCustomer && (
+                  <>
+                    <li>
+                      <Link 
+                        to="/shop?tab=cart" 
+                        onClick={() => setSidebarOpen(false)} 
+                        className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${location.search.includes("tab=cart") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                      >
+                        <div className="flex items-center space-x-2.5">
+                          <ShoppingBag size={18} />
+                          <span>My Cart</span>
+                        </div>
+                        {user.cart && user.cart.length > 0 && (
+                          <span className="bg-emerald-500 text-slate-950 font-extrabold text-xs px-2 py-0.5 rounded-full shrink-0">
+                            {user.cart.length}
+                          </span>
+                        )}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        to="/shop?tab=orders" 
+                        onClick={() => setSidebarOpen(false)} 
+                        className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${location.search.includes("tab=orders") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                      >
+                        <div className="flex items-center space-x-2.5">
+                          <Clock size={18} />
+                          <span>My Purchases</span>
+                        </div>
+                        {user.order && user.order.length > 0 && (
+                          <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-extrabold text-xs px-2 py-0.5 rounded-full shrink-0">
+                            {user.order.length}
+                          </span>
+                        )}
+                      </Link>
+                    </li>
+                  </>
+                )}
 
                 {isAdmin && (
                   <li>

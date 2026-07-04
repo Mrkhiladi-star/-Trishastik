@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children, allowedRoles, adminOnly = false, nonAdminOnl
     return <Navigate to="/login" replace />;
   }
 
-  const isAdmin = user.email === "freeforfire15@gmail.com" || user.role === "admin";
+  const isAdmin = user.email === "sramu1090@gmail.com" || user.role === "admin";
 
   if (adminOnly && !isAdmin) {
     return <Navigate to="/" replace />;

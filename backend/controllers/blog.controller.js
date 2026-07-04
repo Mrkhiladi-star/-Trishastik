@@ -11,7 +11,7 @@ const getBlogs = async (req, res, next) => {
 };
 
 const checkBlogPermission = async (req, res) => {
-  const allowedEmail = "freeforfire15@gmail.com";
+  const allowedEmail = "sramu1090@gmail.com";
   if (req.user && (req.user.email === allowedEmail || req.user.role === "admin")) {
     res.json({ authorized: true });
   } else {

@@ -215,7 +215,7 @@ const trackOrder = async (req, res, next) => {
     
     const isTransporter = order.transporter && order.transporter.toString() === req.user._id.toString();
     const isSeller = order.seller.toString() === req.user._id.toString();
-    const isAdmin = req.user.role === "admin" || req.user.email === "freeforfire15@gmail.com";
+    const isAdmin = req.user.role === "admin" || req.user.email === "sramu1090@gmail.com";
     
     if (!isTransporter && !isSeller && !isAdmin) {
       return res.status(403).json({ error: "Unauthorized to update tracking details." });
@@ -289,7 +289,7 @@ const getCustomersCheckout = async (req, res, next) => {
 };
 
 const createListingReview = async (req, res, next) => {
-  const allowedEmail = "freeforfire15@gmail.com";
+  const allowedEmail = "sramu1090@gmail.com";
   if (req.user && req.user.email !== allowedEmail) {
     try {
       const newReview = new Review(req.body.histing || req.body);

@@ -176,7 +176,7 @@ const updateReport = async (req, res, next) => {
 
     if (req.user.role === "agent") {
       test.isPublished = false;
-    } else if (req.user.role === "admin" || req.user.email === "freeforfire15@gmail.com") {
+    } else if (req.user.role === "admin" || req.user.email === "sramu1090@gmail.com") {
       if (isPublished !== undefined) {
         test.isPublished = isPublished;
       }
@@ -257,9 +257,31 @@ const analyzeReport = async (req, res, next) => {
       await test.save();
     }
 
-    const { reportContent, cropPlanned, soilType, farmArea } = test;
-    if (!reportContent) {
-      return res.status(400).json({ error: "Cannot generate AI suggestions without soil report analysis details. Please fill out the Soil Analysis Summary first." });
+    const { reportContent, cropPlanned, soilType, farmArea, labReportUrl } = test;
+    
+    let reportText = reportContent || "";
+
+    if (labReportUrl) {
+      if (labReportUrl.toLowerCase().includes(".pdf")) {
+        try {
+          logger.info(`Fetching and extracting text from PDF report: ${labReportUrl}`);
+          const pdfResponse = await fetch(labReportUrl);
+          if (pdfResponse.ok) {
+            const pdfBuffer = Buffer.from(await pdfResponse.arrayBuffer());
+            const pdfParse = require("pdf-parse");
+            const pdfData = await pdfParse(pdfBuffer);
+            if (pdfData && pdfData.text && pdfData.text.trim()) {
+              reportText = `[Direct Lab Report Content]\n${pdfData.text.trim()}\n\n${reportText}`;
+            }
+          }
+        } catch (err) {
+          logger.error(`Error parsing lab report PDF: ${err.message}`);
+        }
+      }
+    }
+
+    if (!reportText.trim()) {
+      return res.status(400).json({ error: "Cannot generate AI suggestions without soil report details. Please ensure the agent has uploaded the report PDF, or fill out the Soil Analysis Summary." });
     }
 
     const grokKey = process.env.GROK_API_KEY;
@@ -267,12 +289,12 @@ const analyzeReport = async (req, res, next) => {
 
     if (!grokKey) {
       logger.info("GROK_API_KEY env not configured, generating mock response...");
-      const pHMatch = reportContent.match(/pH\s*[:=]\s*([0-9.]+)/i);
+      const pHMatch = reportText.match(/pH\s*[:=]\s*([0-9.]+)/i);
       const pHVal = pHMatch ? parseFloat(pHMatch[1]) : 6.5;
       const isAcidic = pHVal < 6.0;
 
-      const nMatch = reportContent.toLowerCase().includes("nitrogen") || reportContent.toLowerCase().includes("low n") || reportContent.toLowerCase().includes("deficien");
-      const pMatch = reportContent.toLowerCase().includes("phosphorus") || reportContent.toLowerCase().includes("low p");
+      const nMatch = reportText.toLowerCase().includes("nitrogen") || reportText.toLowerCase().includes("low n") || reportText.toLowerCase().includes("deficien");
+      const pMatch = reportText.toLowerCase().includes("phosphorus") || reportText.toLowerCase().includes("low p");
 
       let npkStr = "Nitrogen: Optimal. Phosphorus: Moderate. Potassium: High.";
       let deficiencyStr = "No significant deficiencies found. Soil is well balanced.";
@@ -304,7 +326,7 @@ Analyze the following soil testing report details:
 Planned Crop: ${cropPlanned}
 Farm Area: ${farmArea} acres
 Soil Type: ${soilType}
-Report Content: ${reportContent}
+Report Content: ${reportText}
 
 Provide a detailed, structured, farmer-friendly analysis in JSON format containing the following fields:
 {

@@ -63,27 +63,18 @@ const SoilTest = () => {
   const [actionLoading, setActionLoading] = useState(false);
   const [publishImmediately, setPublishImmediately] = useState(false);
 
-  const handleDownloadPDF = async (url, filename) => {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error("Network response was not ok");
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.setAttribute('download', filename || 'soil_report.pdf');
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.error("Download failed, opening in new tab:", error);
+  const handleDownloadPDF = (url, filename) => {
+    if (url && url.includes("res.cloudinary.com")) {
+      // Force attachment download using Cloudinary parameter
+      const downloadUrl = url.replace("/upload/", "/upload/fl_attachment/");
+      window.open(downloadUrl, '_blank');
+    } else if (url) {
       window.open(url, '_blank');
     }
   };
 
-  const isAdmin = user && (user.role === "admin" || user.email === "freeforfire15@gmail.com");
-  const isFarmer = user && (user.role === "farmer" || user.role === "customer" || user.email === "freeforfire15@gmail.com");
+  const isAdmin = user && (user.role === "admin" || user.email === "sramu1090@gmail.com");
+  const isFarmer = user && (user.role === "farmer" || user.role === "customer" || user.email === "sramu1090@gmail.com");
   const isAgent = user && user.role === "agent";
 
   // Fetch data
@@ -292,6 +283,10 @@ const SoilTest = () => {
   // Admin/Agent updates report contents
   const handleReportDetailsSubmit = async (e) => {
     e.preventDefault();
+    if (!isAdmin && !reportingTest.labReportUrl) {
+      alert("Please upload the lab report PDF/Image file using the upload icon before saving details.");
+      return;
+    }
     setActionLoading(true);
     try {
       const response = await fetch(`/api/admin/soil-tests/${reportingTest._id}/report`, {
@@ -453,7 +448,8 @@ const SoilTest = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up">
+    <div className="relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up">
 
       {/* Header Banner */}
       <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-800 mb-8 overflow-hidden relative">
@@ -1077,6 +1073,7 @@ const SoilTest = () => {
 
         </div>
       </div>
+      </div>
 
       {/* OVERLAY MODAL: Assign Agent */}
       {assigningTestId && (
@@ -1180,28 +1177,48 @@ const SoilTest = () => {
               </div>
 
               {/* PDF/Image Lab Report File Upload */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Lab Report File (PDF / Image)</label>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="file"
-                    onChange={(e) => setUploadFile(e.target.files[0])}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-slate-300"
-                    accept="image/*,application/pdf"
-                  />
+              {(!isAdmin || !reportingTest.labReportUrl) ? (
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Lab Report File (PDF / Image)</label>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="file"
+                      onChange={(e) => setUploadFile(e.target.files[0])}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-slate-300"
+                      accept="image/*,application/pdf"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleReportFileUpload(reportingTest._id)}
+                      disabled={actionLoading || !uploadFile}
+                      className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 p-2 rounded-xl"
+                    >
+                      <Upload size={16} />
+                    </button>
+                  </div>
+                  {reportingTest.labReportUrl && (
+                    <span className="text-[10px] text-emerald-400 block font-semibold">✓ Report loaded: {reportingTest.labReportUrl}</span>
+                  )}
+                  {!isAdmin && !reportingTest.labReportUrl && (
+                    <p className="text-[10px] text-red-400 font-semibold mt-1">⚠️ Uploading the lab report file is required.</p>
+                  )}
+                </div>
+              ) : (
+                <div className="p-3 bg-slate-950/40 rounded-xl border border-slate-850 flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider block">Lab Report Document</span>
+                    <span className="text-[10px] text-emerald-400 font-semibold block">✓ Uploaded by Agent</span>
+                  </div>
                   <button
                     type="button"
-                    onClick={() => handleReportFileUpload(reportingTest._id)}
-                    disabled={actionLoading || !uploadFile}
-                    className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 p-2 rounded-xl"
+                    onClick={() => handleDownloadPDF(reportingTest.labReportUrl, `Soil_Report_${reportingTest._id}.pdf`)}
+                    className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-emerald-500/20 text-[10px] font-semibold text-emerald-400 hover:text-white"
                   >
-                    <Upload size={16} />
+                    <Download size={12} />
+                    <span>Download Report PDF</span>
                   </button>
                 </div>
-                {reportingTest.labReportUrl && (
-                  <span className="text-[10px] text-emerald-400 block font-semibold">✓ Report loaded: {reportingTest.labReportUrl}</span>
-                )}
-              </div>
+              )}
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Soil Macronutrient Analysis Summary</label>
@@ -1210,7 +1227,7 @@ const SoilTest = () => {
                   onChange={(e) => setReportContent(e.target.value)}
                   placeholder="e.g. pH: 6.8. Nitrogen: 120 ppm (Low), Phosphorus: 30 ppm (Moderate), Potassium: 280 ppm (High)."
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 h-24 focus:outline-none"
-                  required={reportStatus === "Report Ready" || reportStatus === "Completed"}
+                  required={isAdmin && (reportStatus === "Report Ready" || reportStatus === "Completed")}
                 />
               </div>
 
@@ -1221,7 +1238,7 @@ const SoilTest = () => {
                   onChange={(e) => setRecommendedFertilizers(e.target.value)}
                   placeholder="e.g. Incorporate 50kg Urea per acre during primary tillage. Apply organic compost."
                   className="w-full glass-input rounded-xl px-3.5 py-2.5 h-24 focus:outline-none"
-                  required={reportStatus === "Report Ready" || reportStatus === "Completed"}
+                  required={isAdmin && (reportStatus === "Report Ready" || reportStatus === "Completed")}
                 />
               </div>
 

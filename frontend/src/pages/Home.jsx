@@ -105,6 +105,10 @@ const Home = () => {
   };
 
   const filteredListings = listings.filter((item) => {
+    if (user && user.role === "customer" && item.category !== "organic_product") {
+      return false;
+    }
+
     if (!searchQuery) return true;
 
     const title = item.title.toLowerCase();
@@ -114,9 +118,10 @@ const Home = () => {
     return keywords.some(keyword => title.includes(keyword) || desc.includes(keyword));
   });
 
-  const isAdmin = user && (user.role === "admin" || user.email === "freeforfire15@gmail.com");
-  const isCustomer = user && user.role === "customer" && user.email !== "freeforfire15@gmail.com";
+  const isAdmin = user && (user.role === "admin" || user.email === "sramu1090@gmail.com");
+  const isCustomer = user && user.role === "customer" && user.email !== "sramu1090@gmail.com";
   const isFarmer = user && user.role === "farmer";
+  const isSeller = user && (user.role === "farmer" || user.role === "fertilizer_seller" || user.role === "instrument_seller");
 
   // Checking if user is allowed to purchase products
   const canBuy = user && user.role !== "admin" && user.role !== "transporter" && user.role !== "agent";
@@ -165,13 +170,13 @@ const Home = () => {
           </p>
 
           <div className="flex flex-wrap gap-4 pt-2">
-            {isAdmin && (
+            {isSeller && (
               <Link
                 to="/new"
                 className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2 transition-all transform active:scale-95 text-sm"
               >
                 <PlusCircle size={18} />
-                <span>Create New Listing</span>
+                <span>List New Product</span>
               </Link>
             )}
             {isCustomer && (
@@ -263,7 +268,7 @@ const Home = () => {
               {filteredListings.map((item) => (
                 <div
                   key={item._id}
-                  onClick={() => setSelectedProduct(item)}
+                  onClick={() => navigate(`/product/${item._id}`)}
                   className="cursor-pointer bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group"
                 >
                   <div>
@@ -282,7 +287,9 @@ const Home = () => {
                   </div>
 
                   <div className="p-4 pt-0 space-y-3">
-                    <p className="text-lg font-extrabold text-emerald-400 text-left">₹{item.price}</p>
+                    <p className="text-lg font-extrabold text-emerald-400 text-left">
+                      ₹{item.price} <span className="text-xs text-slate-500 font-bold">/ {item.priceUnit || "kg"}</span>
+                    </p>
 
                     {(canBuy || !user) && (
                       <button
