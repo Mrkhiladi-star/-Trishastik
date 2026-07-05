@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import {
-  MapContainer, TileLayer, Marker, useMapEvents
+  MapContainer, TileLayer, Marker, useMapEvents, useMap
 } from "react-leaflet";
 import L from "leaflet";
 import {
@@ -47,6 +47,41 @@ const SoilTest = () => {
 
   // Map view positioning
   const [mapCenter, setMapCenter] = useState([27.56, 80.68]);
+  const [isMapExpanded, setIsMapExpanded] = useState(false);
+  const [searchVal, setSearchVal] = useState("");
+
+  const reverseGeocode = async (lat, lon) => {
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.display_name) {
+          setAddress(data.display_name);
+          const parts = [];
+          if (data.address) {
+            if (data.address.village || data.address.suburb) parts.push(data.address.village || data.address.suburb);
+            if (data.address.county || data.address.district) parts.push(data.address.county || data.address.district);
+            if (data.address.state) parts.push(data.address.state);
+          }
+          if (parts.length > 0) {
+            setStateDistrictVillage(parts.join(", "));
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Reverse geocoding error:", err);
+    }
+  };
+
+  const ChangeMapCenter = ({ center }) => {
+    const map = useMap();
+    useEffect(() => {
+      if (center) {
+        map.setView(center, map.getZoom());
+      }
+    }, [center, map]);
+    return null;
+  };
 
   // Admin Assignment & Report state
   const [agents, setAgents] = useState([]);
@@ -114,6 +149,24 @@ const SoilTest = () => {
     fetchData();
   }, [user]);
 
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          setLatitude(lat);
+          setLongitude(lon);
+          setMapCenter([lat, lon]);
+          reverseGeocode(lat, lon);
+        },
+        (err) => {
+          console.warn("Auto-geolocation access denied or failed:", err.message);
+        }
+      );
+    }
+  }, []);
+
   // Geolocation trigger
   const handleGetCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -124,6 +177,7 @@ const SoilTest = () => {
           setLatitude(lat);
           setLongitude(lon);
           setMapCenter([lat, lon]);
+          reverseGeocode(lat, lon);
         },
         (err) => {
           console.error("Geolocation failed:", err);
@@ -185,11 +239,51 @@ const SoilTest = () => {
   const MapClickHandler = () => {
     useMapEvents({
       click(e) {
-        setLatitude(e.latlng.lat);
-        setLongitude(e.latlng.lng);
+        const lat = e.latlng.lat;
+        const lon = e.latlng.lng;
+        setLatitude(lat);
+        setLongitude(lon);
+        setMapCenter([lat, lon]);
+        reverseGeocode(lat, lon);
       }
     });
     return null;
+  };
+
+  const handleAddressSearch = async () => {
+    if (!searchVal) return;
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchVal)}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.length > 0) {
+          const firstResult = data[0];
+          const lat = parseFloat(firstResult.lat);
+          const lon = parseFloat(firstResult.lon);
+          setLatitude(lat);
+          setLongitude(lon);
+          setMapCenter([lat, lon]);
+          setAddress(firstResult.display_name);
+          const parts = [];
+          if (firstResult.address) {
+            if (firstResult.address.village || firstResult.address.suburb) parts.push(firstResult.address.village || firstResult.address.suburb);
+            if (firstResult.address.county || firstResult.address.district) parts.push(firstResult.address.county || firstResult.address.district);
+            if (firstResult.address.state) parts.push(firstResult.address.state);
+          } else {
+            const names = firstResult.display_name.split(",");
+            if (names.length > 0) parts.push(names[0]);
+            if (names.length > 1) parts.push(names[1]);
+          }
+          if (parts.length > 0) {
+            setStateDistrictVillage(parts.join(", "));
+          }
+        } else {
+          alert("Location not found.");
+        }
+      }
+    } catch (err) {
+      console.error("Address search error:", err);
+    }
   };
 
   // Admin assigns agent
@@ -610,19 +704,36 @@ const SoilTest = () => {
 
                 {/* Map Selector */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                    Map Pinpoint location (Click map to drag/re-pin)
-                  </label>
+                  <div className="flex justify-between items-center">
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                      Map Pinpoint location (Click map to expand and search)
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setIsMapExpanded(true)}
+                      className="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold underline"
+                    >
+                      Expand Map
+                    </button>
+                  </div>
 
-                  {/* Leaflet map implementation */}
-                  <div className="h-44 w-full rounded-2xl overflow-hidden border border-slate-800">
-                    <MapContainer center={mapCenter} zoom={11} scrollWheelZoom={false} className="h-full w-full">
+                  {/* Preview Map (Clicking opens expand modal) */}
+                  <div 
+                    onClick={() => setIsMapExpanded(true)}
+                    className="h-44 w-full rounded-2xl overflow-hidden border border-slate-800 cursor-pointer relative group"
+                  >
+                    <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/0 transition-colors z-[10] flex items-center justify-center">
+                      <span className="bg-slate-900/90 text-white border border-slate-800 text-[10px] font-bold px-3 py-1.5 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                        Click to Expand & Point Location
+                      </span>
+                    </div>
+                    <MapContainer center={mapCenter} zoom={11} scrollWheelZoom={false} zoomControl={false} dragging={false} doubleClickZoom={false} className="h-full w-full">
                       <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                       />
                       <Marker position={[latitude, longitude]} />
-                      <MapClickHandler />
+                      <ChangeMapCenter center={mapCenter} />
                     </MapContainer>
                   </div>
 
@@ -1288,6 +1399,89 @@ const SoilTest = () => {
                 </div>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* EXPANDED MAP SELECTION MODAL */}
+      {isMapExpanded && (
+        <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col">
+            {/* Header */}
+            <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950/50">
+              <div>
+                <h3 className="font-bold text-white text-sm">Pinpoint Field Location</h3>
+                <p className="text-[10px] text-slate-400">Click anywhere on the map or drag the pin to set your coordinates.</p>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setIsMapExpanded(false)}
+                className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            {/* Address Search Bar */}
+            <div className="p-3 bg-slate-950/20 border-b border-slate-850 flex gap-2">
+              <input
+                type="text"
+                value={searchVal}
+                onChange={(e) => setSearchVal(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleAddressSearch()}
+                placeholder="Search village, city, or district name..."
+                className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+              />
+              <button
+                type="button"
+                onClick={handleAddressSearch}
+                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-1.5 rounded-xl text-xs flex items-center space-x-1"
+              >
+                <Search size={12} />
+                <span>Search</span>
+              </button>
+            </div>
+
+            {/* Map Frame */}
+            <div className="h-[50vh] w-full relative bg-slate-950">
+              <MapContainer center={mapCenter} zoom={13} scrollWheelZoom={true} className="h-full w-full">
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                />
+                <Marker 
+                  position={[latitude, longitude]} 
+                  draggable={true}
+                  eventHandlers={{
+                    dragend(e) {
+                      const marker = e.target;
+                      const position = marker.getLatLng();
+                      setLatitude(position.lat);
+                      setLongitude(position.lng);
+                      reverseGeocode(position.lat, position.lng);
+                    }
+                  }}
+                />
+                <MapClickHandler />
+                <ChangeMapCenter center={mapCenter} />
+              </MapContainer>
+            </div>
+
+            {/* Details Footer */}
+            <div className="p-4 border-t border-slate-800 bg-slate-950/50 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+              <div className="text-left w-full sm:w-auto">
+                <p className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Current Selected Coordinates</p>
+                <p className="text-white font-mono mt-0.5">Lat: {latitude.toFixed(6)}, Lng: {longitude.toFixed(6)}</p>
+                <p className="text-[10px] text-emerald-400 mt-1 truncate max-w-md">Address: {address || "Locating..."}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsMapExpanded(false)}
+                className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-2 rounded-xl transition-all shadow-md active:scale-95"
+              >
+                Confirm Location
+              </button>
+            </div>
           </div>
         </div>
       )}
