@@ -167,6 +167,36 @@ const SoilTest = () => {
     }
   }, []);
 
+  // Debounced auto-geocoding from manual address text input
+  useEffect(() => {
+    const delayDebounce = setTimeout(async () => {
+      if (!address || address.trim() === "") return;
+      
+      try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(address)}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            const lat = parseFloat(data[0].lat);
+            const lon = parseFloat(data[0].lon);
+            // Check if coordinates are significantly different to prevent overriding exact map pin clicks/drags
+            const diffLat = Math.abs(lat - latitude);
+            const diffLon = Math.abs(lon - longitude);
+            if (diffLat > 0.005 || diffLon > 0.005) {
+              setLatitude(lat);
+              setLongitude(lon);
+              setMapCenter([lat, lon]);
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Auto geocoding address failed:", err);
+      }
+    }, 1200);
+    
+    return () => clearTimeout(delayDebounce);
+  }, [address]);
+
   // Geolocation trigger
   const handleGetCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -1025,13 +1055,15 @@ const SoilTest = () => {
                         <div className="flex flex-wrap items-center justify-end gap-3 pt-3 border-t border-slate-800/60 mt-2">
                           {test.status !== "Completed" ? (
                             <>
-                              <button
-                                onClick={() => setAssigningTestId(test._id)}
-                                className="bg-slate-900 hover:bg-slate-850 text-white font-semibold py-1.5 px-3 rounded-lg text-xs border border-slate-800 flex items-center space-x-1.5"
-                              >
-                                <UserCheck size={12} />
-                                <span>Assign Field Agent</span>
-                              </button>
+                              {test.status !== "Completed" && test.status !== "Report Ready" && !test.labReportUrl && (
+                                <button
+                                  onClick={() => setAssigningTestId(test._id)}
+                                  className="bg-slate-900 hover:bg-slate-850 text-white font-semibold py-1.5 px-3 rounded-lg text-xs border border-slate-800 flex items-center space-x-1.5"
+                                >
+                                  <UserCheck size={12} />
+                                  <span>Assign Field Agent</span>
+                                </button>
+                              )}
 
                               {test.labReportUrl && !test.isPublished && (
                                 <button

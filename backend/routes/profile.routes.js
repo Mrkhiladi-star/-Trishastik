@@ -8,5 +8,7 @@ router.get("/", isLoggedIn, profileController.getProfile);
 router.put("/", isLoggedIn, profileController.updateProfile);
 router.post("/photo", isLoggedIn, upload.single("photo"), profileController.updatePhoto);
 router.post("/change-password", isLoggedIn, profileController.changePassword);
+router.get("/vehicle", isLoggedIn, profileController.getVehicle);
+router.post("/vehicle", isLoggedIn, profileController.updateVehicle);
 
 module.exports = router;

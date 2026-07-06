@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import {
   Trash2, ShoppingBag, CreditCard, ChevronRight, CheckCircle2,
   ArrowRight, Search, Clock, ShieldAlert, Star, Cpu, MapPin, X
 } from "lucide-react";
+
+const ChangeMapCenter = ({ center }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (center) {
+      map.setView(center, map.getZoom());
+    }
+  }, [center, map]);
+  return null;
+};
 
 const Shop = () => {
   const { user, refreshUser } = useAuth();
@@ -119,6 +129,26 @@ const Shop = () => {
     }
   };
 
+  const handleDecrementQuantity = async (id) => {
+    try {
+      const response = await fetch(`/api/remove-one-from-cart/${id}`);
+      const data = await response.json();
+      if (response.ok && data.success) {
+        await refreshUser();
+        await fetchShopData();
+        setMessage("Quantity updated.");
+        setTimeout(() => setMessage(""), 2000);
+      } else {
+        setMessage(data.error || "Could not update quantity.");
+        setTimeout(() => setMessage(""), 3000);
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("Network error.");
+      setTimeout(() => setMessage(""), 3000);
+    }
+  };
+
   const handleCancelOrder = async (orderId) => {
     if (!window.confirm("Are you sure you want to cancel this order?")) return;
     try {
@@ -167,29 +197,47 @@ const Shop = () => {
 
   // Filter Catalog based on search, category, and user role
   const filteredListings = listings.filter(item => {
+    // 1. Matches Search
     const matchesSearch =
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase());
-      
+
+    // 2. Matches Category
     let matchesCategory = false;
     if (activeCategory === "all") {
-      if (user && user.role === "customer") {
-        matchesCategory = item.category === "organic_product";
-      } else {
-        matchesCategory = true;
-      }
+      matchesCategory = true;
     } else {
       matchesCategory = item.category === activeCategory;
     }
 
-    if (user && user.role === "customer" && item.category !== "organic_product") {
-      return false;
+    // 3. User Role Restrictions (Hide items they cannot buy)
+    if (user) {
+      const ownerId = item.owner?._id || item.owner;
+      if (ownerId && user._id && ownerId.toString() === user._id.toString()) {
+        return false;
+      }
+      if (user.role === "customer" && item.category !== "organic_product") {
+        return false;
+      }
+      if (user.role === "fertilizer_seller" && (item.category === "instrument_sale" || item.category === "instrument_rent")) {
+        return false;
+      }
+      if (user.role === "instrument_seller" && item.category === "medicine_fertilizer") {
+        return false;
+      }
     }
 
     return matchesSearch && matchesCategory;
   });
 
-  const canBuy = user && user.role !== "admin" && user.role !== "transporter" && user.role !== "agent";
+  const getCanBuy = (item) => {
+    if (!user) return false;
+    if (user.role === "admin" || user.role === "transporter" || user.role === "agent" || user.email === "sramu1090@gmail.com") return false;
+    if (user.role === "customer" && item.category !== "organic_product") return false;
+    if (user.role === "fertilizer_seller" && (item.category === "instrument_sale" || item.category === "instrument_rent")) return false;
+    if (user.role === "instrument_seller" && item.category === "medicine_fertilizer") return false;
+    return true;
+  };
 
   if (loading) {
     return (
@@ -278,8 +326,15 @@ const Shop = () => {
                 { id: "instrument_sale", label: "Equipment (Buy)" },
                 { id: "instrument_rent", label: "Equipment (Rent)" }
               ].filter((c) => {
-                if (user && user.role === "customer") {
+                if (!user) return true;
+                if (user.role === "customer") {
                   return c.id === "all" || c.id === "organic_product";
+                }
+                if (user.role === "fertilizer_seller") {
+                  return c.id === "all" || c.id === "organic_product" || c.id === "medicine_fertilizer";
+                }
+                if (user.role === "instrument_seller") {
+                  return c.id === "all" || c.id === "organic_product" || c.id === "instrument_sale" || c.id === "instrument_rent";
                 }
                 return true;
               }).map((c) => (
@@ -287,8 +342,8 @@ const Shop = () => {
                   key={c.id}
                   onClick={() => setActiveCategory(c.id)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${activeCategory === c.id
-                      ? "bg-emerald-500 border-emerald-400 text-slate-950 shadow"
-                      : "bg-slate-900 border-slate-800 text-slate-300 hover:text-white"
+                    ? "bg-emerald-500 border-emerald-400 text-slate-950 shadow"
+                    : "bg-slate-900 border-slate-800 text-slate-300 hover:text-white"
                     }`}
                 >
                   {c.label}
@@ -322,9 +377,9 @@ const Shop = () => {
                           onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
                         />
                         <span className={`absolute top-2 right-2 text-[8px] font-extrabold px-2 py-0.5 rounded-md border uppercase ${item.category === "organic_product" ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400" :
-                            item.category === "medicine_fertilizer" ? "bg-purple-500/10 border-purple-500/25 text-purple-400" :
-                              item.category === "instrument_sale" ? "bg-amber-500/10 border-amber-500/25 text-amber-400" :
-                                "bg-sky-500/10 border-sky-500/25 text-sky-400"
+                          item.category === "medicine_fertilizer" ? "bg-purple-500/10 border-purple-500/25 text-purple-400" :
+                            item.category === "instrument_sale" ? "bg-amber-500/10 border-amber-500/25 text-amber-400" :
+                              "bg-sky-500/10 border-sky-500/25 text-sky-400"
                           }`}>
                           {item.category?.replace("_", " ")}
                         </span>
@@ -346,7 +401,7 @@ const Shop = () => {
                         ₹{item.price} <span className="text-xs text-slate-500 font-bold">/ {item.priceUnit || "kg"}</span>
                       </p>
 
-                      {canBuy && (
+                      {getCanBuy(item) && (
                         isOwnItem ? (
                           <button
                             disabled
@@ -445,34 +500,76 @@ const Shop = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {cart.map((item) => (
-                  <div key={item._id} className="bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg flex flex-col justify-between group">
-                    <div>
-                      <div className="h-44 overflow-hidden bg-slate-950">
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-cover"
-                          onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
-                        />
+                {(() => {
+                  const groupedCart = [];
+                  cart.forEach(item => {
+                    if (!item) return;
+                    const existing = groupedCart.find(g => g._id === item._id);
+                    if (existing) {
+                      existing.quantity += 1;
+                    } else {
+                      groupedCart.push({ ...item, quantity: 1 });
+                    }
+                  });
+                  return groupedCart.map((item) => (
+                    <div key={item._id} className="bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg flex flex-col justify-between group">
+                      <div>
+                        <div className="h-44 overflow-hidden bg-slate-950">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-full h-full object-cover"
+                            onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
+                          />
+                        </div>
+                        <div className="p-4 space-y-2">
+                          <h4 className="font-bold text-white text-sm truncate">{item.title}</h4>
+                          <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">{item.description}</p>
+                          <div className="text-[10px] text-slate-500 font-semibold">
+                            Unit Price: ₹{item.price} / {item.priceUnit || "kg"}
+                          </div>
+                        </div>
                       </div>
-                      <div className="p-4 space-y-1">
-                        <h4 className="font-bold text-white text-sm truncate">{item.title}</h4>
-                        <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">{item.description}</p>
+
+                      <div className="p-4 pt-0 border-t border-slate-900/60 pt-3 space-y-3">
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-slate-400 font-medium">Quantity:</span>
+                          <div className="flex items-center space-x-2 bg-slate-950 border border-slate-800 rounded-lg p-0.5">
+                            <button
+                              type="button"
+                              onClick={() => handleDecrementQuantity(item._id)}
+                              className="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-white rounded hover:bg-slate-800 active:scale-95 transition-all text-xs font-bold"
+                            >
+                              -
+                            </button>
+                            <span className="w-6 text-center font-bold text-white text-xs">{item.quantity}</span>
+                            <button
+                              type="button"
+                              onClick={() => handleAddToCart(item._id)}
+                              className="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-white rounded hover:bg-slate-800 active:scale-95 transition-all text-xs font-bold"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-between items-center">
+                          <div className="flex flex-col">
+                            <span className="text-[9px] uppercase font-bold text-slate-500">Subtotal</span>
+                            <span className="text-base font-extrabold text-emerald-400">₹{(item.price * item.quantity).toFixed(2)}</span>
+                          </div>
+                          <button
+                            onClick={() => handleRemoveFromCart(item._id)}
+                            className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-2 rounded-xl transition-all"
+                            title="Remove item"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div className="p-4 pt-0 flex justify-between items-center mt-4 border-t border-slate-900/60 pt-3">
-                      <span className="text-base font-extrabold text-emerald-400">₹{item.price}</span>
-                      <button
-                        onClick={() => handleRemoveFromCart(item._id)}
-                        className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-2 rounded-xl transition-all"
-                        title="Remove item"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  ));
+                })()}
               </div>
             )}
           </div>
@@ -508,8 +605,8 @@ const Shop = () => {
 
                       <div className="flex items-center space-x-3">
                         <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold border uppercase tracking-wider ${order.status === "Delivered" ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" :
-                            order.status === "Cancelled" ? "bg-red-500/10 border-red-500/20 text-red-400" :
-                              "bg-sky-500/10 border-sky-500/20 text-sky-400 animate-pulse"
+                          order.status === "Cancelled" ? "bg-red-500/10 border-red-500/20 text-red-400" :
+                            "bg-sky-500/10 border-sky-500/20 text-sky-400 animate-pulse"
                           }`}>
                           {order.status}
                         </span>
@@ -656,6 +753,13 @@ const Shop = () => {
                 {/* Marker for current transport location */}
                 <Marker
                   position={[
+                    trackingOrder.currentLocation?.latitude || 27.56,
+                    trackingOrder.currentLocation?.longitude || 80.68
+                  ]}
+                />
+
+                <ChangeMapCenter
+                  center={[
                     trackingOrder.currentLocation?.latitude || 27.56,
                     trackingOrder.currentLocation?.longitude || 80.68
                   ]}

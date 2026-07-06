@@ -155,3 +155,346 @@
 {"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 17:20:06"}
 {"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-04 17:20:52"}
 {"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-04 17:21:03"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-05 19:55:56"}
+{"level":"info","message":"Product 6a4a6665b96654f81539638c added to cart for user Shri Krishna","timestamp":"2026-07-05 19:56:14"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-05 19:56:32"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-05 19:56:37"}
+{"level":"info","message":"Transit requested for Order 6a4b387f885acfd4cc4c3e8b. Matched 2 candidates in 50KM. First assigned: 6a4b387e885acfd4cc4c3e7f","timestamp":"2026-07-06 10:39:19"}
+{"level":"info","message":"Transporter transporter_a rejected job for Order 6a4b387f885acfd4cc4c3e8b","timestamp":"2026-07-06 10:39:20"}
+{"level":"info","message":"Reassigned Order 6a4b387f885acfd4cc4c3e8b to next transporter candidate (Index: 1)","timestamp":"2026-07-06 10:39:20"}
+{"level":"info","message":"Transporter transporter_b rejected job for Order 6a4b387f885acfd4cc4c3e8b","timestamp":"2026-07-06 10:39:20"}
+{"level":"info","message":"Exhausted 50KM radius. Expanding matching for Order 6a4b387f885acfd4cc4c3e8b to 100KM...","timestamp":"2026-07-06 10:39:20"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: Anuj","timestamp":"2026-07-06 10:39:20"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: Saurabh","timestamp":"2026-07-06 10:39:21"}
+{"level":"info","message":"Reassigned Order 6a4b387f885acfd4cc4c3e8b to first 100KM radius transporter candidate","timestamp":"2026-07-06 10:39:21"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: transporter_d","timestamp":"2026-07-06 10:39:22"}
+{"level":"info","message":"Transit requested for Order 6a4b3881885acfd4cc4c3ec1. Matched 1 candidates in 50KM. First assigned: 6a4b3881885acfd4cc4c3ebf","timestamp":"2026-07-06 10:39:22"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 10:42:12"}
+{"level":"info","message":"Transit requested for Order 6a4b394df389fa608280ae77. Matched 2 candidates in 50KM. First assigned: 6a4b394cf389fa608280ae6b","timestamp":"2026-07-06 10:42:45"}
+{"level":"info","message":"Transporter transporter_a rejected job for Order 6a4b394df389fa608280ae77","timestamp":"2026-07-06 10:42:46"}
+{"level":"info","message":"Reassigned Order 6a4b394df389fa608280ae77 to next transporter candidate (Index: 1)","timestamp":"2026-07-06 10:42:46"}
+{"level":"info","message":"Transporter transporter_b rejected job for Order 6a4b394df389fa608280ae77","timestamp":"2026-07-06 10:42:46"}
+{"level":"info","message":"Exhausted 50KM radius. Expanding matching for Order 6a4b394df389fa608280ae77 to 100KM...","timestamp":"2026-07-06 10:42:46"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: Anuj","timestamp":"2026-07-06 10:42:47"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: Saurabh","timestamp":"2026-07-06 10:42:47"}
+{"level":"info","message":"Reassigned Order 6a4b394df389fa608280ae77 to first 100KM radius transporter candidate","timestamp":"2026-07-06 10:42:48"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: transporter_d","timestamp":"2026-07-06 10:42:50"}
+{"level":"info","message":"Transit requested for Order 6a4b3950f389fa608280aead. Matched 1 candidates in 50KM. First assigned: 6a4b3950f389fa608280aeab","timestamp":"2026-07-06 10:42:50"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-06 10:45:21"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-06 10:45:49"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-06 10:46:00"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-06 10:46:18"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 10:46:31"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 10:49:48"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 10:50:06"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 10:50:54"}
+{"level":"info","message":"Transit requested for Order 6a4b3b6019ee985f71bfaf63. Matched 2 candidates in 50KM. First assigned: 6a4b3b5f19ee985f71bfaf57","timestamp":"2026-07-06 10:51:37"}
+{"level":"info","message":"Transporter transporter_a rejected job for Order 6a4b3b6019ee985f71bfaf63","timestamp":"2026-07-06 10:51:37"}
+{"level":"info","message":"Reassigned Order 6a4b3b6019ee985f71bfaf63 to next transporter candidate (Index: 1)","timestamp":"2026-07-06 10:51:37"}
+{"level":"info","message":"Transporter transporter_b rejected job for Order 6a4b3b6019ee985f71bfaf63","timestamp":"2026-07-06 10:51:37"}
+{"level":"info","message":"Exhausted 50KM radius. Expanding matching for Order 6a4b3b6019ee985f71bfaf63 to 100KM...","timestamp":"2026-07-06 10:51:37"}
+{"level":"info","message":"Reassigned Order 6a4b3b6019ee985f71bfaf63 to first 100KM radius transporter candidate","timestamp":"2026-07-06 10:51:38"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: transporter_d","timestamp":"2026-07-06 10:51:39"}
+{"level":"info","message":"Transit requested for Order 6a4b3b6219ee985f71bfaf8d. Matched 1 candidates in 50KM. First assigned: 6a4b3b6219ee985f71bfaf8b","timestamp":"2026-07-06 10:51:39"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 10:52:08"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-06 10:52:54"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-06 10:53:20"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-06 10:53:31"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-06 10:53:59"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 10:54:15"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 10:54:57"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-06 10:55:05"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f19d added to cart for user Ramu Yadav","timestamp":"2026-07-06 10:55:10"}
+{"level":"info","message":"Checkout successful for user: Ramu Yadav","timestamp":"2026-07-06 10:56:43"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-06 10:56:53"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-06 10:57:03"}
+{"level":"info","message":"Order 6a4b3c938330c462249d0a6c accepted by seller","timestamp":"2026-07-06 10:57:11"}
+{"level":"info","message":"No transporters found in 50KM for Order 6a4b3c938330c462249d0a6c. Expanding to 100KM...","timestamp":"2026-07-06 10:58:30"}
+{"level":"warn","message":"No transporters found in 100KM radius for Order 6a4b3c938330c462249d0a6c","timestamp":"2026-07-06 10:58:31"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-06 10:58:39"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 10:58:52"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 10:59:00"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 10:59:08"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:05:20"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:05:25"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:05:30"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:05:58"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:06:06"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:06:10"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:06:16"}
+{"level":"info","message":"Transit requested for Order 6a4b3f1ab68b0c84caeb8a2c. Matched 2 candidates in 50KM. First assigned: 6a4b3f1ab68b0c84caeb8a20","timestamp":"2026-07-06 11:07:31"}
+{"level":"info","message":"Transporter transporter_a rejected job for Order 6a4b3f1ab68b0c84caeb8a2c","timestamp":"2026-07-06 11:07:31"}
+{"level":"info","message":"Reassigned Order 6a4b3f1ab68b0c84caeb8a2c to next transporter candidate (Index: 1)","timestamp":"2026-07-06 11:07:31"}
+{"level":"info","message":"Transporter transporter_b rejected job for Order 6a4b3f1ab68b0c84caeb8a2c","timestamp":"2026-07-06 11:07:31"}
+{"level":"info","message":"Exhausted 50KM radius. Expanding matching for Order 6a4b3f1ab68b0c84caeb8a2c to 100KM...","timestamp":"2026-07-06 11:07:31"}
+{"level":"info","message":"Reassigned Order 6a4b3f1ab68b0c84caeb8a2c to first 100KM radius transporter candidate","timestamp":"2026-07-06 11:07:33"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: transporter_d","timestamp":"2026-07-06 11:07:34"}
+{"level":"info","message":"Transit requested for Order 6a4b3f1db68b0c84caeb8a56. Matched 1 candidates in 50KM. First assigned: 6a4b3f1db68b0c84caeb8a54","timestamp":"2026-07-06 11:07:34"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:08:06"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 11:08:41"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-06 11:08:53"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-06 11:09:07"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-06 11:09:16"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f19d added to cart for user Ramu Yadav","timestamp":"2026-07-06 11:09:21"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f19d added to cart for user Ramu Yadav","timestamp":"2026-07-06 11:09:28"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f19d added to cart for user Ramu Yadav","timestamp":"2026-07-06 11:09:30"}
+{"level":"info","message":"Checkout successful for user: Ramu Yadav","timestamp":"2026-07-06 11:09:33"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-06 11:09:38"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-06 11:09:53"}
+{"level":"info","message":"Order 6a4b3f9569bbdf7ec2ce8b88 accepted by seller","timestamp":"2026-07-06 11:10:00"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-06 11:10:14"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 11:10:23"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 11:10:30"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 11:10:37"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 11:11:09"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-06 11:11:21"}
+{"level":"info","message":"No transporters found in 50KM for Order 6a4b3f9569bbdf7ec2ce8b88. Expanding to 100KM...","timestamp":"2026-07-06 11:11:32"}
+{"level":"warn","message":"No transporters found in 100KM radius for Order 6a4b3f9569bbdf7ec2ce8b88","timestamp":"2026-07-06 11:11:32"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-06 11:11:35"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 11:11:44"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 11:11:55"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 11:12:08"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:14:25"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:14:44"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:15:13"}
+{"level":"info","message":"Transit requested for Order 6a4b42200d4acf41c8849162. Matched 2 candidates in 50KM. First assigned: 6a4b421f0d4acf41c8849156","timestamp":"2026-07-06 11:20:24"}
+{"level":"info","message":"Transporter transporter_a rejected job for Order 6a4b42200d4acf41c8849162","timestamp":"2026-07-06 11:20:25"}
+{"level":"info","message":"Reassigned Order 6a4b42200d4acf41c8849162 to next transporter candidate (Index: 1)","timestamp":"2026-07-06 11:20:25"}
+{"level":"info","message":"Transporter transporter_b rejected job for Order 6a4b42200d4acf41c8849162","timestamp":"2026-07-06 11:20:25"}
+{"level":"info","message":"Exhausted 50KM radius. Expanding matching for Order 6a4b42200d4acf41c8849162 to 100KM...","timestamp":"2026-07-06 11:20:25"}
+{"level":"info","message":"Reassigned Order 6a4b42200d4acf41c8849162 to first 100KM radius transporter candidate","timestamp":"2026-07-06 11:20:26"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: transporter_d","timestamp":"2026-07-06 11:20:27"}
+{"level":"info","message":"Transit requested for Order 6a4b42220d4acf41c884918c. Matched 1 candidates in 50KM. First assigned: 6a4b42220d4acf41c884918a","timestamp":"2026-07-06 11:20:27"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:21:32"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 11:21:46"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 11:21:57"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 11:22:04"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-06 11:22:12"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f19c added to cart for user Ramu Yadav","timestamp":"2026-07-06 11:22:19"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f19c added to cart for user Ramu Yadav","timestamp":"2026-07-06 11:22:29"}
+{"level":"info","message":"Checkout successful for user: Ramu Yadav","timestamp":"2026-07-06 11:22:37"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-06 11:22:43"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-06 11:23:01"}
+{"level":"info","message":"Order 6a4b42a4a06f7b56a1265880 accepted by seller","timestamp":"2026-07-06 11:23:09"}
+{"level":"info","message":"No transporters found in 50KM for Order 6a4b42a4a06f7b56a1265880. Expanding to 100KM...","timestamp":"2026-07-06 11:23:15"}
+{"level":"info","message":"No transporters found in 100KM for Order 6a4b42a4a06f7b56a1265880. Falling back to nearest available transporters...","timestamp":"2026-07-06 11:23:15"}
+{"level":"warn","message":"No available transporters found in database for vehicle type: tata-ace","timestamp":"2026-07-06 11:23:16"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-06 11:23:21"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 11:23:31"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 11:23:38"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 11:23:46"}
+{"level":"info","message":"Transit requested for Order 6a4b46c429db627fa90657f5. Matched 2 candidates in 50KM. First assigned: 6a4b46c329db627fa90657e9","timestamp":"2026-07-06 11:40:13"}
+{"level":"info","message":"Transporter transporter_a rejected job for Order 6a4b46c429db627fa90657f5","timestamp":"2026-07-06 11:40:13"}
+{"level":"info","message":"Reassigned Order 6a4b46c429db627fa90657f5 to next transporter candidate (Index: 1)","timestamp":"2026-07-06 11:40:13"}
+{"level":"info","message":"Transporter transporter_b rejected job for Order 6a4b46c429db627fa90657f5","timestamp":"2026-07-06 11:40:14"}
+{"level":"info","message":"Exhausted 50KM radius. Expanding matching for Order 6a4b46c429db627fa90657f5 to 100KM...","timestamp":"2026-07-06 11:40:14"}
+{"level":"info","message":"Reassigned Order 6a4b46c429db627fa90657f5 to first 100KM radius transporter candidate","timestamp":"2026-07-06 11:40:14"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: transporter_d","timestamp":"2026-07-06 11:40:17"}
+{"level":"info","message":"Transit requested for Order 6a4b46c729db627fa906581f. Matched 1 candidates in 50KM. First assigned: 6a4b46c729db627fa906581d","timestamp":"2026-07-06 11:40:17"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 11:46:38"}
+{"level":"info","message":"Startup Repair: Reset 3 stuck transit requests back to \"Accepted\".","timestamp":"2026-07-06 11:46:40"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 11:46:51"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 11:47:00"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 11:47:07"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-06 11:47:27"}
+{"level":"info","message":"Transit requested for Order 6a4b42a4a06f7b56a1265880. Matched 2 candidates in 50KM. First assigned: 6a16da33ee701f8f2eae1156","timestamp":"2026-07-06 11:47:48"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-06 11:47:55"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 11:48:02"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 11:52:06"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 11:52:16"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 11:52:48"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 11:52:58"}
+{"level":"info","message":"Transporter Anuj accepted delivery for Order 6a4b42a4a06f7b56a1265880","timestamp":"2026-07-06 11:53:03"}
+{"level":"info","message":"Tracking updated for Order 6a4b42a4a06f7b56a1265880: status=undefined","timestamp":"2026-07-06 11:53:24"}
+{"level":"info","message":"Tracking updated for Order 6a4b42a4a06f7b56a1265880: status=Delivered","timestamp":"2026-07-06 11:53:27"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 11:53:31"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-06 11:53:45"}
+{"level":"info","message":"Order 6a4b42a4a06f7b56a1265880 reviewed with rating 5","timestamp":"2026-07-06 11:54:09"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-06 11:55:00"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 11:55:08"}
+{"level":"info","message":"Profile updated for user: Ram. Completeness status: false","timestamp":"2026-07-06 11:56:24"}
+{"level":"info","message":"Profile updated for user: Ram. Completeness status: true","timestamp":"2026-07-06 11:57:09"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a3 added to cart for user Ram","timestamp":"2026-07-06 11:57:44"}
+{"level":"info","message":"Checkout successful for user: Ram","timestamp":"2026-07-06 11:57:49"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 11:57:56"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-06 11:58:03"}
+{"level":"info","message":"Profile updated for user: Sanjay. Completeness status: true","timestamp":"2026-07-06 11:58:30"}
+{"level":"info","message":"Profile updated for user: Sanjay. Completeness status: true","timestamp":"2026-07-06 11:58:39"}
+{"level":"info","message":"Order 6a4b4ae528343d96eb9d4cc1 accepted by seller","timestamp":"2026-07-06 11:58:54"}
+{"level":"info","message":"No transporters found in 50KM for Order 6a4b4ae528343d96eb9d4cc1. Expanding to 100KM...","timestamp":"2026-07-06 11:59:02"}
+{"level":"info","message":"No transporters found in 100KM for Order 6a4b4ae528343d96eb9d4cc1. Falling back to nearest available transporters...","timestamp":"2026-07-06 11:59:03"}
+{"level":"warn","message":"No available transporters found in database for vehicle type: tata-ace","timestamp":"2026-07-06 11:59:04"}
+{"level":"info","message":"User logged out: Sanjay","timestamp":"2026-07-06 11:59:22"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 11:59:42"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 12:00:00"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 12:00:08"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 12:00:21"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-06 12:00:28"}
+{"level":"info","message":"No transporters found in 50KM for Order 6a4b4ae528343d96eb9d4cc1. Expanding to 100KM...","timestamp":"2026-07-06 12:00:40"}
+{"level":"info","message":"No transporters found in 100KM for Order 6a4b4ae528343d96eb9d4cc1. Falling back to nearest available transporters...","timestamp":"2026-07-06 12:00:41"}
+{"level":"warn","message":"No available transporters found in database for vehicle type: tata-ace","timestamp":"2026-07-06 12:00:42"}
+{"level":"info","message":"User logged out: Sanjay","timestamp":"2026-07-06 12:01:09"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 12:01:19"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a0 added to cart for user Ram","timestamp":"2026-07-06 12:01:31"}
+{"level":"info","message":"Checkout successful for user: Ram","timestamp":"2026-07-06 12:01:38"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 12:01:43"}
+{"level":"info","message":"User logged in: Ashwani","timestamp":"2026-07-06 12:01:59"}
+{"level":"info","message":"Order 6a4b4bc928343d96eb9d4dfc accepted by seller","timestamp":"2026-07-06 12:02:06"}
+{"level":"info","message":"No transporters found in 50KM for Order 6a4b4bc928343d96eb9d4dfc. Expanding to 100KM...","timestamp":"2026-07-06 12:02:12"}
+{"level":"info","message":"No transporters found in 100KM for Order 6a4b4bc928343d96eb9d4dfc. Falling back to nearest available transporters...","timestamp":"2026-07-06 12:02:12"}
+{"level":"warn","message":"No available transporters found in database for vehicle type: tata-ace","timestamp":"2026-07-06 12:02:13"}
+{"level":"info","message":"Transit requested for Order 6a4b4bff98b4b956c0e1b7f8. Matched 2 candidates in 50KM. First assigned: 6a4b4bff98b4b956c0e1b7ec","timestamp":"2026-07-06 12:02:32"}
+{"level":"info","message":"Transporter transporter_a rejected job for Order 6a4b4bff98b4b956c0e1b7f8","timestamp":"2026-07-06 12:02:32"}
+{"level":"info","message":"Reassigned Order 6a4b4bff98b4b956c0e1b7f8 to next transporter candidate (Index: 1)","timestamp":"2026-07-06 12:02:32"}
+{"level":"info","message":"Transporter transporter_b rejected job for Order 6a4b4bff98b4b956c0e1b7f8","timestamp":"2026-07-06 12:02:32"}
+{"level":"info","message":"Exhausted 50KM radius. Expanding matching for Order 6a4b4bff98b4b956c0e1b7f8 to 100KM...","timestamp":"2026-07-06 12:02:32"}
+{"level":"info","message":"Reassigned Order 6a4b4bff98b4b956c0e1b7f8 to first 100KM radius transporter candidate","timestamp":"2026-07-06 12:02:33"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: transporter_d","timestamp":"2026-07-06 12:02:34"}
+{"level":"info","message":"Transit requested for Order 6a4b4c0198b4b956c0e1b822. Matched 1 candidates in 50KM. First assigned: 6a4b4c0198b4b956c0e1b820","timestamp":"2026-07-06 12:02:34"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 12:06:23"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 12:07:25"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 12:07:47"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 12:10:56"}
+{"level":"info","message":"No transporters found in 50KM for Order 6a4b4bc928343d96eb9d4dfc. Expanding to 100KM...","timestamp":"2026-07-06 12:11:24"}
+{"level":"info","message":"No transporters found in 100KM for Order 6a4b4bc928343d96eb9d4dfc. Falling back to nearest available transporters...","timestamp":"2026-07-06 12:11:25"}
+{"level":"warn","message":"No available transporters found in database for vehicle type: tata-ace","timestamp":"2026-07-06 12:11:26"}
+{"level":"info","message":"Transit requested for Order 6a4b4fda213d381048fe6872. Matched 2 candidates in 50KM. First assigned: 6a4b4fda213d381048fe6866","timestamp":"2026-07-06 12:18:59"}
+{"level":"info","message":"Transporter transporter_a rejected job for Order 6a4b4fda213d381048fe6872","timestamp":"2026-07-06 12:18:59"}
+{"level":"info","message":"Reassigned Order 6a4b4fda213d381048fe6872 to next transporter candidate (Index: 1)","timestamp":"2026-07-06 12:18:59"}
+{"level":"info","message":"Transporter transporter_b rejected job for Order 6a4b4fda213d381048fe6872","timestamp":"2026-07-06 12:18:59"}
+{"level":"info","message":"Exhausted 50KM radius. Expanding matching for Order 6a4b4fda213d381048fe6872 to 100KM...","timestamp":"2026-07-06 12:18:59"}
+{"level":"info","message":"Reassigned Order 6a4b4fda213d381048fe6872 to first 100KM radius transporter candidate","timestamp":"2026-07-06 12:19:00"}
+{"level":"info","message":"On-the-fly seeded default vehicle for transporter: transporter_d","timestamp":"2026-07-06 12:19:02"}
+{"level":"info","message":"Transit requested for Order 6a4b4fdd213d381048fe689c. Matched 1 candidates in 50KM. First assigned: 6a4b4fdc213d381048fe689a","timestamp":"2026-07-06 12:19:02"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 12:21:11"}
+{"level":"info","message":"Transit requested for Order 6a4b4bc928343d96eb9d4dfc. Matched 2 candidates in 50KM. First assigned: 6a16da33ee701f8f2eae1156","timestamp":"2026-07-06 12:21:26"}
+{"level":"info","message":"User logged out: Ashwani","timestamp":"2026-07-06 12:21:32"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 12:21:41"}
+{"level":"info","message":"Transporter Anuj rejected job for Order 6a4b4bc928343d96eb9d4dfc","timestamp":"2026-07-06 12:22:01"}
+{"level":"info","message":"Reassigned Order 6a4b4bc928343d96eb9d4dfc to next transporter candidate (Index: 1)","timestamp":"2026-07-06 12:22:01"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 12:22:05"}
+{"level":"info","message":"User logged in: Ashwani","timestamp":"2026-07-06 12:22:17"}
+{"level":"info","message":"User logged out: Ashwani","timestamp":"2026-07-06 12:22:27"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 12:22:35"}
+{"level":"info","message":"Transporter Saurabh rejected job for Order 6a4b4bc928343d96eb9d4dfc","timestamp":"2026-07-06 12:22:44"}
+{"level":"info","message":"Exhausted 50KM radius. Expanding matching for Order 6a4b4bc928343d96eb9d4dfc to 100KM...","timestamp":"2026-07-06 12:22:44"}
+{"level":"warn","message":"No transporters found in 100KM radius either for Order 6a4b4bc928343d96eb9d4dfc","timestamp":"2026-07-06 12:22:45"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 12:22:49"}
+{"level":"info","message":"User logged in: Ashwani","timestamp":"2026-07-06 12:22:58"}
+{"level":"info","message":"User logged out: Ashwani","timestamp":"2026-07-06 12:23:16"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-06 12:23:25"}
+{"level":"info","message":"No transporters found in 50KM for Order 6a4b4ae528343d96eb9d4cc1. Expanding to 100KM...","timestamp":"2026-07-06 12:23:39"}
+{"level":"info","message":"No transporters found in 100KM for Order 6a4b4ae528343d96eb9d4cc1. Falling back to nearest available transporters...","timestamp":"2026-07-06 12:23:40"}
+{"level":"warn","message":"No available transporters found in database for vehicle type: mini-truck","timestamp":"2026-07-06 12:23:41"}
+{"level":"info","message":"Transit requested for Order 6a4b4ae528343d96eb9d4cc1. Matched 2 candidates in 50KM. First assigned: 6a16da33ee701f8f2eae1156","timestamp":"2026-07-06 12:23:46"}
+{"level":"info","message":"User logged out: Sanjay","timestamp":"2026-07-06 12:23:51"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 12:24:01"}
+{"level":"info","message":"Transporter Anuj rejected job for Order 6a4b4ae528343d96eb9d4cc1","timestamp":"2026-07-06 12:24:10"}
+{"level":"info","message":"Reassigned Order 6a4b4ae528343d96eb9d4cc1 to next transporter candidate (Index: 1)","timestamp":"2026-07-06 12:24:10"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 12:24:12"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 12:24:21"}
+{"level":"info","message":"Transporter Saurabh rejected job for Order 6a4b4ae528343d96eb9d4cc1","timestamp":"2026-07-06 12:24:28"}
+{"level":"info","message":"Exhausted 50KM radius. Expanding matching for Order 6a4b4ae528343d96eb9d4cc1 to 100KM...","timestamp":"2026-07-06 12:24:28"}
+{"level":"warn","message":"No transporters found in 100KM radius either for Order 6a4b4ae528343d96eb9d4cc1","timestamp":"2026-07-06 12:24:29"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 12:24:34"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-06 12:24:47"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f19c added to cart for user Ramu Yadav","timestamp":"2026-07-06 12:25:04"}
+{"level":"info","message":"Checkout successful for user: Ramu Yadav","timestamp":"2026-07-06 12:25:10"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-06 12:25:15"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-06 12:25:25"}
+{"level":"info","message":"Order 6a4b514eba663112f0a67b98 accepted by seller","timestamp":"2026-07-06 12:25:32"}
+{"level":"info","message":"No transporters found in 50KM for Order 6a4b514eba663112f0a67b98. Expanding to 100KM...","timestamp":"2026-07-06 12:25:39"}
+{"level":"info","message":"No transporters found in 100KM for Order 6a4b514eba663112f0a67b98. Falling back to nearest available transporters...","timestamp":"2026-07-06 12:25:39"}
+{"level":"warn","message":"No available transporters found in database for vehicle type: two-wheeler","timestamp":"2026-07-06 12:25:40"}
+{"level":"info","message":"Transit requested for Order 6a4b514eba663112f0a67b98. Matched 2 candidates in 50KM. First assigned: 6a16da33ee701f8f2eae1156","timestamp":"2026-07-06 12:25:45"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-06 12:25:48"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 12:25:59"}
+{"level":"info","message":"Transporter Anuj rejected job for Order 6a4b514eba663112f0a67b98","timestamp":"2026-07-06 12:26:04"}
+{"level":"info","message":"Reassigned Order 6a4b514eba663112f0a67b98 to next transporter candidate (Index: 1)","timestamp":"2026-07-06 12:26:04"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 12:26:06"}
+{"level":"info","message":"User logged in: Saurabh","timestamp":"2026-07-06 12:26:13"}
+{"level":"info","message":"Transporter Saurabh accepted delivery for Order 6a4b514eba663112f0a67b98","timestamp":"2026-07-06 12:26:17"}
+{"level":"info","message":"Tracking updated for Order 6a4b514eba663112f0a67b98: status=Delivered","timestamp":"2026-07-06 12:26:22"}
+{"level":"info","message":"User logged out: Saurabh","timestamp":"2026-07-06 12:26:28"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 12:31:20"}
+{"level":"info","message":"Startup Repair: Reset 2 stuck transit requests back to \"Accepted\".","timestamp":"2026-07-06 12:31:22"}
+{"level":"error","message":"400 - Username can only contain alphanumeric characters, underscores, and periods. - /register - POST - 127.0.0.1","stack":"Error: Username can only contain alphanumeric characters, underscores, and periods.\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\middleware\\validate.js:17:19\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at Function.handle (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:175:3)\n    at router (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:47:12)","timestamp":"2026-07-06 12:32:33"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 12:34:15"}
+{"level":"info","message":"Soil test request created by farmer Ram","timestamp":"2026-07-06 12:34:58"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 12:35:02"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-06 12:35:11"}
+{"level":"info","message":"Agent 6a16dadeee701f8f2eae116f assigned to Soil Test 6a4b539a7b3712d5a3142d4e","timestamp":"2026-07-06 12:35:28"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-06 12:35:34"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-07-06 12:35:40"}
+{"level":"info","message":"Soil Test 6a4b539a7b3712d5a3142d4e status updated to Sample Collected by agent/admin","timestamp":"2026-07-06 12:35:49"}
+{"level":"info","message":"Soil Test 6a4b539a7b3712d5a3142d4e status updated to Testing by agent/admin","timestamp":"2026-07-06 12:35:52"}
+{"level":"info","message":"Report details updated for Soil Test 6a4b539a7b3712d5a3142d4e","timestamp":"2026-07-06 12:36:16"}
+{"level":"info","message":"User logged out: Badal","timestamp":"2026-07-06 12:36:20"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-06 12:36:28"}
+{"level":"info","message":"Fetching and extracting text from PDF report: https://res.cloudinary.com/dbxi4z3it/image/upload/v1783321572/trishastik/soil-reports/oxvddcrmq8hamlf12rr2.pdf","timestamp":"2026-07-06 12:36:46"}
+{"level":"error","message":"Error parsing lab report PDF: pdfParse is not a function","timestamp":"2026-07-06 12:36:56"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 12:41:04"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 12:52:45"}
+{"level":"info","message":"Fetching and extracting text from PDF report: https://res.cloudinary.com/dbxi4z3it/image/upload/v1783321572/trishastik/soil-reports/oxvddcrmq8hamlf12rr2.pdf","timestamp":"2026-07-06 12:52:58"}
+{"level":"info","message":"GROK_API_KEY env not configured, generating mock response...","timestamp":"2026-07-06 12:52:59"}
+{"level":"info","message":"Grok AI soil analysis report completed for request 6a4b539a7b3712d5a3142d4e","timestamp":"2026-07-06 12:53:00"}
+{"level":"info","message":"Soil Test 6a4b539a7b3712d5a3142d4e published by admin","timestamp":"2026-07-06 12:53:17"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-06 12:53:23"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 12:53:30"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 17:06:11"}
+{"level":"info","message":"Email sent successfully via Nodemailer to a.visan1080@gmail.com","timestamp":"2026-07-06 17:07:08"}
+{"level":"info","message":"Generated and stored OTP for email: a.visan1080@gmail.com","timestamp":"2026-07-06 17:07:08"}
+{"level":"info","message":"OTP verified successfully for email: a.visan1080@gmail.com","timestamp":"2026-07-06 17:07:29"}
+{"level":"info","message":"Auto-seeded default vehicle for newly registered transporter: Rubi","timestamp":"2026-07-06 17:07:29"}
+{"level":"info","message":"User registered successfully: Rubi","timestamp":"2026-07-06 17:07:30"}
+{"level":"info","message":"Profile updated for user: Rubi. Completeness status: false","timestamp":"2026-07-06 17:08:57"}
+{"level":"info","message":"User logged out: Rubi","timestamp":"2026-07-06 17:10:04"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-06 17:10:12"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-06 17:11:20"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-06 17:11:32"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f19e added to cart for user Ramu Yadav","timestamp":"2026-07-06 17:11:51"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f19e added to cart for user Ramu Yadav","timestamp":"2026-07-06 17:11:56"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f19e added to cart for user Ramu Yadav","timestamp":"2026-07-06 17:11:57"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f19e added to cart for user Ramu Yadav","timestamp":"2026-07-06 17:11:57"}
+{"level":"info","message":"Checkout successful for user: Ramu Yadav","timestamp":"2026-07-06 17:11:59"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-06 17:12:08"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 17:12:20"}
+{"level":"info","message":"Order 6a4b94872da2a9dd2a0e1bb2 accepted by seller","timestamp":"2026-07-06 17:12:36"}
+{"level":"info","message":"No transporters found in 50KM for Order 6a4b94872da2a9dd2a0e1bb2. Expanding to 100KM...","timestamp":"2026-07-06 17:12:44"}
+{"level":"info","message":"No transporters found in 100KM for Order 6a4b94872da2a9dd2a0e1bb2. Falling back to nearest available transporters...","timestamp":"2026-07-06 17:12:45"}
+{"level":"info","message":"Matched 1 global candidates. Nearest assigned: 6a4b93792da2a9dd2a0e1b17","timestamp":"2026-07-06 17:12:46"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 17:12:50"}
+{"level":"info","message":"User logged in: Rubi","timestamp":"2026-07-06 17:12:57"}
+{"level":"info","message":"Transporter Rubi rejected job for Order 6a4b94872da2a9dd2a0e1bb2","timestamp":"2026-07-06 17:13:05"}
+{"level":"warn","message":"Exhausted all candidates in 100KM radius for Order 6a4b94872da2a9dd2a0e1bb2. Setting transporter to null.","timestamp":"2026-07-06 17:13:06"}
+{"level":"info","message":"User logged out: Rubi","timestamp":"2026-07-06 17:13:11"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 17:13:18"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 17:13:25"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 17:13:34"}
+{"level":"info","message":"Listing created successfully: Ghuinya by Ram","timestamp":"2026-07-06 17:19:03"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 17:19:11"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 17:32:29"}
+{"level":"info","message":"Startup Repair: Reset 1 stuck transit requests back to \"Accepted\".","timestamp":"2026-07-06 17:32:31"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 17:33:05"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a2 added to cart for user Ram","timestamp":"2026-07-06 17:41:02"}
+{"level":"info","message":"Checkout successful for user: Ram","timestamp":"2026-07-06 17:41:13"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 17:41:17"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-06 17:41:25"}
+{"level":"info","message":"Order 6a4b9b61bcb4f89054471efb accepted by seller","timestamp":"2026-07-06 17:41:44"}
+{"level":"info","message":"No transporters found in 50KM for Order 6a4b9b61bcb4f89054471efb. Expanding to 100KM...","timestamp":"2026-07-06 17:42:07"}
+{"level":"info","message":"No transporters found in 100KM for Order 6a4b9b61bcb4f89054471efb. Falling back to nearest available transporters...","timestamp":"2026-07-06 17:42:07"}
+{"level":"warn","message":"No available transporters found in database for vehicle type: mini-truck","timestamp":"2026-07-06 17:42:08"}
+{"level":"info","message":"Transit requested for Order 6a4b9b61bcb4f89054471efb. Matched 2 candidates in 50KM. First assigned: 6a16da33ee701f8f2eae1156","timestamp":"2026-07-06 17:42:15"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 17:43:57"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 17:44:37"}
+{"level":"info","message":"User logged out: Sanjay","timestamp":"2026-07-06 17:52:23"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 17:52:32"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a0 added to cart for user Ram","timestamp":"2026-07-06 17:52:43"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 17:53:10"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 17:53:17"}
+{"level":"info","message":"Transporter Anuj accepted delivery for Order 6a4b9b61bcb4f89054471efb","timestamp":"2026-07-06 17:53:27"}
+{"level":"info","message":"Tracking updated for Order 6a4b9b61bcb4f89054471efb: status=Delivered","timestamp":"2026-07-06 17:53:33"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 17:53:36"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 17:53:43"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 17:54:02"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-06 17:54:09"}

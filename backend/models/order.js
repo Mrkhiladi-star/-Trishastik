@@ -37,12 +37,20 @@ const orderSchema = new Schema({
   },
   vehicleType: {
     type: String,
-    enum: ['motorcycle', 'auto', 'pickup', 'tractor', 'truck'],
-    default: 'motorcycle'
+    enum: ['two-wheeler', 'three-wheeler', 'pickup', 'tata-ace', 'mini-truck', 'large-truck', 'refrigerated-truck', 'container'],
+    default: 'two-wheeler'
   },
   shippingAddress: {
     type: String,
     required: true
+  },
+  shippingLatitude: {
+    type: Number,
+    default: 27.56
+  },
+  shippingLongitude: {
+    type: Number,
+    default: 80.68
   },
   phone: {
     type: String,
@@ -53,6 +61,39 @@ const orderSchema = new Schema({
     latitude: { type: Number, default: 27.56 },
     longitude: { type: Number, default: 80.68 }
   },
+  deliveryPrice: {
+    type: Number,
+    default: 0
+  },
+  transitRadius: {
+    type: Number,
+    default: 50
+  },
+  currentCandidateIndex: {
+    type: Number,
+    default: 0
+  },
+  requestExpiresAt: {
+    type: Date
+  },
+  transitCandidates: [{
+    transporter: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    price: Number,
+    distanceToSeller: Number,
+    distanceBuyerSeller: Number,
+    status: {
+      type: String,
+      enum: ['Pending', 'Accepted', 'Rejected', 'Timeout'],
+      default: 'Pending'
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now
+    }
+  }],
   review: {
     rating: { type: Number, default: 0 },
     comment: { type: String, default: "" },

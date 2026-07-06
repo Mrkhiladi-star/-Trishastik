@@ -38,6 +38,14 @@ const userSchema = new Schema({
     state: { type: String, default: "" },
     pincode: { type: String, default: "" }
   },
+  latitude: {
+    type: Number,
+    default: 27.56
+  },
+  longitude: {
+    type: Number,
+    default: 80.68
+  },
   farmingInfo: {
     cropTypes: { type: [String], default: [] },
     experienceYears: { type: Number, default: 0 }

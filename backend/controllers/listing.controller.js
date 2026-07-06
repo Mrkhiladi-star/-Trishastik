@@ -81,8 +81,20 @@ const addToCart = async (req, res, next) => {
         return res.status(404).json({ error: "Product not found." });
       }
 
-      if (req.user.role === "farmer" && product.category === "organic_product") {
-        return res.status(403).json({ error: "Access denied: Farmers cannot buy organic crop products." });
+      // Check if trying to buy own listing
+      if (product.owner.toString() === req.user._id.toString()) {
+        return res.status(403).json({ error: "Access denied: You cannot purchase your own product listing." });
+      }
+
+      // Check role-specific product category buying restrictions
+      if (req.user.role === "customer" && product.category !== "organic_product") {
+        return res.status(403).json({ error: "Access denied: Customers can only buy organic crop products." });
+      }
+      if (req.user.role === "fertilizer_seller" && (product.category === "instrument_sale" || product.category === "instrument_rent")) {
+        return res.status(403).json({ error: "Access denied: Fertilizer sellers cannot purchase agricultural instruments." });
+      }
+      if (req.user.role === "instrument_seller" && product.category === "medicine_fertilizer") {
+        return res.status(403).json({ error: "Access denied: Instrument/equipment sellers cannot purchase fertilizers." });
       }
 
       let user = await User.findById(req.user._id);
@@ -105,6 +117,21 @@ const removeFromCart = async (req, res, next) => {
     await user.save();
     logger.info(`Product ${req.params.productid} removed from cart for user ${req.user.username}`);
     res.json({ success: true, message: "Removed from cart", cart: user.cart });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const removeOneFromCart = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const index = user.cart.findIndex(id => id.toString() === req.params.productid);
+    if (index > -1) {
+      user.cart.splice(index, 1);
+    }
+    await user.save();
+    logger.info(`One unit of product ${req.params.productid} removed from cart for user ${req.user.username}`);
+    res.json({ success: true, message: "Decremented quantity in cart", cart: user.cart });
   } catch (err) {
     next(err);
   }
@@ -193,6 +220,7 @@ module.exports = {
   getSellerListings,
   addToCart,
   removeFromCart,
+  removeOneFromCart,
   getShopData,
   getListingDetails,
   deleteListing,

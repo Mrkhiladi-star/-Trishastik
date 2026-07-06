@@ -265,14 +265,11 @@ const analyzeReport = async (req, res, next) => {
       if (labReportUrl.toLowerCase().includes(".pdf")) {
         try {
           logger.info(`Fetching and extracting text from PDF report: ${labReportUrl}`);
-          const pdfResponse = await fetch(labReportUrl);
-          if (pdfResponse.ok) {
-            const pdfBuffer = Buffer.from(await pdfResponse.arrayBuffer());
-            const pdfParse = require("pdf-parse");
-            const pdfData = await pdfParse(pdfBuffer);
-            if (pdfData && pdfData.text && pdfData.text.trim()) {
-              reportText = `[Direct Lab Report Content]\n${pdfData.text.trim()}\n\n${reportText}`;
-            }
+          const { PDFParse } = require("pdf-parse");
+          const parser = new PDFParse({ url: labReportUrl });
+          const pdfData = await parser.getText();
+          if (pdfData && pdfData.text && pdfData.text.trim()) {
+            reportText = `[Direct Lab Report Content]\n${pdfData.text.trim()}\n\n${reportText}`;
           }
         } catch (err) {
           logger.error(`Error parsing lab report PDF: ${err.message}`);

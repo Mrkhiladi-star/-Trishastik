@@ -6,6 +6,15 @@ import {
   TrendingUp, Award, Droplets, HardHat, FileText, CheckCircle2,
   AlertTriangle, Hourglass, ShoppingBag, Store, Tag, Truck, Navigation
 } from "lucide-react";
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
+import L from "leaflet";
+
+// Fix Leaflet marker asset imports
+L.Icon.Default.mergeOptions({
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
 
 const Profile = () => {
   const { user, refreshUser } = useAuth();
@@ -25,6 +34,104 @@ const Profile = () => {
   const [city, setCity] = useState(user?.address?.city || "");
   const [state, setState] = useState(user?.address?.state || "");
   const [pincode, setPincode] = useState(user?.address?.pincode || "");
+  const [latitude, setLatitude] = useState(user?.latitude || 27.56);
+  const [longitude, setLongitude] = useState(user?.longitude || 80.68);
+  const [mapCenter, setMapCenter] = useState([user?.latitude || 27.56, user?.longitude || 80.68]);
+
+  // Synchronize map center when coordinates change
+  useEffect(() => {
+    if (latitude && longitude) {
+      setMapCenter([latitude, longitude]);
+    }
+  }, [latitude, longitude]);
+
+  // Debounced auto-geocoding from manual text fields
+  useEffect(() => {
+    const delayDebounce = setTimeout(async () => {
+      const addressParts = [];
+      if (street) addressParts.push(street);
+      if (city) addressParts.push(city);
+      if (state) addressParts.push(state);
+      if (pincode) addressParts.push(pincode);
+      
+      const query = addressParts.join(", ");
+      if (!query || query.trim() === "") return;
+      
+      try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(query)}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            const lat = parseFloat(data[0].lat);
+            const lon = parseFloat(data[0].lon);
+            setLatitude(lat);
+            setLongitude(lon);
+            setMapCenter([lat, lon]);
+          }
+        }
+      } catch (err) {
+        console.error("Auto geocoding address failed:", err);
+      }
+    }, 1200);
+    
+    return () => clearTimeout(delayDebounce);
+  }, [street, city, state, pincode]);
+
+  const ChangeMapCenter = ({ center }) => {
+    const map = useMap();
+    useEffect(() => {
+      if (center) {
+        map.setView(center, map.getZoom());
+      }
+    }, [center, map]);
+    return null;
+  };
+
+  const MapClickHandler = () => {
+    useMapEvents({
+      click(e) {
+        const lat = e.latlng.lat;
+        const lon = e.latlng.lng;
+        setLatitude(lat);
+        setLongitude(lon);
+        setMapCenter([lat, lon]);
+        
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.address) {
+              const addr = data.address;
+              const streetVal = [addr.road, addr.suburb, addr.neighbourhood, addr.village].filter(Boolean).join(", ") || data.display_name || "";
+              const cityVal = addr.city || addr.town || addr.village || addr.county || "";
+              const stateVal = addr.state || "";
+              const pincodeVal = addr.postcode || "";
+              
+              setStreet(streetVal);
+              setCity(cityVal);
+              setState(stateVal);
+              setPincode(pincodeVal);
+            }
+          })
+          .catch(err => console.error("Reverse geocoding error:", err));
+      }
+    });
+    return null;
+  };
+
+  // Transporter custom logistics settings
+  const [vehicle, setVehicle] = useState(null);
+  const [vehicleType, setVehicleType] = useState("two-wheeler");
+  const [registrationNumber, setRegistrationNumber] = useState("");
+  const [capacityKg, setCapacityKg] = useState(500);
+  const [isAvailable, setIsAvailable] = useState(true);
+  const [pricePerKm, setPricePerKm] = useState(15);
+  const [minCharge, setMinCharge] = useState(50);
+  const [loadingCharge, setLoadingCharge] = useState(100);
+  const [waitingCharge, setWaitingCharge] = useState(50);
+  const [nightSurcharge, setNightSurcharge] = useState(0);
+  const [driverName, setDriverName] = useState("");
+  const [driverPhone, setDriverPhone] = useState("");
+  const [driverLicense, setDriverLicense] = useState("");
 
   // Farming/Land state
   const [farmArea, setFarmArea] = useState(user?.landDetails?.farmArea || 0);
@@ -52,6 +159,8 @@ const Profile = () => {
       setCity(user.address?.city || "");
       setState(user.address?.state || "");
       setPincode(user.address?.pincode || "");
+      setLatitude(user.latitude || 27.56);
+      setLongitude(user.longitude || 80.68);
       setFarmArea(user.landDetails?.farmArea || 0);
       setSoilType(user.landDetails?.soilType || "");
       setLocationName(user.landDetails?.location || "");
@@ -98,6 +207,7 @@ const Profile = () => {
     }
 
     if (user.role === "transporter") {
+      fetchVehicleDetails();
       fetch("/api/transporter/active")
         .then(res => res.ok ? res.json() : null)
         .then(data => {
@@ -142,6 +252,8 @@ const Profile = () => {
           fullName,
           phone,
           address: { street, city, state, pincode },
+          latitude,
+          longitude,
           farmingInfo: {
             cropTypes: cropTypes.split(",").map(c => c.trim()).filter(Boolean),
             experienceYears: Number(experienceYears)
@@ -166,6 +278,124 @@ const Profile = () => {
     } finally {
       setSaveLoading(false);
     }
+  };
+
+  const fetchVehicleDetails = async () => {
+    try {
+      const response = await fetch("/api/profile/vehicle");
+      if (response.ok) {
+        const data = await response.json();
+        if (data.vehicle) {
+          const veh = data.vehicle;
+          setVehicle(veh);
+          setVehicleType(veh.vehicleType || "two-wheeler");
+          setRegistrationNumber(veh.registrationNumber || "");
+          setCapacityKg(veh.capacityKg || 500);
+          setIsAvailable(veh.isAvailable !== undefined ? veh.isAvailable : true);
+          setPricePerKm(veh.pricePerKm || 15);
+          setMinCharge(veh.minCharge || 50);
+          setLoadingCharge(veh.loadingCharge || 100);
+          setWaitingCharge(veh.waitingCharge || 50);
+          setNightSurcharge(veh.nightSurcharge || 0);
+          setDriverName(veh.driverDetails?.name || "");
+          setDriverPhone(veh.driverDetails?.phone || "");
+          setDriverLicense(veh.driverDetails?.licenseNumber || "");
+        }
+      }
+    } catch (err) {
+      console.error("Failed to load vehicle details:", err);
+    }
+  };
+
+  const handleVehicleUpdate = async (e) => {
+    e.preventDefault();
+    setSaveLoading(true);
+    setMessage({ text: "", type: "" });
+    try {
+      const response = await fetch("/api/profile/vehicle", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          vehicleType,
+          registrationNumber,
+          capacityKg: Number(capacityKg),
+          isAvailable,
+          pricePerKm: Number(pricePerKm),
+          minCharge: Number(minCharge),
+          loadingCharge: Number(loadingCharge),
+          waitingCharge: Number(waitingCharge),
+          nightSurcharge: Number(nightSurcharge),
+          driverName,
+          driverPhone,
+          driverLicense
+        })
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setMessage({ text: "Vehicle and logistics settings updated successfully!", type: "success" });
+        setVehicle(data.vehicle);
+        await refreshUser();
+      } else {
+        setMessage({ text: data.error || "Failed to update vehicle details.", type: "error" });
+      }
+    } catch (err) {
+      setMessage({ text: "Network error occurred.", type: "error" });
+    } finally {
+      setSaveLoading(false);
+    }
+  };
+
+  const handleFetchGPSLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+    
+    setMessage({ text: "Requesting GPS coordinates...", type: "success" });
+    
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        setLatitude(lat);
+        setLongitude(lon);
+        
+        setMessage({ text: "Coordinates fetched! Fetching address details...", type: "success" });
+        
+        try {
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data && data.address) {
+              const addr = data.address;
+              const streetVal = [addr.road, addr.suburb, addr.neighbourhood, addr.village].filter(Boolean).join(", ") || data.display_name || "";
+              const cityVal = addr.city || addr.town || addr.village || addr.county || "";
+              const stateVal = addr.state || "";
+              const pincodeVal = addr.postcode || "";
+              
+              setStreet(streetVal);
+              setCity(cityVal);
+              setState(stateVal);
+              setPincode(pincodeVal);
+              setMessage({ text: "Address auto-filled successfully!", type: "success" });
+              setTimeout(() => setMessage({ text: "", type: "" }), 3000);
+            } else {
+              setMessage({ text: "GPS location fetched, but address lookup failed. Please fill manually.", type: "error" });
+            }
+          } else {
+            setMessage({ text: "GPS location fetched, but address service failed. Please fill manually.", type: "error" });
+          }
+        } catch (err) {
+          console.error("Nominatim reverse geocode failed:", err);
+          setMessage({ text: "Error lookup. Please input fields manually.", type: "error" });
+        }
+      },
+      (err) => {
+        console.error("GPS error:", err);
+        setMessage({ text: "GPS access denied or failed: " + err.message, type: "error" });
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
   };
 
   const handlePhotoUpload = async (e) => {
@@ -483,6 +713,19 @@ const Profile = () => {
                 </button>
               )}
 
+              {user.role === "transporter" && (
+                <button
+                  onClick={() => setActiveTab("vehicle")}
+                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-all ${activeTab === "vehicle" ? "bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500" : "hover:bg-slate-900 text-slate-300"}`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <Truck size={16} />
+                    <span>Vehicle & Logistics Settings</span>
+                  </div>
+                  <ChevronRight size={14} />
+                </button>
+              )}
+
               <button
                 onClick={() => setActiveTab("security")}
                 className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-all ${activeTab === "security" ? "bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500" : "hover:bg-slate-900 text-slate-300"}`}
@@ -531,7 +774,17 @@ const Profile = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">Address Details</h4>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-2">
+                      <h4 className="text-sm font-bold text-white uppercase tracking-wider">Address Details</h4>
+                      <button
+                        type="button"
+                        onClick={handleFetchGPSLocation}
+                        className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-[10px] flex items-center space-x-1 uppercase transition-all self-start"
+                      >
+                        <MapPin size={10} />
+                        <span>Autofill GPS Address</span>
+                      </button>
+                    </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="sm:col-span-2 space-y-1.5">
                         <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Street / Locality</label>
@@ -577,6 +830,33 @@ const Profile = () => {
                           className="w-full glass-input rounded-xl px-4 py-3 text-sm"
                           placeholder="State name"
                         />
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4 mt-2">
+                      <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-850">
+                        <span className="text-[10px] uppercase font-bold text-slate-500 block">Latitude</span>
+                        <span className="text-xs font-semibold text-white">{latitude ? Number(latitude).toFixed(5) : "Not Set"}</span>
+                      </div>
+                      <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-850">
+                        <span className="text-[10px] uppercase font-bold text-slate-500 block">Longitude</span>
+                        <span className="text-xs font-semibold text-white">{longitude ? Number(longitude).toFixed(5) : "Not Set"}</span>
+                      </div>
+                    </div>
+
+                    {/* Profile map component */}
+                    <div className="space-y-1.5 mt-2">
+                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Confirm Pinpoint on Map</label>
+                      <div className="h-48 w-full rounded-2xl overflow-hidden border border-slate-800">
+                        <MapContainer center={mapCenter} zoom={12} scrollWheelZoom={false} className="h-full w-full">
+                          <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                          />
+                          <Marker position={[latitude || 27.56, longitude || 80.68]} />
+                          <MapClickHandler />
+                          <ChangeMapCenter center={mapCenter} />
+                        </MapContainer>
                       </div>
                     </div>
                   </div>
@@ -786,6 +1066,179 @@ const Profile = () => {
                     ))}
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* Tab: Vehicle & Logistics Settings */}
+            {activeTab === "vehicle" && user.role === "transporter" && (
+              <div>
+                <h3 className="text-xl font-bold text-white mb-6 border-b border-slate-800/80 pb-4">Vehicle & Logistics Settings</h3>
+                <form onSubmit={handleVehicleUpdate} className="space-y-6">
+                  
+                  {/* Vehicle Details Section */}
+                  <div className="space-y-4">
+                    <h4 className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Vehicle Specifications</h4>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Vehicle Category Type</label>
+                        <select
+                          value={vehicleType}
+                          onChange={(e) => setVehicleType(e.target.value)}
+                          className="w-full bg-slate-900 border border-slate-850 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 font-semibold"
+                          required
+                        >
+                          <option className="bg-slate-900 text-white" value="two-wheeler">Two-Wheeler (Motorcycle / Scooter)</option>
+                          <option className="bg-slate-900 text-white" value="three-wheeler">Three-Wheeler (Auto-Rickshaw / Loader)</option>
+                          <option className="bg-slate-900 text-white" value="pickup">Pickup Truck (Mini Utility payload)</option>
+                          <option className="bg-slate-900 text-white" value="tata-ace">Tata Ace (Chota Hathi / Medium utility)</option>
+                          <option className="bg-slate-900 text-white" value="mini-truck">Mini-Truck (Commercial delivery transport)</option>
+                          <option className="bg-slate-900 text-white" value="large-truck">Large Cargo Truck (Multi-axle container)</option>
+                          <option className="bg-slate-900 text-white" value="refrigerated-truck">Refrigerated Cold-Chain Truck</option>
+                          <option className="bg-slate-900 text-white" value="container">Closed container transport</option>
+                        </select>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Registration Number</label>
+                        <input
+                          type="text"
+                          value={registrationNumber}
+                          onChange={(e) => setRegistrationNumber(e.target.value)}
+                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          placeholder="e.g. MH-12-AB-1234"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Payload Capacity (in Kg)</label>
+                        <input
+                          type="number"
+                          value={capacityKg}
+                          onChange={(e) => setCapacityKg(e.target.value)}
+                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          placeholder="e.g. 500"
+                          min="1"
+                          required
+                        />
+                      </div>
+
+                      <div className="flex items-center space-x-3 pt-6">
+                        <input
+                          type="checkbox"
+                          id="isAvailableCheck"
+                          checked={isAvailable}
+                          onChange={(e) => setIsAvailable(e.target.checked)}
+                          className="w-5 h-5 rounded border-slate-800 text-emerald-500 bg-slate-950 focus:ring-emerald-500 focus:ring-2 focus:ring-offset-slate-900"
+                        />
+                        <label htmlFor="isAvailableCheck" className="text-sm font-semibold text-slate-300 select-none">
+                          Mark Vehicle as Available for Orders
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Pricing Details Section */}
+                  <div className="space-y-4 pt-4 border-t border-slate-800/80">
+                    <h4 className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Fare & Pricing Structure (in ₹)</h4>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Fare per KM</label>
+                        <input
+                          type="number"
+                          value={pricePerKm}
+                          onChange={(e) => setPricePerKm(e.target.value)}
+                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          placeholder="e.g. 15"
+                          min="1"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Minimum Charge</label>
+                        <input
+                          type="number"
+                          value={minCharge}
+                          onChange={(e) => setMinCharge(e.target.value)}
+                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          placeholder="e.g. 50"
+                          min="0"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Loading/Unloading Charge</label>
+                        <input
+                          type="number"
+                          value={loadingCharge}
+                          onChange={(e) => setLoadingCharge(e.target.value)}
+                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          placeholder="e.g. 100"
+                          min="0"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Driver details section */}
+                  <div className="space-y-4 pt-4 border-t border-slate-800/80">
+                    <h4 className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Driver & License Information</h4>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Driver's Name</label>
+                        <input
+                          type="text"
+                          value={driverName}
+                          onChange={(e) => setDriverName(e.target.value)}
+                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          placeholder="e.g. Ramesh Kumar"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Driver's Mobile (Phone)</label>
+                        <input
+                          type="tel"
+                          value={driverPhone}
+                          onChange={(e) => setDriverPhone(e.target.value)}
+                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          placeholder="e.g. 9876543210"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Driving License Number</label>
+                        <input
+                          type="text"
+                          value={driverLicense}
+                          onChange={(e) => setDriverLicense(e.target.value)}
+                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          placeholder="e.g. DL-1420110012345"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={saveLoading}
+                    className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50"
+                  >
+                    <Save size={16} />
+                    <span>{saveLoading ? "Saving Logistics Settings..." : "Save Vehicle & Driver Details"}</span>
+                  </button>
+                </form>
               </div>
             )}
 

@@ -16,6 +16,7 @@ router.get("/transporter/active", isLoggedIn, authorizeRoles("transporter", "adm
 router.post("/orders/:id/accept", isLoggedIn, orderController.sellerAcceptOrder);
 router.post("/orders/:id/request-transit", isLoggedIn, orderController.sellerRequestTransit);
 router.post("/orders/:id/accept-delivery", isLoggedIn, authorizeRoles("transporter", "admin"), orderController.transporterAcceptDelivery);
+router.post("/orders/:id/reject-delivery", isLoggedIn, authorizeRoles("transporter", "admin"), orderController.transporterRejectDelivery);
 router.post("/orders/:id/track", isLoggedIn, orderController.trackOrder);
 router.post("/orders/:id/cancel", isLoggedIn, orderController.cancelOrder);
 router.post("/orders/:id/review", isLoggedIn, orderController.reviewOrder);

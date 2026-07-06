@@ -12,6 +12,7 @@ router.post("/new", isLoggedIn, validateBody(createListingSchema), listingContro
 router.get("/seller/listings", isLoggedIn, authorizeRoles("farmer", "fertilizer_seller", "instrument_seller", "admin", "fertilizerSeller", "equipmentSeller"), listingController.getSellerListings);
 router.get("/addtocart/:productid", isLoggedIn, listingController.addToCart);
 router.get("/remove-from-cart/:productid", isLoggedIn, listingController.removeFromCart);
+router.get("/remove-one-from-cart/:productid", isLoggedIn, listingController.removeOneFromCart);
 router.get("/shop", isLoggedIn, listingController.getShopData);
 router.get("/listings/:id", listingController.getListingDetails);
 router.delete("/listings/:id", isLoggedIn, listingController.deleteListing);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import L from "leaflet";
 import {
   Truck, MapPin, Phone, User, ShoppingBag, DollarSign,
@@ -86,6 +86,28 @@ const TransporterDashboard = () => {
     }
   };
 
+  const handleRejectJob = async (orderId) => {
+    if (!window.confirm("Are you sure you want to reject this job offer? It will automatically go to the next transporter.")) return;
+    setActionLoading(true);
+    try {
+      const response = await fetch(`/api/orders/${orderId}/reject-delivery`, {
+        method: "POST"
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setMessage("Job rejected successfully. Reassigning next candidate...");
+        setTimeout(() => setMessage(""), 3000);
+        await fetchData();
+      } else {
+        alert(data.error || "Failed to reject job.");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
   const handleUpdateLocation = async (e) => {
     e.preventDefault();
     if (!trackingOrderId) return;
@@ -147,12 +169,64 @@ const TransporterDashboard = () => {
   const MapClickHandler = () => {
     useMapEvents({
       click(e) {
-        setTrackingLat(e.latlng.lat);
-        setTrackingLon(e.latlng.lng);
+        const lat = e.latlng.lat;
+        const lon = e.latlng.lng;
+        setTrackingLat(lat);
+        setTrackingLon(lon);
+        setMapCenter([lat, lon]);
+        
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.display_name) {
+              setTrackingLocationName(data.display_name);
+            }
+          })
+          .catch(err => console.error("Reverse geocoding error:", err));
       }
     });
     return null;
   };
+
+  const ChangeMapCenter = ({ center }) => {
+    const map = useMap();
+    useEffect(() => {
+      if (center) {
+        map.setView(center, map.getZoom());
+      }
+    }, [center, map]);
+    return null;
+  };
+
+  // Debounced auto-geocoding from trackingLocationName text input
+  useEffect(() => {
+    const delayDebounce = setTimeout(async () => {
+      if (!trackingLocationName || trackingLocationName.trim() === "") return;
+      
+      try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(trackingLocationName)}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            const lat = parseFloat(data[0].lat);
+            const lon = parseFloat(data[0].lon);
+            // Check if coordinates are significantly different to prevent overriding exact map clicks
+            const diffLat = Math.abs(lat - trackingLat);
+            const diffLon = Math.abs(lon - trackingLon);
+            if (diffLat > 0.005 || diffLon > 0.005) {
+              setTrackingLat(lat);
+              setTrackingLon(lon);
+              setMapCenter([lat, lon]);
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Auto geocoding tracking location failed:", err);
+      }
+    }, 1200);
+    
+    return () => clearTimeout(delayDebounce);
+  }, [trackingLocationName]);
 
   if (loading) {
     return (
@@ -189,6 +263,25 @@ const TransporterDashboard = () => {
           </p>
         </div>
       </div>
+
+      {/* Warning Banner for default coordinates */}
+      {user && (user.latitude === 27.56 || user.longitude === 80.68) && (
+        <div className="bg-amber-500/10 border border-amber-500/25 p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-amber-400">
+          <div className="flex items-start space-x-3 text-xs leading-relaxed">
+            <MapPin className="mt-0.5 shrink-0" size={16} />
+            <div>
+              <p className="font-bold uppercase tracking-wider text-[10px]">Location Coordinate Action Required</p>
+              <p className="text-slate-300">Your profile coordinates are currently set to default locations. Update your GPS geolocations in your profile to accurately see orders in your area.</p>
+            </div>
+          </div>
+          <button
+            onClick={() => navigate("/profile")}
+            className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-4 py-1.5 rounded-xl text-[10px] uppercase tracking-wider self-start sm:self-center transition-all"
+          >
+            Update Profile
+          </button>
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="flex space-x-4 border-b border-slate-800 pb-4">
@@ -254,15 +347,41 @@ const TransporterDashboard = () => {
                     </div>
                   </div>
 
-                  {/* Accept action button */}
-                  <button
-                    onClick={() => handleAcceptJob(job._id)}
-                    disabled={actionLoading}
-                    className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 text-xs shadow-lg"
-                  >
-                    <Truck size={14} />
-                    <span>Accept Delivery Contract</span>
-                  </button>
+                  {/* Delivery Price & Distance Breakup */}
+                  <div className="bg-emerald-500/5 p-4 rounded-xl border border-emerald-500/10 space-y-2 text-xs">
+                    <div className="flex justify-between text-slate-400">
+                      <span>Distance to Pickup (Seller):</span>
+                      <span className="font-bold text-white">{job.distanceToSeller !== undefined ? `${job.distanceToSeller} KM` : 'Calculating...'}</span>
+                    </div>
+                    <div className="flex justify-between text-slate-400">
+                      <span>Delivery Distance (Seller to Buyer):</span>
+                      <span className="font-bold text-white">{job.distanceBuyerSeller !== undefined ? `${job.distanceBuyerSeller} KM` : 'Calculating...'}</span>
+                    </div>
+                    <div className="border-t border-slate-850 my-2"></div>
+                    <div className="flex justify-between text-sm font-extrabold text-emerald-400">
+                      <span>Your Guaranteed Earnings:</span>
+                      <span>₹{job.deliveryPrice || '0.00'}</span>
+                    </div>
+                  </div>
+
+                  {/* Accept & Reject action buttons */}
+                  <div className="flex space-x-3 mt-4">
+                    <button
+                      onClick={() => handleRejectJob(job._id)}
+                      disabled={actionLoading}
+                      className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/25 font-bold py-3 px-4 rounded-xl text-xs transition-all"
+                    >
+                      Reject Job
+                    </button>
+                    <button
+                      onClick={() => handleAcceptJob(job._id)}
+                      disabled={actionLoading}
+                      className="flex-2 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 text-xs shadow-lg transition-all"
+                    >
+                      <Truck size={14} />
+                      <span>Accept Contract</span>
+                    </button>
+                  </div>
 
                 </div>
               ))}
@@ -401,6 +520,7 @@ const TransporterDashboard = () => {
                     />
                     <Marker position={[trackingLat, trackingLon]} />
                     <MapClickHandler />
+                    <ChangeMapCenter center={mapCenter} />
                   </MapContainer>
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-[10px] text-slate-400 mt-2">

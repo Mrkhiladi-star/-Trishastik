@@ -135,23 +135,24 @@ const Home = () => {
   };
 
   const filteredListings = listings.filter((item) => {
-    // 1. If not logged in, show ONLY organic products
-    if (!user) {
-      if (item.category !== "organic_product") return false;
-    } else {
-      // 2. If logged in, filter based on role authorization
-      if (user.role === "customer") {
-        if (item.category !== "organic_product") return false;
-      } else if (user.role === "farmer") {
-        // Farmers buy fertilizers and tools, not organic crops
-        if (item.category === "organic_product") return false;
-      } else if (user.role === "fertilizer_seller") {
-        // Fertilizer sellers see only fertilizers
-        if (item.category !== "medicine_fertilizer") return false;
-      } else if (user.role === "instrument_seller") {
-        // Instrument sellers see only equipment
-        if (item.category !== "instrument_sale" && item.category !== "instrument_rent") return false;
+    // 1. User Role Restrictions (Hide items they cannot buy)
+    if (user) {
+      const ownerId = item.owner?._id || item.owner;
+      if (ownerId && user._id && ownerId.toString() === user._id.toString()) {
+        return false;
       }
+      if (user.role === "customer" && item.category !== "organic_product") {
+        return false;
+      }
+      if (user.role === "fertilizer_seller" && (item.category === "instrument_sale" || item.category === "instrument_rent")) {
+        return false;
+      }
+      if (user.role === "instrument_seller" && item.category === "medicine_fertilizer") {
+        return false;
+      }
+    } else {
+      // If not logged in, show ONLY organic products
+      if (item.category !== "organic_product") return false;
     }
 
     // Tag-based filtering

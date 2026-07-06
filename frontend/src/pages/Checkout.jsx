@@ -49,6 +49,30 @@ const Checkout = () => {
     fetchCheckoutData();
   }, []);
 
+  const handleIncrementQuantity = async (id) => {
+    try {
+      const response = await fetch(`/api/addtocart/${id}`);
+      if (response.ok) {
+        await refreshUser();
+        await fetchCheckoutData();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDecrementQuantity = async (id) => {
+    try {
+      const response = await fetch(`/api/remove-one-from-cart/${id}`);
+      if (response.ok) {
+        await refreshUser();
+        await fetchCheckoutData();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleCheckoutSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -134,16 +158,59 @@ const Checkout = () => {
               <span>Cart Summary</span>
             </h3>
 
-            <div className="space-y-4 text-xs">
-              <div className="flex justify-between items-center text-slate-400">
-                <span>Total Items:</span>
-                <span className="font-bold text-white text-sm">{cart.length}</span>
-              </div>
-              <div className="flex justify-between items-start text-slate-400 gap-2">
-                <span className="flex-shrink-0">Selected Items:</span>
-                <span className="font-semibold text-white text-right line-clamp-3 leading-relaxed max-w-[220px]" title={cartTitles}>
-                  {cartTitles || "None"}
-                </span>
+             <div className="space-y-4 text-xs">
+              {/* Grouped items review list */}
+              <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
+                {(() => {
+                  const groupedCart = [];
+                  cart.forEach(item => {
+                    if (!item) return;
+                    const existing = groupedCart.find(g => g._id === item._id);
+                    if (existing) {
+                      existing.quantity += 1;
+                    } else {
+                      groupedCart.push({ ...item, quantity: 1 });
+                    }
+                  });
+                  return groupedCart.map((item) => (
+                    <div key={item._id} className="bg-slate-950/40 p-3 rounded-xl border border-slate-850/60 flex items-center justify-between gap-3 text-xs">
+                      <div className="flex items-center space-x-3 truncate">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-10 h-10 rounded-lg object-cover bg-slate-900"
+                          onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
+                        />
+                        <div className="truncate">
+                          <p className="font-bold text-white truncate">{item.title}</p>
+                          <p className="text-[10px] text-slate-500">₹{item.price} each</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-3">
+                        {/* Quantity Selector */}
+                        <div className="flex items-center space-x-1.5 bg-slate-950 border border-slate-800 rounded p-0.5">
+                          <button
+                            type="button"
+                            onClick={() => handleDecrementQuantity(item._id)}
+                            className="w-5 h-5 flex items-center justify-center text-slate-400 hover:text-white rounded hover:bg-slate-800 active:scale-95 transition-all font-bold text-[10px]"
+                          >
+                            -
+                          </button>
+                          <span className="w-4 text-center font-bold text-white text-[10px]">{item.quantity}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleIncrementQuantity(item._id)}
+                            className="w-5 h-5 flex items-center justify-center text-slate-400 hover:text-white rounded hover:bg-slate-800 active:scale-95 transition-all font-bold text-[10px]"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <span className="font-bold text-emerald-400 min-w-[50px] text-right">₹{(item.price * item.quantity).toFixed(2)}</span>
+                      </div>
+                    </div>
+                  ));
+                })()}
               </div>
 
               <div className="border-t border-slate-800/80 my-3"></div>

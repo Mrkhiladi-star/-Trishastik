@@ -78,6 +78,36 @@ const NewListing = () => {
     }
   }, []);
 
+  // Debounced auto-geocoding from manual location text input
+  useEffect(() => {
+    const delayDebounce = setTimeout(async () => {
+      if (!location || location.trim() === "") return;
+      
+      try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(location)}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            const lat = parseFloat(data[0].lat);
+            const lon = parseFloat(data[0].lon);
+            // Check if coordinates are significantly different to prevent overriding exact map pin clicks/drags
+            const diffLat = Math.abs(lat - latitude);
+            const diffLon = Math.abs(lon - longitude);
+            if (diffLat > 0.005 || diffLon > 0.005) {
+              setLatitude(lat);
+              setLongitude(lon);
+              setMapCenter([lat, lon]);
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Auto geocoding location failed:", err);
+      }
+    }, 1200);
+    
+    return () => clearTimeout(delayDebounce);
+  }, [location]);
+
   const MapClickHandler = () => {
     useMapEvents({
       click(e) {

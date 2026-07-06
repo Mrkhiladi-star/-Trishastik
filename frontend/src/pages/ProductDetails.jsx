@@ -166,15 +166,22 @@ const ProductDetails = () => {
     ? product.category.split("_").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
     : "Organic Input";
 
-  const isOwnListing = user && product.owner && product.owner._id === user._id;
+  const isOwnListing = user && product.owner && (
+    (product.owner._id || product.owner || "").toString() === (user._id || "").toString()
+  );
   const isAdmin = user && (user.role === "admin" || user.email === "sramu1090@gmail.com");
   
-  // Customers and Farmers can buy fertilizers or tools, but only customers can buy crops. Admin/Transporters/Agents cannot buy anything.
-  const canBuy = user && 
-    user.role !== "admin" && 
-    user.role !== "transporter" && 
-    user.role !== "agent" && 
-    !(user.role === "farmer" && product.category === "organic_product");
+  let canBuy = false;
+  if (user && !isOwnListing && user.role !== "admin" && user.role !== "transporter" && user.role !== "agent" && user.email !== "sramu1090@gmail.com") {
+    canBuy = true;
+    if (user.role === "customer" && product.category !== "organic_product") {
+      canBuy = false;
+    } else if (user.role === "fertilizer_seller" && (product.category === "instrument_sale" || product.category === "instrument_rent")) {
+      canBuy = false;
+    } else if (user.role === "instrument_seller" && product.category === "medicine_fertilizer") {
+      canBuy = false;
+    }
+  }
 
   // Create unique list of all images for gallery (including legacy main image field)
   const galleryImages = [

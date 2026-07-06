@@ -57,6 +57,27 @@ const register = async (req, res, next) => {
 
     const registeredUser = await User.register(newUser, password);
     
+    // Auto-seed default vehicle for transporters
+    if (registeredUser.role === "transporter") {
+      try {
+        const Vehicle = require("../models/vehicle");
+        const defaultVehicle = new Vehicle({
+          transporter: registeredUser._id,
+          vehicleType: "two-wheeler",
+          registrationNumber: "MH-12-AB-" + Math.floor(1000 + Math.random() * 9000),
+          capacityKg: 150,
+          pricePerKm: 15,
+          minCharge: 50,
+          loadingCharge: 100,
+          isAvailable: true
+        });
+        await defaultVehicle.save();
+        logger.info(`Auto-seeded default vehicle for newly registered transporter: ${username}`);
+      } catch (vehErr) {
+        logger.error(`Error auto-seeding vehicle for transporter ${username}:`, vehErr);
+      }
+    }
+    
     // Log in user automatically after verification
     req.login(registeredUser, (err) => {
       if (err) return next(err);

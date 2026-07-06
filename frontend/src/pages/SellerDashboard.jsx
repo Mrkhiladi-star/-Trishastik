@@ -21,7 +21,7 @@ const SellerDashboard = () => {
 
   // Transit Dispatch modal state
   const [transitOrderId, setTransitOrderId] = useState(null);
-  const [vehicleType, setVehicleType] = useState("motorcycle");
+  const [vehicleType, setVehicleType] = useState("two-wheeler");
   const [transitSubmitting, setTransitSubmitting] = useState(false);
 
   const fetchSellerData = async () => {
@@ -400,11 +400,14 @@ const SellerDashboard = () => {
                   onChange={(e) => setVehicleType(e.target.value)}
                   className="w-full bg-slate-950 border border-slate-850 text-white rounded-xl px-4 py-2.5 focus:outline-none"
                 >
-                  <option value="motorcycle">Motorcycle (Small parcels / letters)</option>
-                  <option value="auto">Auto-Rickshaw (Fertilizers / medium load)</option>
-                  <option value="pickup">Pickup Mini-truck (Agri Instruments / large load)</option>
-                  <option value="tractor">Tractor (Bulk crop / farm inputs)</option>
-                  <option value="truck">Cargo Truck (Bulk container wholesale loads)</option>
+                  <option value="two-wheeler">Two-Wheeler (Motorcycle / Scooter)</option>
+                  <option value="three-wheeler">Three-Wheeler (Auto-Rickshaw / Loader)</option>
+                  <option value="pickup">Pickup Truck (Mini Utility payload)</option>
+                  <option value="tata-ace">Tata Ace (Chota Hathi / Medium utility)</option>
+                  <option value="mini-truck">Mini-Truck (Commercial delivery transport)</option>
+                  <option value="large-truck">Large Cargo Truck (Multi-axle container)</option>
+                  <option value="refrigerated-truck">Refrigerated Cold-Chain Truck</option>
+                  <option value="container">Closed container transport</option>
                 </select>
               </div>
 
