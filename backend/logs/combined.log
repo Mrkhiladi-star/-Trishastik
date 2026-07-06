@@ -498,3 +498,8 @@
 {"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 17:53:43"}
 {"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 17:54:02"}
 {"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-06 17:54:09"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 17:58:35"}
+{"level":"info","message":"User logged out: Sanjay","timestamp":"2026-07-06 17:58:55"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 18:10:32"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 18:14:13"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 18:15:14"}

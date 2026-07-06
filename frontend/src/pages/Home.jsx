@@ -72,7 +72,7 @@ const Home = () => {
 
   const fetchHomeData = async () => {
     try {
-      const response = await fetch("/api/");
+      const response = await fetch("/api");
       const data = await response.json();
       setListings(data.allListings || []);
       setReviews(data.allReviews || []);
