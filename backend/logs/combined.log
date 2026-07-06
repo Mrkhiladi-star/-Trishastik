@@ -503,3 +503,34 @@
 {"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 18:10:32"}
 {"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 18:14:13"}
 {"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 18:15:14"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 18:42:07"}
+{"level":"info","message":"Rental order placed for product Mahindra Tractor 4WD by user Ram","timestamp":"2026-07-06 18:42:46"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 21:51:47"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 21:52:06"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 21:52:44"}
+{"level":"info","message":"Rental order placed for product Mahindra Tractor 4WD by user Ram","timestamp":"2026-07-06 21:53:12"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 21:59:23"}
+{"level":"info","message":"Rental order placed for product Mahindra Tractor 4WD by user Ram","timestamp":"2026-07-06 21:59:41"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 21:59:58"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-06 22:00:08"}
+{"level":"info","message":"Order 6a4bd7f45e7ccf3c606582a7 accepted by seller","timestamp":"2026-07-06 22:00:27"}
+{"level":"info","message":"Transit requested for Order 6a4bd7f45e7ccf3c606582a7. Matched 2 candidates in 50KM. First assigned: 6a16da33ee701f8f2eae1156","timestamp":"2026-07-06 22:00:37"}
+{"level":"info","message":"User logged out: Sanjay","timestamp":"2026-07-06 22:00:55"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-06 22:01:04"}
+{"level":"info","message":"Transporter Anuj accepted delivery for Order 6a4bd7f45e7ccf3c606582a7","timestamp":"2026-07-06 22:01:14"}
+{"level":"info","message":"Email sent successfully via Nodemailer to ram@gmail.com","timestamp":"2026-07-06 22:01:26"}
+{"level":"info","message":"Tracking updated for Order 6a4bd7f45e7ccf3c606582a7: status=Delivered","timestamp":"2026-07-06 22:01:26"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-06 22:01:30"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 22:01:37"}
+{"level":"info","message":"Rental return initiated for Order 6a4bd7f45e7ccf3c606582a7","timestamp":"2026-07-06 22:02:05"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 22:02:12"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-06 22:02:21"}
+{"level":"error","message":"500 - Order validation failed: status: `Returned` is not a valid enum value for path `status`. - /orders/6a4bd7f45e7ccf3c606582a7/confirm-return - POST - 127.0.0.1","stack":"ValidationError: Order validation failed: status: `Returned` is not a valid enum value for path `status`.\n    at Document.invalidate (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\mongoose\\lib\\document.js:3331:32)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\mongoose\\lib\\document.js:3092:17\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\mongoose\\lib\\schemaType.js:1407:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)","timestamp":"2026-07-06 22:02:44"}
+{"level":"error","message":"500 - Order validation failed: status: `Returned` is not a valid enum value for path `status`. - /orders/6a4bd7f45e7ccf3c606582a7/confirm-return - POST - 127.0.0.1","stack":"ValidationError: Order validation failed: status: `Returned` is not a valid enum value for path `status`.\n    at Document.invalidate (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\mongoose\\lib\\document.js:3331:32)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\mongoose\\lib\\document.js:3092:17\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\mongoose\\lib\\schemaType.js:1407:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)","timestamp":"2026-07-06 22:02:58"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-06 22:11:23"}
+{"level":"info","message":"Email sent successfully via Nodemailer to ram@gmail.com","timestamp":"2026-07-06 22:11:45"}
+{"level":"info","message":"Rental return confirmed for Order 6a4bd7f45e7ccf3c606582a7. Late days: 0, charges: 0","timestamp":"2026-07-06 22:11:45"}
+{"level":"info","message":"User logged out: Sanjay","timestamp":"2026-07-06 22:12:02"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 22:12:11"}
+{"level":"info","message":"Order 6a4bd67001b972bbb170a168 cancelled","timestamp":"2026-07-06 22:12:50"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 22:15:50"}

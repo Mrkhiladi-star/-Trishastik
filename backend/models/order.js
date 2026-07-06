@@ -32,7 +32,7 @@ const orderSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['Pending', 'Accepted', 'Transit Requested', 'In Transit', 'Delivered', 'Cancelled'],
+    enum: ['Pending', 'Accepted', 'Transit Requested', 'In Transit', 'Delivered', 'Cancelled', 'Returned'],
     default: 'Pending'
   },
   vehicleType: {
@@ -94,6 +94,28 @@ const orderSchema = new Schema({
       default: Date.now
     }
   }],
+  isRental: {
+    type: Boolean,
+    default: false
+  },
+  rentalStartDate: {
+    type: Date
+  },
+  rentalEndDate: {
+    type: Date
+  },
+  rentalDurationDays: {
+    type: Number
+  },
+  rentalReturnStatus: {
+    type: String,
+    enum: ['None', 'Return Pending', 'Returned', 'Overdue'],
+    default: 'None'
+  },
+  rentalOverdueCharges: {
+    type: Number,
+    default: 0
+  },
   review: {
     rating: { type: Number, default: 0 },
     comment: { type: String, default: "" },

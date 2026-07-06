@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
   ShoppingCart, CreditCard, ArrowLeft, Star, MapPin,
-  User, Mail, Tag, ShieldCheck, MessageSquare, AlertCircle, Trash2, Video
+  User, Mail, Tag, ShieldCheck, MessageSquare, AlertCircle, Trash2, Video, Calendar, X
 } from "lucide-react";
 
 const ProductDetails = () => {
@@ -20,6 +20,68 @@ const ProductDetails = () => {
   const [addingToCart, setAddingToCart] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [activeImage, setActiveImage] = useState("");
+
+  // Rental Form state
+  const [showRentModal, setShowRentModal] = useState(false);
+  const [rentalDuration, setRentalDuration] = useState(7);
+  const [rentalStartDate, setRentalStartDate] = useState(new Date().toISOString().split("T")[0]);
+  const [rentalFullName, setRentalFullName] = useState("");
+  const [rentalPhone, setRentalPhone] = useState("");
+  const [rentalAddress, setRentalAddress] = useState("");
+  const [rentalAgreement, setRentalAgreement] = useState(false);
+  const [rentalSubmitting, setRentalSubmitting] = useState(false);
+  const [rentalError, setRentalError] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      setRentalFullName(user.fullName || user.username || "");
+      setRentalPhone(user.phone || "");
+      if (user.address) {
+        setRentalAddress(`${user.address.street || ""}, ${user.address.city || ""}, ${user.address.state || ""} - ${user.address.pincode || ""}`.replace(/^,\s*/, ""));
+      }
+    }
+  }, [user]);
+
+  const handleConfirmRental = async (e) => {
+    e.preventDefault();
+    if (!rentalAgreement) {
+      setRentalError("You must accept the terms of liability and return policy.");
+      return;
+    }
+    setRentalSubmitting(true);
+    setRentalError("");
+    
+    try {
+      const response = await fetch("/api/orders/rent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: product._id,
+          fullName: rentalFullName,
+          address: rentalAddress,
+          phone: rentalPhone,
+          durationDays: Number(rentalDuration),
+          startDate: rentalStartDate
+        })
+      });
+      
+      const data = await response.json();
+      if (response.ok && data.success) {
+        showToast("success", "Rental order placed successfully!");
+        setShowRentModal(false);
+        setTimeout(() => {
+          navigate("/shop", { state: { activeTab: "orders" } });
+        }, 1500);
+      } else {
+        setRentalError(data.error || "Failed to submit rental request.");
+      }
+    } catch (err) {
+      console.error(err);
+      setRentalError("Network error. Please try again.");
+    } finally {
+      setRentalSubmitting(false);
+    }
+  };
 
   const fetchProductDetails = async () => {
     try {
@@ -348,24 +410,34 @@ const ProductDetails = () => {
                   </button>
                 </div>
               ) : canBuy ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                product.category === "instrument_rent" ? (
                   <button
-                    onClick={handleAddToCart}
-                    disabled={addingToCart}
-                    className="bg-slate-900 hover:bg-slate-850 border border-slate-800 text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50 text-xs shadow-md"
+                    onClick={() => setShowRentModal(true)}
+                    className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-4 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 text-xs shadow-lg hover:shadow-emerald-500/10 font-extrabold tracking-wide uppercase"
                   >
-                    <ShoppingCart size={14} />
-                    <span>{addingToCart ? "Adding..." : "Add to Cart"}</span>
+                    <Calendar size={14} />
+                    <span>Rent Equipment (किराए पर लें)</span>
                   </button>
-                  <button
-                    onClick={handleBuyNow}
-                    disabled={buying}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50 text-xs shadow-lg hover:shadow-emerald-500/10"
-                  >
-                    <CreditCard size={14} />
-                    <span>{buying ? "Ordering..." : "Buy Now"}</span>
-                  </button>
-                </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <button
+                      onClick={handleAddToCart}
+                      disabled={addingToCart}
+                      className="bg-slate-900 hover:bg-slate-850 border border-slate-800 text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50 text-xs shadow-md"
+                    >
+                      <ShoppingCart size={14} />
+                      <span>{addingToCart ? "Adding..." : "Add to Cart"}</span>
+                    </button>
+                    <button
+                      onClick={handleBuyNow}
+                      disabled={buying}
+                      className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50 text-xs shadow-lg hover:shadow-emerald-500/10"
+                    >
+                      <CreditCard size={14} />
+                      <span>{buying ? "Ordering..." : "Buy Now"}</span>
+                    </button>
+                  </div>
+                )
               ) : (
                 <div className="bg-slate-950/40 border border-slate-850 p-3.5 rounded-xl text-center text-xs text-slate-500 font-semibold flex items-center justify-center space-x-2">
                   <ShieldCheck size={14} className="text-slate-600" />
@@ -494,6 +566,145 @@ const ProductDetails = () => {
           )}
         </div>
       </div>
+
+      {/* RENTAL REGISTER MODAL */}
+      {showRentModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 animate-fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl relative flex flex-col p-6 space-y-4 text-left">
+            <button
+              onClick={() => setShowRentModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-xl bg-slate-950/50 border border-slate-800 z-10 transition-all"
+            >
+              <X size={16} />
+            </button>
+
+            <div className="flex items-center space-x-3 pb-3 border-b border-slate-850">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                <Calendar size={18} />
+              </div>
+              <div>
+                <h3 className="text-lg font-extrabold text-white">Equipment Rental Checkout</h3>
+                <p className="text-[10px] text-slate-400">Rent '{product.title}' directly from verified owner</p>
+              </div>
+            </div>
+
+            {rentalError && (
+              <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs p-3 rounded-xl flex items-center space-x-2">
+                <AlertCircle size={14} className="shrink-0" />
+                <span>{rentalError}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleConfirmRental} className="space-y-4 text-xs sm:text-sm">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Start Date (किराया शुरू तिथि)</label>
+                  <input
+                    type="date"
+                    required
+                    min={new Date().toISOString().split("T")[0]}
+                    value={rentalStartDate}
+                    onChange={(e) => setRentalStartDate(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-emerald-500 text-xs"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Duration (Days - कुल दिन)</label>
+                  <input
+                    type="number"
+                    required
+                    min="1"
+                    max="30"
+                    value={rentalDuration}
+                    onChange={(e) => setRentalDuration(Math.max(1, parseInt(e.target.value) || 1))}
+                    className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-emerald-500 text-xs"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Full Name (पूरा नाम)</label>
+                <input
+                  type="text"
+                  required
+                  value={rentalFullName}
+                  onChange={(e) => setRentalFullName(e.target.value)}
+                  placeholder="Enter recipient full name"
+                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 text-xs"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Phone Number (मोबाइल नंबर)</label>
+                <input
+                  type="tel"
+                  required
+                  pattern="[0-9]{10}"
+                  value={rentalPhone}
+                  onChange={(e) => setRentalPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                  placeholder="10-digit mobile number"
+                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 text-xs"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Shipping Address (डिलिवरी पता)</label>
+                <textarea
+                  required
+                  rows="2"
+                  value={rentalAddress}
+                  onChange={(e) => setRentalAddress(e.target.value)}
+                  placeholder="Enter complete delivery address with landmark"
+                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-emerald-500 text-xs resize-none"
+                />
+              </div>
+
+              {/* Dynamic Rent Calculation Banner */}
+              <div className="bg-slate-950/60 border border-slate-850 rounded-2xl p-4 flex justify-between items-center">
+                <div>
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Daily Rent Rate</span>
+                  <span className="text-emerald-400 font-bold">₹{product.price} / day</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Total Estimated Price</span>
+                  <span className="text-xl font-extrabold text-emerald-400">₹{(product.price * rentalDuration).toLocaleString()}</span>
+                </div>
+              </div>
+
+              {/* Liability checkbox */}
+              <div className="flex items-start space-x-2 pb-2">
+                <input
+                  type="checkbox"
+                  id="rentalAgree"
+                  checked={rentalAgreement}
+                  onChange={(e) => setRentalAgreement(e.target.checked)}
+                  className="mt-0.5 border-slate-800 rounded bg-slate-950 text-emerald-500 focus:ring-0 focus:ring-offset-0"
+                />
+                <label htmlFor="rentalAgree" className="text-[10px] text-slate-400 leading-snug cursor-pointer select-none">
+                  I agree to return the equipment in the same working condition. Delayed returns exceeding 24 hours of scheduled end date are subject to overdue fees at <strong>1.5x daily rent</strong> (₹{(product.price * 1.5).toFixed(0)}/day).
+                </label>
+              </div>
+
+              <div className="flex space-x-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowRentModal(false)}
+                  className="w-1/2 bg-slate-950 hover:bg-slate-900 border border-slate-850 text-slate-300 font-semibold py-3 rounded-xl text-center text-xs transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={rentalSubmitting}
+                  className="w-1/2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl flex items-center justify-center space-x-1.5 transition-all disabled:opacity-50 text-xs shadow-lg"
+                >
+                  <span>{rentalSubmitting ? "Processing..." : "Confirm & Rent"}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

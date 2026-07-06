@@ -27,4 +27,9 @@ router.get("/customer", isLoggedIn, authorizeRoles("admin", "farmer", "fertilize
 // Listing reviews
 router.post("/newReview", isLoggedIn, orderController.createListingReview);
 
+// Rental routes
+router.post("/orders/rent", isLoggedIn, orderController.rentProduct);
+router.post("/orders/:id/initiate-return", isLoggedIn, orderController.initiateRentalReturn);
+router.post("/orders/:id/confirm-return", isLoggedIn, orderController.confirmRentalReturn);
+
 module.exports = router;

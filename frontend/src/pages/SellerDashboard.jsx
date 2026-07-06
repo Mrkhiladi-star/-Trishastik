@@ -83,6 +83,31 @@ const SellerDashboard = () => {
     }
   };
 
+  const handleConfirmReturn = async (orderId) => {
+    if (!window.confirm("Confirm receipt of the equipment? The system will check the return due date and automatically assess late charges of 1.5x daily rate if overdue.")) {
+      return;
+    }
+    try {
+      const response = await fetch(`/api/orders/${orderId}/confirm-return`, {
+        method: "POST"
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        let returnMsg = "Return confirmed successfully!";
+        if (data.lateDays > 0) {
+          returnMsg += ` Assessed Late Fees: ₹${data.overdueCharges} for ${data.lateDays} overdue days.`;
+        }
+        alert(returnMsg);
+        await fetchSellerData();
+      } else {
+        alert(data.error || "Failed to confirm return.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Network error.");
+    }
+  };
+
   const handleRequestTransit = async (e) => {
     e.preventDefault();
     if (!transitOrderId) return;
@@ -308,6 +333,18 @@ const SellerDashboard = () => {
                       </span>
                     </div>
 
+                    {order.isRental && (
+                      <div className="bg-slate-950/20 border border-slate-850/50 p-2.5 rounded-xl text-xs text-slate-300 flex justify-between items-center mt-2">
+                        <span>📅 Rental Period: <strong>{order.rentalStartDate ? new Date(order.rentalStartDate).toLocaleDateString() : "TBD"} - {order.rentalEndDate ? new Date(order.rentalEndDate).toLocaleDateString() : "TBD"}</strong></span>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                          order.rentalReturnStatus === "None" ? "bg-amber-500/10 text-amber-400" :
+                          order.rentalReturnStatus === "Return Pending" ? "bg-yellow-500/10 text-yellow-400 animate-pulse" :
+                          "bg-emerald-500/10 text-emerald-400"
+                        }`}>
+                          Return: {order.rentalReturnStatus}
+                        </span>
+                      </div>
+                    )}
                     {/* Order Metadata Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs mt-4">
                       <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-850 space-y-1">
@@ -323,8 +360,18 @@ const SellerDashboard = () => {
 
                       <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-850 space-y-1">
                         <span className="text-[9px] uppercase font-bold text-amber-400">Price Breakup</span>
-                        <p className="text-slate-300">Quantity: <strong>{order.quantity}</strong></p>
-                        <p className="text-emerald-400 font-extrabold">Total: ₹{order.price * order.quantity}</p>
+                        {order.isRental ? (
+                          <>
+                            <p className="text-slate-300">Daily Rent: <strong>₹{(order.price / order.rentalDurationDays).toFixed(0)}/day</strong></p>
+                            <p className="text-slate-300">Duration: <strong>{order.rentalDurationDays} Days</strong></p>
+                            <p className="text-emerald-400 font-extrabold">Total: ₹{order.price}</p>
+                          </>
+                        ) : (
+                          <>
+                            <p className="text-slate-300">Quantity: <strong>{order.quantity}</strong></p>
+                            <p className="text-emerald-400 font-extrabold">Total: ₹{order.price * order.quantity}</p>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -363,6 +410,16 @@ const SellerDashboard = () => {
                         <Navigation className="text-sky-400 animate-spin" size={12} />
                         <span>Shipment is In Transit ({order.currentLocation?.name || "Picked Up"})</span>
                       </div>
+                    )}
+
+                    {order.status === "Delivered" && order.isRental && order.rentalReturnStatus === "Return Pending" && (
+                      <button
+                        onClick={() => handleConfirmReturn(order._id)}
+                        className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 px-4 rounded-xl flex items-center space-x-1.5 text-xs shadow-lg"
+                      >
+                        <CheckCircle size={12} />
+                        <span>Confirm Return Received</span>
+                      </button>
                     )}
                   </div>
                 </div>

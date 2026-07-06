@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import {
   Trash2, ShoppingBag, CreditCard, ChevronRight, CheckCircle2,
-  ArrowRight, Search, Clock, ShieldAlert, Star, Cpu, MapPin, X
+  ArrowRight, Search, Clock, ShieldAlert, Star, Cpu, MapPin, X, Calendar
 } from "lucide-react";
 
 const ChangeMapCenter = ({ center }) => {
@@ -84,10 +84,12 @@ const Shop = () => {
     const tabParam = params.get("tab");
     if (tabParam && ["catalog", "cart", "orders"].includes(tabParam)) {
       setShopTab(tabParam);
+    } else if (location.state && location.state.activeTab) {
+      setShopTab(location.state.activeTab);
     } else {
       setShopTab("catalog");
     }
-  }, [location.search]);
+  }, [location.search, location.state]);
 
   const handleAddToCart = async (id) => {
     try {
@@ -165,6 +167,28 @@ const Shop = () => {
       }
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const handleInitiateReturn = async (orderId) => {
+    if (!window.confirm("Confirm that you have returned the equipment to the owner? This will notify the owner to verify and confirm receipt.")) {
+      return;
+    }
+    try {
+      const response = await fetch(`/api/orders/${orderId}/initiate-return`, {
+        method: "POST"
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setMessage("Return request initiated successfully!");
+        await fetchShopData();
+        setTimeout(() => setMessage(""), 3000);
+      } else {
+        alert(data.error || "Failed to initiate return.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Network error.");
     }
   };
 
@@ -684,6 +708,65 @@ const Shop = () => {
                             <span>Live Track Dispatch Map</span>
                           </button>
                         )}
+                      </div>
+                    )}
+
+                    {/* Rental Details Section */}
+                    {order.isRental && (
+                      <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-850 space-y-3 text-xs">
+                        <div className="flex justify-between items-center pb-2 border-b border-slate-900">
+                          <span className="text-[10px] text-emerald-400 font-extrabold uppercase tracking-wider bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 flex items-center space-x-1">
+                            <Calendar size={10} />
+                            <span>Rental Order</span>
+                          </span>
+                          <span className="text-slate-400 font-semibold">
+                            Duration: {order.rentalDurationDays} Days
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4 text-[11px] text-slate-300">
+                          <div>
+                            <span className="text-[9px] text-slate-500 font-bold uppercase block">Rental Start</span>
+                            <span>{order.rentalStartDate ? new Date(order.rentalStartDate).toLocaleDateString() : "Pending Delivery"}</span>
+                          </div>
+                          <div>
+                            <span className="text-[9px] text-slate-500 font-bold uppercase block">Return Due Date</span>
+                            <span>{order.rentalEndDate ? new Date(order.rentalEndDate).toLocaleDateString() : "Pending Delivery"}</span>
+                          </div>
+                        </div>
+
+                        {/* Return Actions and Badges */}
+                        <div className="pt-2 flex justify-between items-center border-t border-slate-900/60 mt-1">
+                          <div>
+                            <span className="text-[9px] text-slate-500 font-bold uppercase block">Return Status</span>
+                            {order.rentalReturnStatus === "None" ? (
+                              <span className="text-amber-400 font-extrabold uppercase text-[10px]">Active / Held by Farmer</span>
+                            ) : order.rentalReturnStatus === "Return Pending" ? (
+                              <span className="text-amber-500 font-extrabold uppercase text-[10px] animate-pulse">Return Awaiting Confirmation</span>
+                            ) : order.rentalReturnStatus === "Returned" ? (
+                              <span className="text-emerald-400 font-extrabold uppercase text-[10px]">Returned Successfully</span>
+                            ) : (
+                              <span className="text-red-400 font-extrabold uppercase text-[10px]">Overdue</span>
+                            )}
+                          </div>
+
+                          {/* Initiate Return Action Button */}
+                          {order.status === "Delivered" && order.rentalReturnStatus === "None" && (
+                            <button
+                              onClick={() => handleInitiateReturn(order._id)}
+                              className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 transition-all shadow-lg shadow-emerald-500/5 active:scale-95"
+                            >
+                              <Calendar size={12} />
+                              <span>Initiate Return (वापसी शुरू करें)</span>
+                            </button>
+                          )}
+
+                          {order.rentalReturnStatus === "Returned" && order.rentalOverdueCharges > 0 && (
+                            <div className="text-right">
+                              <span className="text-[9px] text-slate-500 font-bold uppercase block">Late Overdue Fees</span>
+                              <span className="text-red-400 font-extrabold">₹{order.rentalOverdueCharges}</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     )}
 

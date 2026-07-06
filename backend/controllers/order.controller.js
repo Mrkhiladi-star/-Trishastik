@@ -519,7 +519,39 @@ const trackOrder = async (req, res, next) => {
       return res.status(403).json({ error: "Unauthorized to update tracking details." });
     }
     
-    if (status) order.status = status;
+    if (status) {
+      order.status = status;
+      if (status === "Delivered" && order.isRental) {
+        order.rentalStartDate = new Date();
+        order.rentalEndDate = new Date(Date.now() + order.rentalDurationDays * 24 * 60 * 60 * 1000);
+        
+        try {
+          const populatedOrder = await Order.findById(order._id)
+            .populate("buyer", "username email")
+            .populate("seller", "username email")
+            .populate("product", "title price");
+            
+          const emailService = require("../services/email.service");
+          if (populatedOrder && populatedOrder.buyer && populatedOrder.seller && populatedOrder.product) {
+            const formattedStart = order.rentalStartDate.toLocaleDateString();
+            const formattedEnd = order.rentalEndDate.toLocaleDateString();
+            
+            await emailService.sendRentalDeliveryEmail(
+              populatedOrder.buyer.email,
+              populatedOrder.buyer.username,
+              populatedOrder.seller.username,
+              populatedOrder.product.title,
+              formattedStart,
+              formattedEnd,
+              order.rentalDurationDays,
+              populatedOrder.product.price
+            );
+          }
+        } catch (err) {
+          logger.error("Failed to send rental delivery email: " + err.message);
+        }
+      }
+    }
     if (locationName !== undefined) order.currentLocation.name = locationName;
     if (latitude !== undefined) order.currentLocation.latitude = latitude;
     if (longitude !== undefined) order.currentLocation.longitude = longitude;
@@ -570,7 +602,7 @@ const reviewOrder = async (req, res, next) => {
       createdAt: new Date()
     };
     await order.save();
-    logger.info(`Order ${req.params.id} reviewed with rating ${rating}`);
+    logger.info(`Review saved for Order ${req.params.id}`);
     res.json({ success: true, order });
   } catch (err) {
     next(err);
@@ -601,6 +633,157 @@ const createListingReview = async (req, res, next) => {
   }
 };
 
+const rentProduct = async (req, res, next) => {
+  try {
+    const { productId, fullName, address, phone, durationDays, startDate } = req.body;
+    const product = await Listing.findById(productId);
+    if (!product) {
+      return res.status(404).json({ error: "Product not found." });
+    }
+    
+    if (product.category !== "instrument_rent") {
+      return res.status(400).json({ error: "Only equipment for rent can be rented." });
+    }
+    if (product.owner.toString() === req.user._id.toString()) {
+      return res.status(400).json({ error: "You cannot rent your own equipment listing." });
+    }
+
+    let shippingLat = req.user.latitude || 27.56;
+    let shippingLon = req.user.longitude || 80.68;
+    if (address) {
+      try {
+        const geocodeRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(address)}`, {
+          headers: { "User-Agent": "Trishastik-AgriTech-App" }
+        });
+        if (geocodeRes.ok) {
+          const data = await geocodeRes.json();
+          if (data && data.length > 0) {
+            shippingLat = Number(data[0].lat);
+            shippingLon = Number(data[0].lon);
+          }
+        }
+      } catch (err) {
+        logger.error("Failed to geocode rental address: " + err.message);
+      }
+    }
+
+    const days = Math.max(1, Number(durationDays) || 1);
+    const start = new Date(startDate || Date.now());
+    const end = new Date(start.getTime() + days * 24 * 60 * 60 * 1000);
+    const totalPrice = product.price * days;
+
+    const newOrder = new Order({
+      buyer: req.user._id,
+      seller: product.owner,
+      product: product._id,
+      price: totalPrice,
+      quantity: 1,
+      shippingAddress: address,
+      shippingLatitude: shippingLat,
+      shippingLongitude: shippingLon,
+      phone: phone || req.user.phone || "9999999999",
+      status: 'Pending',
+      currentLocation: {
+        name: "Seller Warehouse",
+        latitude: product.latitude || 27.56,
+        longitude: product.longitude || 80.68
+      },
+      isRental: true,
+      rentalStartDate: start,
+      rentalEndDate: end,
+      rentalDurationDays: days,
+      rentalReturnStatus: 'None'
+    });
+
+    await newOrder.save();
+    logger.info(`Rental order placed for product ${product.title} by user ${req.user.username}`);
+    res.json({ success: true, message: "Rental order placed successfully", order: newOrder });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const initiateRentalReturn = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ error: "Order not found." });
+    }
+    if (order.buyer.toString() !== req.user._id.toString() && req.user.role !== "admin") {
+      return res.status(403).json({ error: "Unauthorized." });
+    }
+    if (!order.isRental || order.status !== "Delivered") {
+      return res.status(400).json({ error: "Cannot return this order." });
+    }
+    
+    order.rentalReturnStatus = "Return Pending";
+    await order.save();
+    logger.info(`Rental return initiated for Order ${order._id}`);
+    res.json({ success: true, message: "Rental return initiated successfully", order });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const confirmRentalReturn = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ error: "Order not found." });
+    }
+    if (order.seller.toString() !== req.user._id.toString() && req.user.role !== "admin") {
+      return res.status(403).json({ error: "Unauthorized." });
+    }
+    if (!order.isRental || order.rentalReturnStatus !== "Return Pending") {
+      return res.status(400).json({ error: "No pending return request for this order." });
+    }
+    
+    const actualReturnDate = new Date();
+    const dueDate = order.rentalEndDate;
+    let overdueCharges = 0;
+    let lateDays = 0;
+    
+    if (actualReturnDate > dueDate) {
+      const diffTime = Math.abs(actualReturnDate - dueDate);
+      lateDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      const product = await Listing.findById(order.product);
+      const dailyPrice = product ? product.price : (order.price / order.rentalDurationDays);
+      overdueCharges = Math.round(lateDays * dailyPrice * 1.5);
+    }
+    
+    order.rentalReturnStatus = "Returned";
+    order.status = "Returned";
+    order.rentalOverdueCharges = overdueCharges;
+    await order.save();
+    
+    try {
+      const populatedOrder = await Order.findById(order._id)
+        .populate("buyer", "username email")
+        .populate("seller", "username email")
+        .populate("product", "title");
+        
+      const emailService = require("../services/email.service");
+      if (populatedOrder && populatedOrder.buyer && populatedOrder.seller && populatedOrder.product) {
+        await emailService.sendRentalReturnConfirmationEmail(
+          populatedOrder.buyer.email,
+          populatedOrder.buyer.username,
+          populatedOrder.seller.username,
+          populatedOrder.product.title,
+          lateDays,
+          overdueCharges
+        );
+      }
+    } catch (err) {
+      logger.error("Failed to send rental return confirmation email: " + err.message);
+    }
+
+    logger.info(`Rental return confirmed for Order ${order._id}. Late days: ${lateDays}, charges: ${overdueCharges}`);
+    res.json({ success: true, message: "Rental return confirmed successfully", order, lateDays, overdueCharges });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getCheckout,
   checkout,
@@ -617,4 +800,7 @@ module.exports = {
   reviewOrder,
   getCustomersCheckout,
   createListingReview,
+  rentProduct,
+  initiateRentalReturn,
+  confirmRentalReturn,
 };
