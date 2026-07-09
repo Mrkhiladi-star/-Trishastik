@@ -230,35 +230,35 @@ const TransporterDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center text-white">
+      <div className="min-h-[80vh] bg-slate-50 dark:bg-slate-950 flex items-center justify-center text-slate-800 dark:text-white font-semibold">
         <div className="flex flex-col items-center space-y-4">
-          <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-slate-400 text-sm font-semibold tracking-wider font-sans">Syncing Dispatch Jobs...</p>
+          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold tracking-wider font-sans">Syncing Dispatch Jobs...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up space-y-8 text-left">
       {message && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-emerald-500 text-slate-950 px-6 py-3 rounded-2xl shadow-2xl font-bold">
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-blue-600 text-white px-6 py-3 rounded-2xl shadow-lg font-bold text-xs">
           {message}
         </div>
       )}
 
       {/* Header Banner */}
-      <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-800 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 sm:p-12 rounded-3xl shadow-sm relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
         <div className="max-w-3xl space-y-4 relative z-10">
-          <div className="flex items-center space-x-2 text-emerald-400 font-bold tracking-wider text-xs uppercase">
+          <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 font-bold tracking-wider text-xs uppercase">
             <Truck size={14} />
             <span>Dispatcher Logistics Center</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Transporter Dispatch Dashboard
           </h1>
-          <p className="text-sm text-slate-400 leading-relaxed">
+          <p className="text-sm text-slate-500 dark:text-slate-404 leading-relaxed font-sans">
             Find pending transportation notifications from farmers and agricultural sellers. Select active dispatches, set your GPS coordinates, and deliver equipment or crops smoothly.
           </p>
         </div>
@@ -266,17 +266,17 @@ const TransporterDashboard = () => {
 
       {/* Warning Banner for default coordinates */}
       {user && (user.latitude === 27.56 || user.longitude === 80.68) && (
-        <div className="bg-amber-500/10 border border-amber-500/25 p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-amber-400">
+        <div className="bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/25 p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-amber-700 dark:text-amber-400 font-semibold shadow-sm">
           <div className="flex items-start space-x-3 text-xs leading-relaxed">
-            <MapPin className="mt-0.5 shrink-0" size={16} />
-            <div>
+            <MapPin className="mt-0.5 shrink-0 text-blue-600" size={16} />
+            <div className="text-left">
               <p className="font-bold uppercase tracking-wider text-[10px]">Location Coordinate Action Required</p>
-              <p className="text-slate-300">Your profile coordinates are currently set to default locations. Update your GPS geolocations in your profile to accurately see orders in your area.</p>
+              <p className="text-slate-600 dark:text-slate-350">Your profile coordinates are currently set to default locations. Update your GPS geolocations in your profile to accurately see orders in your area.</p>
             </div>
           </div>
           <button
             onClick={() => navigate("/profile")}
-            className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-4 py-1.5 rounded-xl text-[10px] uppercase tracking-wider self-start sm:self-center transition-all"
+            className="bg-amber-600 hover:bg-amber-750 text-white font-bold px-4 py-1.5 rounded-xl text-[10px] uppercase tracking-wider self-start sm:self-center transition-all shadow-sm"
           >
             Update Profile
           </button>
@@ -284,17 +284,17 @@ const TransporterDashboard = () => {
       )}
 
       {/* Tabs */}
-      <div className="flex space-x-4 border-b border-slate-800 pb-4">
+      <div className="flex space-x-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <button
           onClick={() => { setActiveTab("jobs"); setTrackingOrderId(null); }}
-          className={`pb-2 text-sm font-bold border-b-2 transition-all flex items-center space-x-2 ${activeTab === "jobs" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
+          className={`pb-2 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all flex items-center space-x-2 ${activeTab === "jobs" ? "border-blue-600 text-blue-600 dark:text-blue-400 font-extrabold" : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"}`}
         >
           <Navigation size={16} />
           <span>Available Jobs ({jobs.length})</span>
         </button>
         <button
           onClick={() => { setActiveTab("active"); setTrackingOrderId(null); }}
-          className={`pb-2 text-sm font-bold border-b-2 transition-all flex items-center space-x-2 ${activeTab === "active" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
+          className={`pb-2 text-xs font-semibold uppercase tracking-wider border-b-2 transition-all flex items-center space-x-2 ${activeTab === "active" ? "border-blue-600 text-blue-600 dark:text-blue-400 font-extrabold" : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"}`}
         >
           <Activity size={16} />
           <span>My Active Shipments ({activeDeliveries.filter(d => d.status === "In Transit").length})</span>
@@ -303,80 +303,80 @@ const TransporterDashboard = () => {
 
       {/* Available Jobs list */}
       {activeTab === "jobs" && (
-        <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
-          <h2 className="text-xl font-bold text-white flex items-center space-x-2 border-b border-slate-850 pb-4">
-            <Navigation className="text-emerald-400" size={20} />
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm space-y-6 text-left">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-800 pb-4">
+            <Navigation className="text-blue-600 dark:text-blue-400" size={20} />
             <span>Available Transportation Contracts</span>
           </h2>
 
           {jobs.length === 0 ? (
-            <p className="text-center text-slate-500 py-16 font-semibold">No pending transit requests available.</p>
+            <p className="text-center text-slate-500 py-16 font-semibold font-sans">No pending transit requests available.</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
               {jobs.map((job) => (
-                <div key={job._id} className="bg-slate-900/40 p-6 rounded-2xl border border-slate-850 hover:border-slate-800 transition-all flex flex-col justify-between space-y-6">
+                <div key={job._id} className="bg-slate-50 dark:bg-slate-950/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-slate-350 dark:hover:border-slate-800 transition-all flex flex-col justify-between space-y-6 shadow-sm">
 
                   {/* Job Header */}
-                  <div className="flex justify-between items-start gap-4 border-b border-slate-850 pb-3">
+                  <div className="flex justify-between items-start gap-4 border-b border-slate-100 dark:border-slate-800 pb-3 text-left">
                     <div>
-                      <h4 className="font-extrabold text-white text-base">{job.product?.title}</h4>
-                      <p className="text-[10px] text-slate-500 mt-1 uppercase font-bold flex items-center space-x-1">
+                      <h4 className="font-extrabold text-slate-900 dark:text-white text-base">{job.product?.title}</h4>
+                      <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1 uppercase font-bold flex items-center space-x-1 font-sans">
                         <Calendar size={10} />
                         <span>Ordered: {new Date(job.createdAt).toLocaleDateString()}</span>
                       </p>
                     </div>
-                    <span className="px-3 py-1 bg-amber-500/10 border border-amber-500/25 text-amber-400 font-extrabold rounded-full text-[10px] uppercase tracking-wider">
+                    <span className="px-3 py-1 bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/25 text-blue-600 dark:text-blue-400 font-extrabold rounded-full text-[10px] uppercase tracking-wider shadow-sm">
                       {job.vehicleType} needed
                     </span>
                   </div>
 
                   {/* Shipment Info Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                    <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-850 space-y-1">
-                      <span className="text-[9px] uppercase font-bold text-emerald-400">Origin / Pickup (Seller)</span>
-                      <p className="font-bold text-slate-300">{job.seller?.fullName || job.seller?.username}</p>
-                      <p className="text-slate-400 truncate">{job.seller?.phone}</p>
-                      <p className="text-slate-400 italic text-[11px] truncate">{job.seller?.location || "No coordinate name"}</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-semibold">
+                    <div className="bg-white dark:bg-slate-950/40 p-3 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1 shadow-sm text-left">
+                      <span className="text-[9px] uppercase font-bold text-blue-600 dark:text-blue-400">Origin / Pickup (Seller)</span>
+                      <p className="font-bold text-slate-800 dark:text-slate-300 font-sans">{job.seller?.fullName || job.seller?.username}</p>
+                      <p className="text-slate-500 dark:text-slate-400 truncate font-sans">{job.seller?.phone}</p>
+                      <p className="text-slate-500 dark:text-slate-400 italic text-[11px] truncate font-sans">{job.seller?.location || "No coordinate name"}</p>
                     </div>
 
-                    <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-850 space-y-1">
-                      <span className="text-[9px] uppercase font-bold text-sky-400">Destination (Buyer)</span>
-                      <p className="font-bold text-slate-300">{job.buyer?.fullName || job.buyer?.username}</p>
-                      <p className="text-slate-400 truncate">{job.phone}</p>
-                      <p className="text-slate-400 italic text-[11px] truncate">{job.shippingAddress}</p>
+                    <div className="bg-white dark:bg-slate-950/40 p-3 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1 shadow-sm text-left">
+                      <span className="text-[9px] uppercase font-bold text-blue-600 dark:text-blue-400">Destination (Buyer)</span>
+                      <p className="font-bold text-slate-800 dark:text-slate-300 font-sans">{job.buyer?.fullName || job.buyer?.username}</p>
+                      <p className="text-slate-500 dark:text-slate-400 truncate font-sans">{job.phone}</p>
+                      <p className="text-slate-500 dark:text-slate-450 italic text-[11px] truncate font-sans">{job.shippingAddress}</p>
                     </div>
                   </div>
 
                   {/* Delivery Price & Distance Breakup */}
-                  <div className="bg-emerald-500/5 p-4 rounded-xl border border-emerald-500/10 space-y-2 text-xs">
-                    <div className="flex justify-between text-slate-400">
+                  <div className="bg-blue-50/50 dark:bg-blue-500/5 p-4 rounded-xl border border-blue-100 dark:border-blue-500/10 space-y-2 text-xs font-semibold font-sans text-left">
+                    <div className="flex justify-between text-slate-500 dark:text-slate-400">
                       <span>Distance to Pickup (Seller):</span>
-                      <span className="font-bold text-white">{job.distanceToSeller !== undefined ? `${job.distanceToSeller} KM` : 'Calculating...'}</span>
+                      <span className="font-bold text-slate-800 dark:text-white">{job.distanceToSeller !== undefined ? `${job.distanceToSeller} KM` : 'Calculating...'}</span>
                     </div>
-                    <div className="flex justify-between text-slate-400">
+                    <div className="flex justify-between text-slate-500 dark:text-slate-400">
                       <span>Delivery Distance (Seller to Buyer):</span>
-                      <span className="font-bold text-white">{job.distanceBuyerSeller !== undefined ? `${job.distanceBuyerSeller} KM` : 'Calculating...'}</span>
+                      <span className="font-bold text-slate-800 dark:text-white">{job.distanceBuyerSeller !== undefined ? `${job.distanceBuyerSeller} KM` : 'Calculating...'}</span>
                     </div>
-                    <div className="border-t border-slate-850 my-2"></div>
-                    <div className="flex justify-between text-sm font-extrabold text-emerald-400">
+                    <div className="border-t border-slate-100 dark:border-slate-800 my-2"></div>
+                    <div className="flex justify-between text-sm font-extrabold text-emerald-600 dark:text-emerald-450">
                       <span>Your Guaranteed Earnings:</span>
                       <span>₹{job.deliveryPrice || '0.00'}</span>
                     </div>
                   </div>
 
                   {/* Accept & Reject action buttons */}
-                  <div className="flex space-x-3 mt-4">
+                  <div className="flex space-x-3 mt-4 text-xs font-semibold">
                     <button
                       onClick={() => handleRejectJob(job._id)}
                       disabled={actionLoading}
-                      className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/25 font-bold py-3 px-4 rounded-xl text-xs transition-all"
+                      className="flex-1 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 text-red-650 dark:text-red-400 border border-red-200 dark:border-red-500/25 font-bold py-3 px-4 rounded-xl text-xs transition-all shadow-sm"
                     >
                       Reject Job
                     </button>
                     <button
                       onClick={() => handleAcceptJob(job._id)}
                       disabled={actionLoading}
-                      className="flex-2 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 text-xs shadow-lg transition-all"
+                      className="flex-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 text-xs shadow-sm transition-all active:scale-95"
                     >
                       <Truck size={14} />
                       <span>Accept Contract</span>
@@ -392,32 +392,32 @@ const TransporterDashboard = () => {
 
       {/* Active Shipments tab */}
       {activeTab === "active" && (
-        <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
-          <h2 className="text-xl font-bold text-white flex items-center space-x-2 border-b border-slate-850 pb-4">
-            <Truck className="text-emerald-400" size={20} />
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm space-y-6 text-left">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-800 pb-4">
+            <Truck className="text-blue-600 dark:text-blue-400" size={20} />
             <span>Active Shipments Registry</span>
           </h2>
 
           {activeDeliveries.length === 0 ? (
-            <p className="text-center text-slate-500 py-16 font-semibold">You don't have any active shipments.</p>
+            <p className="text-center text-slate-500 py-16 font-semibold font-sans">You don't have any active shipments.</p>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-6 text-left">
               {activeDeliveries.map((delivery) => (
-                <div key={delivery._id} className="bg-slate-900/40 p-6 rounded-2xl border border-slate-850 space-y-4">
+                <div key={delivery._id} className="bg-slate-50 dark:bg-slate-950/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm text-left">
 
                   {/* Row Header */}
-                  <div className="flex flex-wrap justify-between items-center gap-4 border-b border-slate-850 pb-3">
+                  <div className="flex flex-wrap justify-between items-center gap-4 border-b border-slate-100 dark:border-slate-800 pb-3 text-left">
                     <div className="space-y-0.5">
-                      <h4 className="font-extrabold text-white text-base">{delivery.product?.title}</h4>
-                      <p className="text-xs text-slate-400 flex items-center space-x-1">
-                        <User size={12} className="text-slate-500" />
+                      <h4 className="font-extrabold text-slate-900 dark:text-white text-base">{delivery.product?.title}</h4>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center space-x-1 font-sans font-semibold">
+                        <User size={12} className="text-blue-600" />
                         <span>Buyer: {delivery.buyer?.fullName || delivery.buyer?.username} | Phone: {delivery.phone}</span>
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border ${delivery.status === "Delivered"
-                          ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400"
-                          : "bg-sky-500/10 border-sky-500/25 text-sky-400 animate-pulse"
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border uppercase tracking-wider ${delivery.status === "Delivered"
+                          ? "bg-emerald-50 dark:bg-emerald-500/10 border-emerald-100 dark:border-emerald-500/25 text-emerald-600 dark:text-emerald-400"
+                          : "bg-blue-50 dark:bg-blue-500/10 border-blue-100 dark:border-blue-500/25 text-blue-600 dark:text-blue-400 animate-pulse animate-duration-1000"
                         }`}>
                         {delivery.status}
                       </span>
@@ -425,27 +425,27 @@ const TransporterDashboard = () => {
                   </div>
 
                   {/* Progress specifications */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                    <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-850/80">
-                      <span className="text-[9px] text-slate-500 uppercase tracking-wider block mb-0.5">Pickup Warehouse</span>
-                      <p className="font-bold text-slate-300">{delivery.seller?.fullName || delivery.seller?.username}</p>
-                      <p className="text-slate-400 truncate">{delivery.seller?.location}</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-semibold">
+                    <div className="bg-white dark:bg-slate-950/40 p-3 rounded-xl border border-slate-200 dark:border-slate-800/80 shadow-sm text-left">
+                      <span className="text-[9px] text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-0.5">Pickup Warehouse</span>
+                      <p className="font-bold text-slate-800 dark:text-slate-300 font-sans">{delivery.seller?.fullName || delivery.seller?.username}</p>
+                      <p className="text-slate-500 dark:text-slate-400 truncate font-sans">{delivery.seller?.location}</p>
                     </div>
-                    <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-850/80">
-                      <span className="text-[9px] text-slate-500 uppercase tracking-wider block mb-0.5">Destination Address</span>
-                      <p className="font-bold text-slate-300">{delivery.shippingAddress}</p>
-                      <p className="text-slate-400 truncate">{delivery.phone}</p>
+                    <div className="bg-white dark:bg-slate-950/40 p-3 rounded-xl border border-slate-200 dark:border-slate-800/80 shadow-sm text-left">
+                      <span className="text-[9px] text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-0.5">Destination Address</span>
+                      <p className="font-bold text-slate-800 dark:text-slate-300 font-sans">{delivery.shippingAddress}</p>
+                      <p className="text-slate-500 dark:text-slate-400 truncate font-sans">{delivery.phone}</p>
                     </div>
-                    <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-850/80">
-                      <span className="text-[9px] text-slate-500 uppercase tracking-wider block mb-0.5">Last Tracking Coordinates</span>
-                      <p className="font-bold text-amber-400">{delivery.currentLocation?.name || "No location updates"}</p>
-                      <p className="text-slate-400 text-[10px]">Lat: {delivery.currentLocation?.latitude.toFixed(4)} | Lng: {delivery.currentLocation?.longitude.toFixed(4)}</p>
+                    <div className="bg-white dark:bg-slate-950/40 p-3 rounded-xl border border-slate-200 dark:border-slate-800/80 shadow-sm text-left">
+                      <span className="text-[9px] text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-0.5">Last Tracking Coordinates</span>
+                      <p className="font-bold text-blue-600 dark:text-blue-400">{delivery.currentLocation?.name || "No location updates"}</p>
+                      <p className="text-slate-550 dark:text-slate-400 text-[10px] font-mono">Lat: {delivery.currentLocation?.latitude.toFixed(4)} | Lng: {delivery.currentLocation?.longitude.toFixed(4)}</p>
                     </div>
                   </div>
 
                   {/* Actions row */}
                   {delivery.status !== "Delivered" && (
-                    <div className="flex flex-wrap items-center justify-end gap-3 pt-3 border-t border-slate-900/60 mt-2">
+                    <div className="flex flex-wrap items-center justify-end gap-3 pt-3 border-t border-slate-100 dark:border-slate-900/60 mt-2">
                       <button
                         onClick={() => {
                           setTrackingOrderId(delivery._id);
@@ -454,7 +454,7 @@ const TransporterDashboard = () => {
                           setTrackingLon(delivery.currentLocation?.longitude || 80.68);
                           setMapCenter([delivery.currentLocation?.latitude || 27.56, delivery.currentLocation?.longitude || 80.68]);
                         }}
-                        className="bg-slate-950 hover:bg-slate-900 text-emerald-400 font-bold py-2 px-4 rounded-xl border border-slate-850 text-xs flex items-center space-x-1.5"
+                        className="bg-white dark:bg-slate-950 hover:bg-slate-50 dark:hover:bg-slate-900 text-blue-600 dark:text-blue-400 font-bold py-2 px-4 rounded-xl border border-slate-200 dark:border-slate-800 text-xs flex items-center space-x-1.5 shadow-sm"
                       >
                         <MapPin size={12} />
                         <span>Update Tracking Location</span>
@@ -463,7 +463,7 @@ const TransporterDashboard = () => {
                       <button
                         onClick={() => handleDeliverOrder(delivery._id)}
                         disabled={actionLoading}
-                        className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold py-2 px-5 rounded-xl text-xs flex items-center space-x-1.5"
+                        className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-2 px-5 rounded-xl text-xs flex items-center space-x-1.5 shadow-sm active:scale-95"
                       >
                         <CheckCircle size={12} />
                         <span>Mark as Delivered</span>
@@ -480,23 +480,23 @@ const TransporterDashboard = () => {
 
       {/* OVERLAY MODAL: Update Tracking Coordinates & Name */}
       {trackingOrderId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-lg w-full space-y-4 my-8 shadow-2xl">
-            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
-              <h3 className="text-base font-bold text-white flex items-center space-x-1.5">
-                <MapPin className="text-emerald-400" size={16} />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 overflow-y-auto animate-fade-in text-left">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 max-w-lg w-full space-y-4 my-8 shadow-lg text-left">
+            <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3 text-left">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-1.5">
+                <MapPin className="text-blue-600" size={16} />
                 <span>Update Active Tracking Coordinates</span>
               </h3>
               <button
                 onClick={() => setTrackingOrderId(null)}
-                className="text-slate-400 hover:text-white"
+                className="text-slate-400 hover:text-slate-900 dark:hover:text-white p-1 rounded-lg"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <form onSubmit={handleUpdateLocation} className="space-y-4 text-xs">
-              <div className="space-y-1.5">
+            <form onSubmit={handleUpdateLocation} className="space-y-4 text-xs font-semibold">
+              <div className="space-y-1.5 text-left">
                 <label htmlFor="trackLoc" className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Current Location Description</label>
                 <input
                   type="text"
@@ -510,9 +510,9 @@ const TransporterDashboard = () => {
               </div>
 
               {/* Leaflet map to pinpoint current position */}
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 text-left">
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Pinpoint position on Map</label>
-                <div className="h-48 w-full rounded-2xl overflow-hidden border border-slate-800">
+                <div className="h-48 w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 shadow-sm">
                   <MapContainer center={mapCenter} zoom={12} scrollWheelZoom={false} className="h-full w-full">
                     <TileLayer
                       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -523,9 +523,9 @@ const TransporterDashboard = () => {
                     <ChangeMapCenter center={mapCenter} />
                   </MapContainer>
                 </div>
-                <div className="grid grid-cols-2 gap-4 text-[10px] text-slate-400 mt-2">
-                  <span className="bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-850">Latitude: <strong className="text-white">{trackingLat.toFixed(5)}</strong></span>
-                  <span className="bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-850">Longitude: <strong className="text-white">{trackingLon.toFixed(5)}</strong></span>
+                <div className="grid grid-cols-2 gap-4 text-[10px] text-slate-500 dark:text-slate-400 mt-2 font-mono">
+                  <span className="bg-slate-50 dark:bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">Lat: <strong className="text-slate-800 dark:text-white font-mono">{trackingLat.toFixed(5)}</strong></span>
+                  <span className="bg-slate-50 dark:bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800">Lng: <strong className="text-slate-800 dark:text-white font-mono">{trackingLon.toFixed(5)}</strong></span>
                 </div>
               </div>
 
@@ -533,14 +533,14 @@ const TransporterDashboard = () => {
                 <button
                   type="button"
                   onClick={() => setTrackingOrderId(null)}
-                  className="px-4 py-2 text-slate-400 hover:bg-slate-800 rounded-xl font-semibold"
+                  className="px-4 py-2 text-slate-500 hover:bg-slate-100 rounded-xl font-bold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-slate-950 font-bold px-4 py-2 rounded-xl"
+                  className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold px-4 py-2 rounded-xl shadow-sm"
                 >
                   Save Coordinates
                 </button>

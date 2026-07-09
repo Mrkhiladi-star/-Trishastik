@@ -212,30 +212,30 @@ const NewListing = () => {
   };
 
   return (
-    <div className="min-h-[80vh] py-8 animate-fade-in-up">
-      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800/80 max-w-2xl mx-auto space-y-6 text-left">
+    <div className="min-h-[80vh] py-8 animate-fade-in-up text-left">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm max-w-2xl mx-auto space-y-6 text-left">
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center space-x-1.5 text-slate-400 hover:text-emerald-400 font-semibold mb-2 transition-colors text-xs"
+          className="flex items-center space-x-1.5 text-slate-400 hover:text-blue-600 font-semibold mb-2 transition-colors text-xs"
         >
           <ArrowLeft size={14} />
           <span>Go Back</span>
         </button>
 
         <div>
-          <h2 className="text-2xl font-bold text-white">Create a New Product Listing</h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full mt-2"></div>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Create a New Product Listing</h2>
+          <div className="w-16 h-1 bg-blue-600 rounded-full mt-2"></div>
         </div>
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-xl font-semibold text-center text-xs">
+          <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-650 dark:text-red-400 p-3 rounded-xl font-bold text-center text-xs animate-pulse">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-1.5">
-            <label htmlFor="title" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Product Title</label>
+          <div className="space-y-1.5 text-left">
+            <label htmlFor="title" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Product Title</label>
             <input
               type="text"
               id="title"
@@ -244,11 +244,11 @@ const NewListing = () => {
               className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
               placeholder="e.g. Organic Vermicompost"
               required
-            />
-          </div>
+                />
+              </div>
 
-          <div className="space-y-1.5">
-            <label htmlFor="description" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Description</label>
+          <div className="space-y-1.5 text-left">
+            <label htmlFor="description" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Description</label>
             <textarea
               id="description"
               value={description}
@@ -259,24 +259,24 @@ const NewListing = () => {
             />
           </div>
 
-          <div className="space-y-1.5">
-            <label htmlFor="category" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Product Category</label>
+          <div className="space-y-1.5 text-left">
+            <label htmlFor="category" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Product Category</label>
             <select
               id="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-3 text-sm focus:outline-none dark:bg-slate-900 bg-white text-slate-900 dark:text-white"
+              className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white rounded-xl px-3.5 py-2.5 text-xs focus:outline-none font-bold"
             >
-              <option value="organic_product">Organic Farm Product (Crops/Vegetables/Grains)</option>
-              <option value="medicine_fertilizer">Medicines & Fertilizers</option>
-              <option value="instrument_sale">Agricultural Instruments (For Sale)</option>
-              <option value="instrument_rent">Agricultural Instruments (For Rent)</option>
+              <option value="organic_product" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Organic Farm Product (Crops/Vegetables/Grains)</option>
+              <option value="medicine_fertilizer" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Medicines & Fertilizers</option>
+              <option value="instrument_sale" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Agricultural Instruments (For Sale)</option>
+              <option value="instrument_rent" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Agricultural Instruments (For Rent)</option>
             </select>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
             <div className="space-y-1.5">
-              <label htmlFor="price" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Price (₹)</label>
+              <label htmlFor="price" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Price (₹)</label>
               <input
                 type="number"
                 id="price"
@@ -288,31 +288,31 @@ const NewListing = () => {
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label htmlFor="priceUnit" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Per Unit</label>
+            <div className="space-y-1.5 text-left">
+              <label htmlFor="priceUnit" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Per Unit</label>
               <select
                 id="priceUnit"
                 value={priceUnit}
                 onChange={(e) => setPriceUnit(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-3.5 py-2.5 text-xs focus:outline-none bg-white text-slate-900 dark:bg-slate-900 dark:text-white"
+                className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white rounded-xl px-3.5 py-2.5 text-xs focus:outline-none font-bold"
               >
-                <option value="kg">Per Kilogram (kg)</option>
-                <option value="quintal">Per Quintal</option>
-                <option value="gram">Per Gram</option>
-                <option value="piece">Per Piece</option>
-                <option value="hour">Per Hour (Rent)</option>
-                <option value="day">Per Day (Rent)</option>
+                <option value="kg" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Per Kilogram (kg)</option>
+                <option value="quintal" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Per Quintal</option>
+                <option value="gram" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Per Gram</option>
+                <option value="piece" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Per Piece</option>
+                <option value="hour" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Per Hour (Rent)</option>
+                <option value="day" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Per Day (Rent)</option>
               </select>
             </div>
           </div>
 
           {/* Product Media Section */}
-          <div className="space-y-3 bg-slate-950/40 border border-slate-850 p-4 rounded-2xl">
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider">Product Media</h3>
+          <div className="space-y-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-sm text-left">
+            <h3 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Product Media</h3>
             
             {/* Multiple Image Inputs */}
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Product Image URLs (Max 5)</label>
+            <div className="space-y-2 text-left">
+              <label className="text-[10px] font-bold text-slate-400 dark:text-slate-550 uppercase tracking-wider block">Product Image URLs (Max 5)</label>
               {images.map((imgUrl, index) => (
                 <div key={index} className="flex items-center space-x-2">
                   <input
@@ -327,7 +327,7 @@ const NewListing = () => {
                     <button
                       type="button"
                       onClick={() => removeImageField(index)}
-                      className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-2 rounded-xl transition-all shrink-0"
+                      className="text-red-650 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 p-2 rounded-xl transition-all shrink-0"
                       title="Remove field"
                     >
                       <Trash2 size={16} />
@@ -340,7 +340,7 @@ const NewListing = () => {
                 <button
                   type="button"
                   onClick={addImageField}
-                  className="mt-1 flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 text-xs font-bold transition-colors"
+                  className="mt-1 flex items-center space-x-1 text-blue-600 dark:text-blue-400 hover:text-blue-750 text-xs font-bold transition-colors"
                 >
                   <Plus size={14} />
                   <span>Add another image URL</span>
@@ -349,8 +349,8 @@ const NewListing = () => {
             </div>
 
             {/* Optional Video Link */}
-            <div className="space-y-1.5 pt-2">
-              <label htmlFor="video" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Product Video URL (Optional)</label>
+            <div className="space-y-1.5 pt-2 text-left">
+              <label htmlFor="video" className="text-[10px] font-bold text-slate-400 dark:text-slate-550 uppercase tracking-wider block">Product Video URL (Optional)</label>
               <input
                 type="text"
                 id="video"
@@ -362,8 +362,8 @@ const NewListing = () => {
             </div>
           </div>
 
-          <div className="space-y-1.5">
-            <label htmlFor="location" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Seller Warehouse / Pickup Address</label>
+          <div className="space-y-1.5 text-left">
+            <label htmlFor="location" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Seller Warehouse / Pickup Address</label>
             <input
               type="text"
               id="location"
@@ -375,44 +375,44 @@ const NewListing = () => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 text-left">
             <div className="space-y-1.5">
-              <label htmlFor="latitude" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Latitude</label>
+              <label htmlFor="latitude" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Latitude</label>
               <input
                 type="number"
                 step="0.0001"
                 id="latitude"
                 value={latitude}
                 onChange={(e) => setLatitude(e.target.value)}
-                className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
+                className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none font-mono"
                 required
               />
             </div>
 
             <div className="space-y-1.5">
-              <label htmlFor="longitude" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Longitude</label>
+              <label htmlFor="longitude" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Longitude</label>
               <input
                 type="number"
                 step="0.0001"
                 id="longitude"
                 value={longitude}
                 onChange={(e) => setLongitude(e.target.value)}
-                className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
+                className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none font-mono"
                 required
               />
             </div>
           </div>
 
           {/* Map Selector */}
-          <div className="space-y-1.5">
-            <div className="flex justify-between items-center">
-              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+          <div className="space-y-1.5 text-left">
+            <div className="flex justify-between items-center mb-1">
+              <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                 Map Pinpoint location (Click map to expand and search)
               </label>
               <button
                 type="button"
                 onClick={() => setIsMapExpanded(true)}
-                className="text-[10px] text-emerald-400 hover:text-emerald-300 font-bold underline"
+                className="text-[10px] text-blue-600 dark:text-blue-400 hover:text-blue-750 font-bold underline"
               >
                 Expand Map
               </button>
@@ -421,7 +421,7 @@ const NewListing = () => {
             {/* Preview Map (Clicking opens expand modal) */}
             <div 
               onClick={() => setIsMapExpanded(true)}
-              className="h-32 w-full rounded-2xl overflow-hidden border border-slate-800 cursor-pointer relative group"
+              className="h-32 w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 cursor-pointer relative group bg-slate-50 dark:bg-slate-950 shadow-sm"
             >
               <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/0 transition-colors z-[10] flex items-center justify-center">
                 <span className="bg-slate-900/90 text-white border border-slate-800 text-[10px] font-bold px-3 py-1.5 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
@@ -442,7 +442,7 @@ const NewListing = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50 text-xs mt-4"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 text-xs mt-4"
           >
             <PlusCircle size={14} />
             <span>{submitting ? "Publishing Product..." : "Publish Product Listing"}</span>
@@ -452,37 +452,37 @@ const NewListing = () => {
 
       {/* EXPANDED MAP SELECTION MODAL */}
       {isMapExpanded && (
-        <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col animate-fade-in">
+        <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 text-left animate-fade-in">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col">
             {/* Header */}
-            <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950/50">
-              <div>
-                <h3 className="font-bold text-white text-sm">Pinpoint Product Location</h3>
-                <p className="text-[10px] text-slate-400">Click anywhere on the map or drag the pin to set your coordinates.</p>
+            <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-950/50">
+              <div className="text-left">
+                <h3 className="font-bold text-slate-900 dark:text-white text-sm">Pinpoint Product Location</h3>
+                <p className="text-[10px] text-slate-400 dark:text-slate-500">Click anywhere on the map or drag the pin to set your coordinates.</p>
               </div>
               <button 
                 type="button"
                 onClick={() => setIsMapExpanded(false)}
-                className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+                className="text-slate-400 hover:text-slate-900 dark:hover:text-white p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
                 <X size={16} />
               </button>
             </div>
 
             {/* Address Search Bar */}
-            <div className="p-3 bg-slate-950/20 border-b border-slate-850 flex gap-2">
+            <div className="p-3 bg-slate-50 dark:bg-slate-950/20 border-b border-slate-100 dark:border-slate-800 flex gap-2">
               <input
                 type="text"
                 value={searchVal}
                 onChange={(e) => setSearchVal(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAddressSearch()}
                 placeholder="Search location, warehouse, village name..."
-                className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                className="flex-1 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-600"
               />
               <button
                 type="button"
                 onClick={handleAddressSearch}
-                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-1.5 rounded-xl text-xs flex items-center space-x-1"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-1.5 rounded-xl text-xs flex items-center space-x-1 shadow-sm"
               >
                 <Search size={12} />
                 <span>Search</span>
@@ -490,7 +490,7 @@ const NewListing = () => {
             </div>
 
             {/* Map Frame */}
-            <div className="h-[50vh] w-full relative bg-slate-950">
+            <div className="h-[50vh] w-full relative bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800">
               <MapContainer center={mapCenter} zoom={13} scrollWheelZoom={true} className="h-full w-full">
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -515,16 +515,16 @@ const NewListing = () => {
             </div>
 
             {/* Details Footer */}
-            <div className="p-4 border-t border-slate-800 bg-slate-950/50 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+            <div className="p-4 bg-slate-50 dark:bg-slate-950/50 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-semibold">
               <div className="text-left w-full sm:w-auto">
-                <p className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Selected Coordinates</p>
-                <p className="text-white font-mono mt-0.5">Lat: {latitude.toFixed(6)}, Lng: {longitude.toFixed(6)}</p>
-                <p className="text-[10px] text-emerald-400 mt-1 truncate max-w-md">Address: {location || "Locating..."}</p>
+                <p className="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold tracking-wider">Selected Coordinates</p>
+                <p className="text-slate-900 dark:text-white font-mono mt-0.5">Lat: {latitude.toFixed(6)}, Lng: {longitude.toFixed(6)}</p>
+                <p className="text-[10px] text-blue-600 dark:text-blue-400 mt-1 truncate max-w-md">Address: {location || "Locating..."}</p>
               </div>
               <button
                 type="button"
                 onClick={() => setIsMapExpanded(false)}
-                className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-2 rounded-xl transition-all shadow-md active:scale-95"
+                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-xl transition-all shadow-sm active:scale-95 text-xs"
               >
                 Confirm Location
               </button>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Menu, X, LogOut, User as UserIcon, Sprout, ShoppingBag, BookOpen, Newspaper, ShieldAlert, Users, Compass, Info, Sun, Moon, Truck, Clock } from "lucide-react";
-
+import logo from "../assets/logo.png";
 const Navbar = () => {
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -10,7 +10,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
     if (theme === "dark") {
@@ -43,93 +43,97 @@ const Navbar = () => {
   const isStandardCustomer = user && user.role === "customer";
 
   return (
-    <nav className="sticky top-0 z-50 w-full mb-6">
-      <div className="glass-panel backdrop-blur-md bg-slate-950/60 p-4 shadow-2xl rounded-2xl border border-slate-800/80 transition-all duration-300">
-        <div className="flex justify-between items-center max-w-7xl mx-auto">
+    <nav className="sticky top-0 z-50 w-full bg-white/95 dark:bg-slate-900/95 border-b border-slate-200/80 dark:border-slate-800/80 backdrop-blur-md transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+        <div className="flex justify-between items-center">
           {/* Logo / Brand */}
           <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center space-x-2 group">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center group-hover:bg-emerald-500/20 transition-all duration-300">
-                <Sprout className="text-emerald-400 group-hover:scale-110 transition-transform duration-300" size={24} />
+              <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center overflow-hidden">
+                <img
+                  src={logo}
+                  alt="Trishastik Logo"
+                  className="w-11 h-11 object-contain transition-transform duration-300 group-hover:scale-105"
+                />
               </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-lg leading-tight tracking-tight text-white group-hover:text-emerald-400 transition-colors duration-300">
+              <div className="flex flex-col text-left">
+                <span className="font-bold text-base leading-tight tracking-tight text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                   Trishastik
                 </span>
-                <span className="text-[10px] text-slate-400 tracking-widest uppercase">Bharat Farms</span>
+                <span className="text-[9px] text-slate-500 dark:text-slate-400 tracking-widest uppercase font-bold">Bharat Farms</span>
               </div>
             </Link>
           </div>
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
-            <Link 
-              to="/" 
-              className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+            <Link
+              to="/"
+              className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 ${isActive("/") ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"}`}
             >
-              <Compass size={16} />
+              <Compass size={14} />
               <span>Home</span>
             </Link>
-            <Link 
-              to="/about" 
-              className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/about") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+            <Link
+              to="/about"
+              className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 ${isActive("/about") ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"}`}
             >
-              <Info size={16} />
+              <Info size={14} />
               <span>About</span>
             </Link>
-            
+
             {!isAdmin && !isTransporter && !isAgent && (
-              <Link 
-                to="/shop" 
-                className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/shop") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+              <Link
+                to="/shop"
+                className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 ${isActive("/shop") ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"}`}
               >
-                <ShoppingBag size={16} />
+                <ShoppingBag size={14} />
                 <span>Shop</span>
               </Link>
             )}
 
             {isSeller && (
-              <Link 
-                to="/seller-dashboard" 
-                className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/seller-dashboard") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+              <Link
+                to="/seller-dashboard"
+                className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 ${isActive("/seller-dashboard") ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"}`}
               >
-                <Sprout size={16} />
+                <Sprout size={14} />
                 <span>Seller Portal</span>
               </Link>
             )}
 
             {isTransporter && (
-              <Link 
-                to="/transporter-dashboard" 
-                className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/transporter-dashboard") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+              <Link
+                to="/transporter-dashboard"
+                className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 ${isActive("/transporter-dashboard") ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"}`}
               >
-                <Truck size={16} />
+                <Truck size={14} />
                 <span>Transport Portal</span>
               </Link>
             )}
 
             {!isStandardCustomer && (
               <>
-                <Link 
-                  to="/soil-test" 
-                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/soil-test") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+                <Link
+                  to="/soil-test"
+                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 ${isActive("/soil-test") ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"}`}
                 >
-                  <Sprout size={16} />
+                  <Sprout size={14} />
                   <span>Soil Health</span>
                 </Link>
-                
-                <Link 
-                  to="/blog" 
-                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/blog") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+
+                <Link
+                  to="/blog"
+                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 ${isActive("/blog") ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"}`}
                 >
-                  <Newspaper size={16} />
+                  <Newspaper size={14} />
                   <span>Blog</span>
                 </Link>
-                <Link 
-                  to="/education" 
-                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/education") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+                <Link
+                  to="/education"
+                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 ${isActive("/education") ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"}`}
                 >
-                  <BookOpen size={16} />
+                  <BookOpen size={14} />
                   <span>Education</span>
                 </Link>
               </>
@@ -137,26 +141,26 @@ const Navbar = () => {
 
             {isStandardCustomer && (
               <>
-                <Link 
-                  to="/shop?tab=cart" 
-                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${location.search.includes("tab=cart") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+                <Link
+                  to="/shop?tab=cart"
+                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 ${location.search.includes("tab=cart") ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"}`}
                 >
-                  <ShoppingBag size={16} />
+                  <ShoppingBag size={14} />
                   <span>My Cart</span>
                   {user.cart && user.cart.length > 0 && (
-                    <span className="ml-1 bg-emerald-500 text-slate-950 font-extrabold text-[10px] px-1.5 py-0.5 rounded-full shrink-0">
+                    <span className="ml-1 bg-blue-600 text-white font-extrabold text-[9px] px-1.5 py-0.5 rounded-full shrink-0">
                       {user.cart.length}
                     </span>
                   )}
                 </Link>
-                <Link 
-                  to="/shop?tab=orders" 
-                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${location.search.includes("tab=orders") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+                <Link
+                  to="/shop?tab=orders"
+                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 ${location.search.includes("tab=orders") ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"}`}
                 >
-                  <Clock size={16} />
+                  <Clock size={14} />
                   <span>My Purchases</span>
                   {user.order && user.order.length > 0 && (
-                    <span className="ml-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-extrabold text-[10px] px-1.5 py-0.5 rounded-full shrink-0">
+                    <span className="ml-1 bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 font-extrabold text-[9px] px-1.5 py-0.5 rounded-full shrink-0">
                       {user.order.length}
                     </span>
                   )}
@@ -165,11 +169,11 @@ const Navbar = () => {
             )}
 
             {isAdmin && (
-              <Link 
-                to="/customer" 
-                className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isActive("/customer") ? "bg-emerald-500/10 text-emerald-400 border-b-2 border-emerald-500" : "text-slate-300 hover:text-white hover:bg-slate-800/50"}`}
+              <Link
+                to="/customer"
+                className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-200 ${isActive("/customer") ? "bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"}`}
               >
-                <Users size={16} />
+                <Users size={14} />
                 <span>Customers</span>
               </Link>
             )}
@@ -177,69 +181,69 @@ const Navbar = () => {
 
           {/* Desktop Right Panel (Profile/Auth) */}
           <div className="hidden md:flex items-center space-x-4">
-            <button 
+            <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-amber-400 dark:text-emerald-400 hover:bg-slate-800/80 transition-colors"
+              className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-700/60 transition-all duration-200"
               title="Toggle Light/Dark Theme"
             >
-              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+              {theme === "dark" ? <Sun size={15} className="text-blue-600 dark:text-blue-400" /> : <Moon size={15} />}
             </button>
             {user ? (
               <div className="relative">
-                <button 
+                <button
                   onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all duration-200"
+                  className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-750 transition-all duration-200"
                 >
-                  <div className="w-8 h-8 rounded-lg overflow-hidden border border-slate-700">
-                    <img 
-                      src={user.profilePhoto || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&h=80&q=80"} 
-                      alt="Profile" 
-                      className="w-full h-full object-cover" 
+                  <div className="w-8 h-8 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <img
+                      src={user.profilePhoto || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&h=80&q=80"}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="flex flex-col items-start text-left">
-                    <span className="text-xs font-semibold text-white max-w-[100px] truncate">{user.username}</span>
-                    <span className="text-[9px] text-emerald-400 font-bold uppercase tracking-wider">{user.role}</span>
+                    <span className="text-xs font-semibold text-slate-800 dark:text-white max-w-[100px] truncate">{user.username}</span>
+                    <span className="text-[8px] text-blue-600 dark:text-blue-400 font-extrabold uppercase tracking-wider">{user.role?.replace("_", " ")}</span>
                   </div>
                 </button>
 
                 {profileDropdownOpen && (
-                  <div className="absolute right-0 mt-3 w-56 glass-panel rounded-xl shadow-2xl py-2 text-slate-200 border border-slate-800/90 animate-fade-in z-50">
-                    <div className="px-4 py-3 border-b border-slate-800/80">
-                      <p className="font-bold text-sm text-white truncate">{user.fullName || user.username}</p>
-                      <p className="text-xs text-slate-400 truncate">{user.email}</p>
+                  <div className="absolute right-0 mt-3 w-56 bg-white dark:bg-slate-900 rounded-xl shadow-lg py-2 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 animate-fade-in z-50 text-left">
+                    <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800/80">
+                      <p className="font-extrabold text-sm text-slate-900 dark:text-white truncate">{user.fullName || user.username}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{user.email}</p>
                     </div>
-                    <Link 
-                      to="/profile" 
-                      className="flex items-center px-4 py-2.5 hover:bg-slate-800/80 hover:text-white transition-colors text-sm"
+                    <Link
+                      to="/profile"
+                      className="flex items-center px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors text-xs font-semibold"
                       onClick={() => setProfileDropdownOpen(false)}
                     >
-                      <UserIcon size={16} className="mr-2 text-slate-400" />
+                      <UserIcon size={14} className="mr-2 text-slate-400" />
                       {user.role === "farmer" ? "Farmer Profile" :
-                       user.role === "customer" ? "Customer Profile" :
-                       user.role === "transporter" ? "Transporter Profile" :
-                       user.role === "agent" ? "Field Agent Profile" :
-                       user.role === "fertilizer_seller" ? "Fertilizer Seller Profile" :
-                       user.role === "instrument_seller" ? "Ag Instruments Seller Profile" :
-                       user.role === "admin" ? "Admin Profile" : "My Profile"}
+                        user.role === "customer" ? "Customer Profile" :
+                          user.role === "transporter" ? "Transporter Profile" :
+                            user.role === "agent" ? "Field Agent Profile" :
+                              user.role === "fertilizer_seller" ? "Fertilizer Seller Profile" :
+                                user.role === "instrument_seller" ? "Ag Instruments Seller Profile" :
+                                  user.role === "admin" ? "Admin Profile" : "My Profile"}
                     </Link>
-                    <button 
+                    <button
                       onClick={() => {
                         setProfileDropdownOpen(false);
                         handleLogout();
                       }}
-                      className="w-full text-left flex items-center px-4 py-2.5 hover:bg-red-500/10 text-red-400 hover:text-red-300 transition-colors text-sm border-t border-slate-800/50"
+                      className="w-full text-left flex items-center px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-500/10 text-red-600 dark:text-red-400 hover:text-red-700 transition-colors text-xs font-semibold border-t border-slate-100 dark:border-slate-800/50"
                     >
-                      <LogOut size={16} className="mr-2" />
+                      <LogOut size={14} className="mr-2" />
                       Sign Out
                     </button>
                   </div>
                 )}
               </div>
             ) : (
-              <Link 
-                to="/login" 
-                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 px-5 rounded-xl shadow-lg hover:shadow-emerald-500/10 transition-all duration-300 transform active:scale-95 text-sm"
+              <Link
+                to="/login"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-5 rounded-xl shadow-sm text-xs transition-all transform active:scale-95"
               >
                 Sign In
               </Link>
@@ -248,56 +252,58 @@ const Navbar = () => {
 
           {/* Mobile Sidebar Hamburger Toggle */}
           <div className="md:hidden">
-            <button 
+            <button
               onClick={() => setSidebarOpen(true)}
-              className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+              className="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-750 transition-colors shadow-sm"
             >
-              <Menu size={22} />
+              <Menu size={20} />
             </button>
           </div>
         </div>
       </div>
 
       {user && !user.isProfileComplete && (
-        <div className="mt-3 bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs px-4 py-2.5 rounded-xl flex items-center justify-between animate-fade-in shadow-md">
+        <div className="bg-amber-50 dark:bg-amber-500/10 border border-amber-250 dark:border-amber-500/20 text-amber-705 dark:text-amber-400 text-[10px] px-4 py-2 rounded-xl flex items-center justify-between shadow-sm mt-1 mb-3 mx-4 md:mx-6 text-left">
           <div className="flex items-center space-x-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 relative flex shrink-0">
+            <span className="w-2 h-2 rounded-full bg-amber-500 relative flex shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
             </span>
-            <span>Your profile is incomplete. Please add your contact and address details to unlock all platform features.</span>
+            <span className="font-semibold font-sans">Your profile is incomplete. Please add your contact and address details to unlock all platform features.</span>
           </div>
-          <Link to="/profile" className="font-bold underline hover:text-amber-300 ml-4 shrink-0">Complete Profile</Link>
+          <Link to="/profile" className="font-extrabold underline hover:text-amber-800 dark:hover:text-amber-300 ml-4 shrink-0">Complete Profile</Link>
         </div>
       )}
 
       {/* Mobile Drawer (Sidebar) */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-50 flex md:hidden">
+        <div className="fixed inset-0 z-50 flex md:hidden text-left">
           {/* Backdrop */}
-          <div 
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity" 
+          <div
+            className="absolute inset-0 z-40 bg-slate-950/80 backdrop-blur-xl transition-all duration-300"
             onClick={() => setSidebarOpen(false)}
           ></div>
-          
+
           {/* Sidebar Panel */}
-          <div className="relative flex flex-col w-72 max-w-xs bg-slate-950 border-r border-slate-800/80 text-slate-200 p-6 shadow-2xl z-10 transition-all duration-300 animate-slide-right">
+          <div
+            className="relative flex flex-col w-72 max-w-xs bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 text-slate-850 dark:text-slate-100 p-6 shadow-2xl z-50 transition-all duration-300 animate-slide-right"
+          >
             <div className="flex justify-between items-center mb-8">
               <div className="flex items-center space-x-2">
-                <Sprout className="text-emerald-400" size={24} />
-                <span className="font-bold text-lg text-white">Trishastik</span>
+                <Sprout className="text-blue-600 dark:text-blue-400" size={24} />
+                <span className="font-bold text-lg text-slate-900 dark:text-white">Trishastik</span>
               </div>
               <div className="flex items-center space-x-2">
-                <button 
+                <button
                   onClick={toggleTheme}
-                  className="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-amber-400 dark:text-emerald-400"
+                  className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300"
                   title="Toggle Theme"
                 >
-                  {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+                  {theme === "dark" ? <Sun size={16} className="text-blue-600 dark:text-blue-400" /> : <Moon size={16} />}
                 </button>
-                <button 
-                  onClick={() => setSidebarOpen(false)} 
-                  className="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+                <button
+                  onClick={() => setSidebarOpen(false)}
+                  className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-400 hover:text-slate-900 dark:hover:text-white"
                 >
                   <X size={20} />
                 </button>
@@ -307,32 +313,32 @@ const Navbar = () => {
             <div className="flex flex-col justify-between flex-grow">
               <ul className="flex flex-col space-y-3 font-medium">
                 <li>
-                  <Link 
-                    to="/" 
-                    onClick={() => setSidebarOpen(false)} 
-                    className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                  <Link
+                    to="/"
+                    onClick={() => setSidebarOpen(false)}
+                    className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors text-xs font-semibold ${isActive("/") ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400" : "hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-100 font-bold"}`}
                   >
                     <Compass size={18} />
                     <span>Home</span>
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    to="/about" 
-                    onClick={() => setSidebarOpen(false)} 
-                    className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/about") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                  <Link
+                    to="/about"
+                    onClick={() => setSidebarOpen(false)}
+                    className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors text-xs font-semibold ${isActive("/about") ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400" : "hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-100 font-bold"}`}
                   >
                     <Info size={18} />
                     <span>About Us</span>
                   </Link>
                 </li>
-                
+
                 {!isAdmin && !isTransporter && !isAgent && (
                   <li>
-                    <Link 
-                      to="/shop" 
-                      onClick={() => setSidebarOpen(false)} 
-                      className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/shop") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                    <Link
+                      to="/shop"
+                      onClick={() => setSidebarOpen(false)}
+                      className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors text-xs font-semibold ${isActive("/shop") ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400" : "hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-100 font-bold"}`}
                     >
                       <ShoppingBag size={18} />
                       <span>Shop Products</span>
@@ -342,10 +348,10 @@ const Navbar = () => {
 
                 {isSeller && (
                   <li>
-                    <Link 
-                      to="/seller-dashboard" 
-                      onClick={() => setSidebarOpen(false)} 
-                      className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/seller-dashboard") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                    <Link
+                      to="/seller-dashboard"
+                      onClick={() => setSidebarOpen(false)}
+                      className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors text-xs font-semibold ${isActive("/seller-dashboard") ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400" : "hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-100 font-bold"}`}
                     >
                       <Sprout size={18} />
                       <span>Seller Portal</span>
@@ -355,10 +361,10 @@ const Navbar = () => {
 
                 {isTransporter && (
                   <li>
-                    <Link 
-                      to="/transporter-dashboard" 
-                      onClick={() => setSidebarOpen(false)} 
-                      className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/transporter-dashboard") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                    <Link
+                      to="/transporter-dashboard"
+                      onClick={() => setSidebarOpen(false)}
+                      className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors text-xs font-semibold ${isActive("/transporter-dashboard") ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400" : "hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-100 font-bold"}`}
                     >
                       <Truck size={18} />
                       <span>Transport Portal</span>
@@ -369,31 +375,31 @@ const Navbar = () => {
                 {!isStandardCustomer && (
                   <>
                     <li>
-                      <Link 
-                        to="/soil-test" 
-                        onClick={() => setSidebarOpen(false)} 
-                        className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/soil-test") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                      <Link
+                        to="/soil-test"
+                        onClick={() => setSidebarOpen(false)}
+                        className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors text-xs font-semibold ${isActive("/soil-test") ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400" : "hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-100 font-bold"}`}
                       >
                         <Sprout size={18} />
                         <span>Soil Testing</span>
                       </Link>
                     </li>
-                    
+
                     <li>
-                      <Link 
-                        to="/blog" 
-                        onClick={() => setSidebarOpen(false)} 
-                        className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/blog") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                      <Link
+                        to="/blog"
+                        onClick={() => setSidebarOpen(false)}
+                        className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors text-xs font-semibold ${isActive("/blog") ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400" : "hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-100 font-bold"}`}
                       >
                         <Newspaper size={18} />
                         <span>Agronomy Blog</span>
                       </Link>
                     </li>
                     <li>
-                      <Link 
-                        to="/education" 
-                        onClick={() => setSidebarOpen(false)} 
-                        className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/education") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                      <Link
+                        to="/education"
+                        onClick={() => setSidebarOpen(false)}
+                        className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors text-xs font-semibold ${isActive("/education") ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400" : "hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-100 font-bold"}`}
                       >
                         <BookOpen size={18} />
                         <span>Learning Hub</span>
@@ -402,37 +408,37 @@ const Navbar = () => {
                   </>
                 )}
 
-                 {isStandardCustomer && (
+                {isStandardCustomer && (
                   <>
                     <li>
-                      <Link 
-                        to="/shop?tab=cart" 
-                        onClick={() => setSidebarOpen(false)} 
-                        className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${location.search.includes("tab=cart") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                      <Link
+                        to="/shop?tab=cart"
+                        onClick={() => setSidebarOpen(false)}
+                        className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors text-xs font-semibold ${location.search.includes("tab=cart") ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400" : "hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-100 font-bold"}`}
                       >
                         <div className="flex items-center space-x-2.5">
                           <ShoppingBag size={18} />
                           <span>My Cart</span>
                         </div>
                         {user.cart && user.cart.length > 0 && (
-                          <span className="bg-emerald-500 text-slate-950 font-extrabold text-xs px-2 py-0.5 rounded-full shrink-0">
+                          <span className="bg-blue-600 text-white font-extrabold text-xs px-2 py-0.5 rounded-full shrink-0">
                             {user.cart.length}
                           </span>
                         )}
                       </Link>
                     </li>
                     <li>
-                      <Link 
-                        to="/shop?tab=orders" 
-                        onClick={() => setSidebarOpen(false)} 
-                        className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${location.search.includes("tab=orders") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                      <Link
+                        to="/shop?tab=orders"
+                        onClick={() => setSidebarOpen(false)}
+                        className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors text-xs font-semibold ${location.search.includes("tab=orders") ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400" : "hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-100 font-bold"}`}
                       >
                         <div className="flex items-center space-x-2.5">
                           <Clock size={18} />
                           <span>My Purchases</span>
                         </div>
                         {user.order && user.order.length > 0 && (
-                          <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-extrabold text-xs px-2 py-0.5 rounded-full shrink-0">
+                          <span className="bg-blue-50 dark:bg-blue-500/10 border border-blue-105 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 font-extrabold text-xs px-2 py-0.5 rounded-full shrink-0">
                             {user.order.length}
                           </span>
                         )}
@@ -443,10 +449,10 @@ const Navbar = () => {
 
                 {isAdmin && (
                   <li>
-                    <Link 
-                      to="/customer" 
-                      onClick={() => setSidebarOpen(false)} 
-                      className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors ${isActive("/customer") ? "bg-emerald-500/10 text-emerald-400" : "hover:bg-slate-950"}`}
+                    <Link
+                      to="/customer"
+                      onClick={() => setSidebarOpen(false)}
+                      className={`flex items-center space-x-2.5 px-3 py-2.5 rounded-xl transition-colors text-xs font-semibold ${isActive("/customer") ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400" : "hover:bg-slate-50 dark:hover:bg-slate-800/40 text-slate-800 dark:text-slate-100 font-bold"}`}
                     >
                       <Users size={18} />
                       <span>Customer List</span>
@@ -455,46 +461,46 @@ const Navbar = () => {
                 )}
               </ul>
 
-              <div className="border-t border-slate-800/80 pt-4 mt-4">
+              <div className="border-t border-slate-100 dark:border-slate-800/80 pt-4 mt-4 text-xs font-semibold">
                 {user ? (
                   <div className="space-y-3">
-                    <div className="flex items-center space-x-3 px-3 py-2 rounded-xl bg-slate-950 border border-slate-850">
-                      <div className="w-10 h-10 rounded-lg overflow-hidden border border-slate-800">
-                        <img 
-                          src={user.profilePhoto || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&h=80&q=80"} 
-                          alt="Profile" 
-                          className="w-full h-full object-cover" 
+                    <div className="flex items-center space-x-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                      <div className="w-10 h-10 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800">
+                        <img
+                          src={user.profilePhoto || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&h=80&q=80"}
+                          alt="Profile"
+                          className="w-full h-full object-cover"
                         />
                       </div>
                       <div className="flex flex-col text-left">
-                        <span className="text-sm font-bold text-white leading-tight">{user.username}</span>
-                        <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">{user.role}</span>
+                        <span className="text-sm font-bold text-slate-800 dark:text-white leading-tight">{user.username}</span>
+                        <span className="text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">{user.role?.replace("_", " ")}</span>
                       </div>
                     </div>
-                    <Link 
-                      to="/profile" 
-                      onClick={() => setSidebarOpen(false)} 
-                      className="flex items-center px-3 py-2.5 hover:bg-slate-900 rounded-xl transition-colors text-sm font-medium"
+                    <Link
+                      to="/profile"
+                      onClick={() => setSidebarOpen(false)}
+                      className="flex items-center px-3 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors text-slate-700 dark:text-slate-200"
                     >
                       <UserIcon size={16} className="mr-2 text-slate-400" />
                       View Profile
                     </Link>
-                    <button 
+                    <button
                       onClick={() => {
                         setSidebarOpen(false);
                         handleLogout();
                       }}
-                      className="w-full text-left flex items-center px-3 py-2.5 hover:bg-red-500/10 text-red-400 rounded-xl transition-colors text-sm font-medium"
+                      className="w-full text-left flex items-center px-3 py-2.5 hover:bg-red-50 dark:hover:bg-red-500/10 text-red-600 dark:text-red-400 rounded-xl transition-colors"
                     >
                       <LogOut size={16} className="mr-2" />
                       Sign Out
                     </button>
                   </div>
                 ) : (
-                  <Link 
-                    to="/login" 
-                    onClick={() => setSidebarOpen(false)} 
-                    className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-4 rounded-xl block text-center transition-all duration-200"
+                  <Link
+                    to="/login"
+                    onClick={() => setSidebarOpen(false)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl block text-center transition-all duration-200"
                   >
                     Get Started
                   </Link>

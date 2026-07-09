@@ -46,30 +46,30 @@ const NewBlog = () => {
   };
 
   return (
-    <div className="min-h-[80vh] py-8 animate-fade-in-up">
-      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800/80 max-w-2xl mx-auto space-y-6">
+    <div className="min-h-[80vh] py-8 animate-fade-in-up text-left">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm max-w-2xl mx-auto space-y-6 text-left">
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center space-x-1.5 text-slate-400 hover:text-emerald-400 font-semibold mb-2 transition-colors text-xs"
+          className="flex items-center space-x-1.5 text-slate-400 hover:text-blue-650 font-semibold mb-2 transition-colors text-xs"
         >
           <ArrowLeft size={14} />
           <span>Go Back</span>
         </button>
 
         <div>
-          <h2 className="text-2xl font-bold text-white">Write a New Blog Post</h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full mt-2"></div>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Write a New Blog Post</h2>
+          <div className="w-16 h-1 bg-blue-600 rounded-full mt-2"></div>
         </div>
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-xl font-semibold text-center text-xs">
+          <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-650 dark:text-red-400 p-3 rounded-xl font-bold text-center text-xs animate-pulse">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-1.5">
-            <label htmlFor="title" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Blog Title</label>
+          <div className="space-y-1.5 text-left">
+            <label htmlFor="title" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Blog Title</label>
             <input
               type="text"
               id="title"
@@ -81,8 +81,8 @@ const NewBlog = () => {
             />
           </div>
 
-          <div className="space-y-1.5">
-            <label htmlFor="description" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Content</label>
+          <div className="space-y-1.5 text-left">
+            <label htmlFor="description" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Content</label>
             <textarea
               id="description"
               value={description}
@@ -93,9 +93,9 @@ const NewBlog = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
             <div className="space-y-1.5">
-              <label htmlFor="publishedon" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Publish Date</label>
+              <label htmlFor="publishedon" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Publish Date</label>
               <input
                 type="text"
                 id="publishedon"
@@ -108,7 +108,7 @@ const NewBlog = () => {
             </div>
 
             <div className="space-y-1.5">
-              <label htmlFor="image" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Banner Image URL</label>
+              <label htmlFor="image" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Banner Image URL</label>
               <input
                 type="text"
                 id="image"
@@ -124,7 +124,7 @@ const NewBlog = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50 text-xs mt-4"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 text-xs mt-4"
           >
             <PlusCircle size={14} />
             <span>{submitting ? "Publishing Blog..." : "Publish Blog Post"}</span>

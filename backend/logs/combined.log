@@ -534,3 +534,20 @@
 {"level":"info","message":"User logged in: Ram","timestamp":"2026-07-06 22:12:11"}
 {"level":"info","message":"Order 6a4bd67001b972bbb170a168 cancelled","timestamp":"2026-07-06 22:12:50"}
 {"level":"info","message":"User logged out: Ram","timestamp":"2026-07-06 22:15:50"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-09 10:51:54"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-09 10:54:22"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-09 10:55:36"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-09 11:08:38"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-09 11:13:58"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-09 11:14:50"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-09 11:46:19"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-09 12:25:20"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-09 15:55:18"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-09 16:48:05"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-09 16:48:53"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-09 16:53:21"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-09 16:53:29"}
+{"level":"info","message":"New Kisan testimonial created by Ram","timestamp":"2026-07-09 16:53:49"}
+{"level":"info","message":"New Kisan testimonial created by Ram","timestamp":"2026-07-09 16:54:02"}
+{"level":"info","message":"New Kisan testimonial created by Ram","timestamp":"2026-07-09 16:54:18"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-09 16:54:25"}

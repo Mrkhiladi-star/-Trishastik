@@ -3,8 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
   ShoppingCart, Star, Video, PlusCircle, MessageSquare, Sprout,
-  MapPin, CheckCircle, ChevronRight, Compass, ShieldAlert, Cpu, X, Search
+  MapPin, CheckCircle, ChevronRight, Compass, ShieldAlert, Cpu, X, Search,
+  Users, Map, Shield, ShoppingBag, Truck, BookOpen,
+
+  FlaskConical,
+  Tractor,
+  Store,
+  FileText,
+  Package
 } from "lucide-react";
+import logo from "../assets/logo.png"
+
 
 const Home = () => {
   const { user, refreshUser } = useAuth();
@@ -159,7 +168,7 @@ const Home = () => {
     if (selectedTag !== "All") {
       const title = item.title.toLowerCase();
       const desc = item.description.toLowerCase();
-      
+
       if (selectedTag === "grains") {
         const isGrain = ["wheat", "rice", "gehu", "chawal", "dhan", "wheet"].some(kw => title.includes(kw) || desc.includes(kw));
         if (!isGrain) return false;
@@ -197,131 +206,243 @@ const Home = () => {
   const isFarmer = user && user.role === "farmer";
   const isSeller = user && (user.role === "farmer" || user.role === "fertilizer_seller" || user.role === "instrument_seller");
 
-  // Checking if user is allowed to purchase products
   const canBuy = user && user.role !== "admin" && user.role !== "transporter" && user.role !== "agent";
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center text-slate-800 dark:text-white">
         <div className="flex flex-col items-center space-y-4">
-          <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-slate-400 text-sm font-semibold tracking-wider">Starting Dev Server...</p>
+          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold tracking-wider font-sans">Starting Dev Server...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen pb-12 space-y-16 animate-fade-in-up">
+    <div className="min-h-screen pb-12 space-y-16 animate-fade-in-up text-left">
       {/* Toast alert banner */}
       {message.text && (
-        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-2xl shadow-2xl text-white font-semibold flex items-center space-x-2 animate-bounce border ${message.type === "success" ? "bg-emerald-500 border-emerald-400 text-slate-950" : "bg-red-500 border-red-400"
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-xl shadow-lg text-white font-bold flex items-center space-x-2 border ${message.type === "success" ? "bg-emerald-600 border-emerald-500 text-white" : "bg-red-650 border-red-500 text-white"
           }`}>
           <span>{message.text}</span>
         </div>
       )}
 
-      {/* Hero Banner Grid */}
-      <div className="relative glass-panel rounded-3xl overflow-hidden shadow-2xl border border-slate-800/80 p-8 sm:p-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[500px]">
+      {/* Hero Banner Grid (Design 2 Aesthetic layout) */}
+      <div className="relative bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 p-8 sm:p-12 lg:p-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[500px]">
         {/* Glow Effects */}
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
         {/* Hero Text */}
-        <div className="lg:col-span-7 space-y-6 text-left">
-          <div className="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full text-xs font-bold text-emerald-400 uppercase tracking-wider">
+        <div className="lg:col-span-7 space-y-6 text-left relative z-10">
+          <div className="inline-flex items-center space-x-2 bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 px-3 py-1 rounded-full text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
             <Sprout size={12} />
             <span>Sustainable AgriTech Ecosystem</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
             Trishastik Bharat <br />
-            <span className="gradient-text-emerald">Sustainable Farms</span>
+            <span className="text-blue-600 dark:text-blue-400">Sustainable Farms</span>
           </h1>
 
-          <p className="text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl">
-            Empowering rural India with scientific soil tests, automated NPK summaries, and certified organic marketplace products. Together we build sustainable food cycles.
+          <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed max-w-xl font-sans">
+            A complete digital platform for organic farming, bringing together soil testing, certified laboratory reports, equipment rental, fertilizer services, direct farmer marketplace, transportation, and crop education in one place.
           </p>
 
           <div className="flex flex-wrap gap-4 pt-2">
             {isSeller && (
               <Link
                 to="/new"
-                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2 transition-all transform active:scale-95 text-sm"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-sm flex items-center space-x-2 transition-all transform active:scale-95 text-xs"
               >
-                <PlusCircle size={18} />
+                <PlusCircle size={14} />
                 <span>List New Product</span>
               </Link>
             )}
             {isFarmer && (
               <Link
                 to="/newreview"
-                className="bg-slate-900 hover:bg-slate-850 border border-slate-800 text-white font-semibold px-6 py-3 rounded-xl flex items-center space-x-2 transition-all text-sm"
+                className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-white font-bold px-6 py-3 rounded-xl flex items-center space-x-2 transition-all text-xs shadow-sm hover:bg-slate-50 dark:hover:bg-slate-900"
               >
-                <MessageSquare size={18} className="text-emerald-400" />
+                <MessageSquare size={14} className="text-blue-600 dark:text-blue-400" />
                 <span>Write Testimonial</span>
               </Link>
             )}
             {!user && (
               <Link
                 to="/login"
-                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2 transition-all transform active:scale-95 text-sm"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-sm flex items-center space-x-2 transition-all transform active:scale-95 text-xs"
               >
                 <span>Get Started Now</span>
-                <ChevronRight size={16} />
+                <ChevronRight size={14} />
               </Link>
             )}
             {isFarmer && (
               <Link
                 to="/soil-test"
-                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2 transition-all transform active:scale-95 text-sm"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-sm flex items-center space-x-2 transition-all transform active:scale-95 text-xs"
               >
-                <Sprout size={18} />
+                <Sprout size={14} />
                 <span>Request Soil Test</span>
               </Link>
             )}
             <Link
               to="/about"
-              className="bg-slate-900 hover:bg-slate-850 border border-slate-800 text-white font-semibold px-6 py-3 rounded-xl flex items-center space-x-2 transition-all text-sm"
+              className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-white font-bold px-6 py-3 rounded-xl flex items-center space-x-2 transition-all text-xs shadow-sm hover:bg-slate-50 dark:hover:bg-slate-900"
             >
               <span>Learn More</span>
             </Link>
           </div>
         </div>
 
-        {/* Hero Features Card Panel */}
-        <div className="lg:col-span-5 grid grid-cols-1 gap-4">
-          <div className="glass-panel-light p-5 rounded-2xl border border-slate-800/60 flex items-start space-x-4">
-            <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-400 mt-0.5">
-              <CheckCircle size={20} />
-            </div>
-            <div>
-              <h3 className="font-bold text-sm text-white">Interactive Pin Mapping</h3>
-              <p className="text-xs text-slate-400 mt-1 leading-relaxed">Pin your land on dynamic coordinates map to fetch exact weather and local soil composition.</p>
-            </div>
-          </div>
+        {/* Right Hero Image Panel with Tractor Image & Statistics card overlay */}
+        <div className="lg:col-span-5 relative w-full h-[320px] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md">
+          <img
+            src={logo}
+            alt="logo"
+            className="w-full h-full object-cover"
+          />
 
-          <div className="glass-panel-light p-5 rounded-2xl border border-slate-800/60 flex items-start space-x-4">
-            <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-400 mt-0.5">
-              <Cpu size={20} className="animate-pulse-glow" />
-            </div>
-            <div>
-              <h3 className="font-bold text-sm text-white">Grok AI Cognitive Engine</h3>
-              <p className="text-xs text-slate-400 mt-1 leading-relaxed">Deep NPK analyses, nutrient deficiencies explanation, organic compost dosage rates per acre.</p>
-            </div>
-          </div>
         </div>
       </div>
 
+      {/* Bottom Hero Features Grid Row */}
+      {/* Platform Services */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl hover:border-blue-500/20 transition-all shadow-sm text-left">
+          <div className="p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl text-blue-600 dark:text-blue-400 w-fit">
+            <Store size={18} />
+          </div>
+          <div className="mt-4">
+            <h3 className="font-extrabold text-xs uppercase tracking-wider">Organic Marketplace</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+              Buy fresh organic products directly from farmers.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl hover:border-blue-500/20 transition-all shadow-sm text-left">
+          <div className="p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl text-blue-600 dark:text-blue-400 w-fit">
+            <FlaskConical size={18} />
+          </div>
+          <div className="mt-4">
+            <h3 className="font-extrabold text-xs uppercase tracking-wider">Free Soil Testing</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+              Request laboratory soil testing with field agent support.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl hover:border-blue-500/20 transition-all shadow-sm text-left">
+          <div className="p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl text-blue-600 dark:text-blue-400 w-fit">
+            <ShoppingBag size={18} />
+          </div>
+          <div className="mt-4">
+            <h3 className="font-extrabold text-xs uppercase tracking-wider">Fertilizer Store</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+              Purchase fertilizers and crop protection products.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl hover:border-blue-500/20 transition-all shadow-sm text-left">
+          <div className="p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl text-blue-600 dark:text-blue-400 w-fit">
+            <Tractor size={18} />
+          </div>
+          <div className="mt-4">
+            <h3 className="font-extrabold text-xs uppercase tracking-wider">Equipment Rental</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+              Rent or purchase agricultural equipment as needed.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl hover:border-blue-500/20 transition-all shadow-sm text-left">
+          <div className="p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl text-blue-600 dark:text-blue-400 w-fit">
+            <BookOpen size={18} />
+          </div>
+          <div className="mt-4">
+            <h3 className="font-extrabold text-xs uppercase tracking-wider">Crop Education</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+              Learn organic farming practices for different crops.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl hover:border-blue-500/20 transition-all shadow-sm text-left">
+          <div className="p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl text-blue-600 dark:text-blue-400 w-fit">
+            <Truck size={18} />
+          </div>
+          <div className="mt-4">
+            <h3 className="font-extrabold text-xs uppercase tracking-wider">Smart Logistics</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+              Automated delivery through the nearest available transporter.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl hover:border-blue-500/20 transition-all shadow-sm text-left">
+          <div className="p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl text-blue-600 dark:text-blue-400 w-fit">
+            <FileText size={18} />
+          </div>
+          <div className="mt-4">
+            <h3 className="font-extrabold text-xs uppercase tracking-wider">Soil Reports</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+              View approved laboratory reports from your dashboard.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl hover:border-blue-500/20 transition-all shadow-sm text-left">
+          <div className="p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl text-blue-600 dark:text-blue-400 w-fit">
+            <Sprout size={18} />
+          </div>
+          <div className="mt-4">
+            <h3 className="font-extrabold text-xs uppercase tracking-wider">Farmer Selling</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+              List and sell organic farm products directly to customers.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl hover:border-blue-500/20 transition-all shadow-sm text-left">
+          <div className="p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl text-blue-600 dark:text-blue-400 w-fit">
+            <Package size={18} />
+          </div>
+          <div className="mt-4">
+            <h3 className="font-extrabold text-xs uppercase tracking-wider">Equipment Store</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+              Buy agricultural tools and machinery from verified sellers.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl hover:border-blue-500/20 transition-all shadow-sm text-left">
+          <div className="p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl text-blue-600 dark:text-blue-400 w-fit">
+            <ShoppingCart size={18} />
+          </div>
+          <div className="mt-4">
+            <h3 className="font-extrabold text-xs uppercase tracking-wider">Farmer Shopping</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+              Farmers can also purchase products from other farmers.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
       {/* Featured Products Section */}
-      <section className="glass-panel py-16 px-6 sm:px-8 rounded-3xl border border-slate-800/80">
+      <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-10 rounded-3xl shadow-sm text-left animate-fade-in-up">
         <div className="max-w-7xl mx-auto space-y-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 border-b border-slate-800 pb-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 border-b border-slate-200 dark:border-slate-800 pb-6">
             <div className="text-left space-y-2">
-              <h2 className="text-3xl font-extrabold text-white tracking-tight animate-fade-in">
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight animate-fade-in">
                 {user && user.role === "farmer" ? "Recommended Farming Inputs" : "Featured Organic Marketplace"}
               </h2>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-slate-500 dark:text-slate-400">
                 {user && user.role === "farmer"
                   ? "Top fertilizers, dynamic tool rents, and equipment listed by verified agronomists"
                   : "Fresh organic crops, grains, and vegetables directly from certified farms"}
@@ -330,13 +451,13 @@ const Home = () => {
 
             {/* Search Bar with Hinglish capabilities */}
             <div className="relative w-full md:w-80">
-              <Search className="absolute left-3 top-2.5 text-slate-500" size={16} />
+              <Search className="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500" size={16} />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search (e.g. ganna, tamatar, potato)..."
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-800 text-white rounded-xl text-xs focus:outline-none focus:border-emerald-500"
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl text-xs focus:outline-none focus:border-blue-650"
               />
             </div>
           </div>
@@ -350,11 +471,10 @@ const Home = () => {
                   setSelectedTag(tag.value);
                   setSearchQuery("");
                 }}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 border ${
-                  selectedTag === tag.value 
-                    ? "bg-emerald-500 text-slate-950 border-emerald-400 font-extrabold shadow-md shadow-emerald-500/10 scale-105" 
-                    : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-850"
-                }`}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 border shadow-sm ${selectedTag === tag.value
+                  ? "bg-blue-600 text-white border-blue-500 font-extrabold scale-105"
+                  : "bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900"
+                  }`}
               >
                 {tag.name}
               </button>
@@ -362,17 +482,17 @@ const Home = () => {
           </div>
 
           {filteredListings.length === 0 ? (
-            <p className="text-center text-slate-500 py-12">No products match your search query.</p>
+            <p className="text-center text-slate-500 py-12 font-semibold">No products match your search query.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {filteredListings.map((item) => (
                 <div
                   key={item._id}
                   onClick={() => navigate(`/product/${item._id}`)}
-                  className="cursor-pointer bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group"
+                  className="cursor-pointer bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm hover:border-slate-350 dark:hover:border-slate-800 transition-all flex flex-col justify-between group"
                 >
                   <div>
-                    <div className="relative h-48 overflow-hidden bg-slate-950">
+                    <div className="relative h-48 overflow-hidden bg-slate-100 dark:bg-slate-950">
                       <img
                         src={item.image}
                         alt={item.title}
@@ -381,17 +501,17 @@ const Home = () => {
                       />
                     </div>
                     <div className="p-4 space-y-1.5 text-left">
-                      <span className="text-[10px] text-emerald-400 font-extrabold bg-emerald-500/5 border border-emerald-500/10 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                      <span className="text-[10px] text-blue-600 dark:text-blue-400 font-extrabold bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 px-2 py-0.5 rounded-md uppercase tracking-wider shadow-sm">
                         {item.category?.replace("_", " ")}
                       </span>
-                      <h3 className="text-sm font-bold text-white line-clamp-1 group-hover:text-emerald-400 transition-colors pt-1">{item.title}</h3>
-                      <p className="text-xs text-slate-400 line-clamp-2 min-h-[2rem] leading-relaxed">{item.description}</p>
-                      
+                      <h3 className="text-sm font-bold text-slate-800 dark:text-white line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors pt-1">{item.title}</h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 min-h-[2rem] leading-relaxed font-sans">{item.description}</p>
+
                       {/* Star Rating Mockup */}
-                      <div className="flex items-center space-x-1 text-amber-400 pt-0.5">
+                      <div className="flex items-center space-x-1 text-amber-500 pt-0.5">
                         <div className="flex space-x-0.5">
                           {[...Array(4)].map((_, i) => <Star key={i} size={11} fill="currentColor" />)}
-                          <Star size={11} className="text-slate-700" />
+                          <Star size={11} className="text-slate-200 dark:text-slate-700" />
                         </div>
                         <span className="text-[9px] text-slate-500 font-bold">(15)</span>
                       </div>
@@ -401,10 +521,10 @@ const Home = () => {
                   <div className="p-4 pt-0 space-y-3">
                     {/* Strikethrough Pricing Layout */}
                     <div className="space-y-0.5 text-left">
-                      <div className="flex items-baseline space-x-1.5">
-                        <span className="text-lg font-extrabold text-emerald-400">₹{item.price}</span>
-                        <span className="text-xs text-slate-500 line-through">₹{Math.round(item.price * 1.25)}</span>
-                        <span className="text-[9px] text-emerald-500 font-extrabold bg-emerald-500/10 px-1 rounded-md">20% OFF</span>
+                      <div className="flex items-baseline space-x-1.5 font-sans">
+                        <span className="text-lg font-extrabold text-emerald-600 dark:text-emerald-400">₹{item.price}</span>
+                        <span className="text-xs text-slate-400 line-through">₹{Math.round(item.price * 1.25)}</span>
+                        <span className="text-[9px] text-emerald-600 dark:text-emerald-450 font-extrabold bg-emerald-50 dark:bg-emerald-500/10 px-1 rounded-md">20% OFF</span>
                       </div>
                       <span className="text-[10px] text-slate-500 font-bold block">per {item.priceUnit || "kg"}</span>
                     </div>
@@ -412,7 +532,7 @@ const Home = () => {
                     {(canBuy || !user) && (
                       <button
                         onClick={(e) => handleAddToCart(item._id, e)}
-                        className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 px-4 rounded-xl flex items-center justify-center space-x-1.5 transition-all text-xs"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center space-x-1.5 transition-all text-xs shadow-sm"
                       >
                         <ShoppingCart size={14} />
                         <span>Add to Cart</span>
@@ -427,18 +547,18 @@ const Home = () => {
       </section>
 
       {/* Customer Testimonials Section */}
-      <section className="glass-panel py-16 px-6 sm:px-8 rounded-3xl border border-slate-800/80 relative">
+      <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 py-16 px-6 sm:px-8 rounded-3xl shadow-sm relative text-left">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center space-y-2 relative">
-            <h2 className="text-3xl font-extrabold text-white tracking-tight">Kisan Testimonials</h2>
-            <p className="text-sm text-slate-400">Real stories from farmers across Bharat implementing sustainable tech tools</p>
-            <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-green-600 mx-auto rounded-full mt-4"></div>
-            
+            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Kisan Testimonials</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400">Real stories from farmers across Bharat implementing sustainable tech tools</p>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-blue-500 mx-auto rounded-full mt-4"></div>
+
             {isFarmer && (
               <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
                 <Link
                   to="/newreview"
-                  className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-2 rounded-xl shadow-md text-xs flex items-center space-x-1.5 transition-all transform active:scale-95"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-xl shadow-sm text-xs flex items-center space-x-1.5 transition-all transform active:scale-95"
                 >
                   <PlusCircle size={14} />
                   <span>Share Your Story</span>
@@ -448,23 +568,23 @@ const Home = () => {
           </div>
 
           {reviews.length === 0 ? (
-            <p className="text-center text-slate-500 py-12">No testimonials yet. Be the first to leave one!</p>
+            <p className="text-center text-slate-500 py-12 font-semibold">No testimonials yet. Be the first to leave one!</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {reviews.map((rev) => (
-                <div key={rev._id} className="bg-slate-900/40 border border-slate-850 p-6 rounded-2xl shadow-lg flex flex-col justify-between">
+                <div key={rev._id} className="bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm flex flex-col justify-between">
                   <div className="space-y-4">
-                    <div className="flex space-x-1 text-amber-400">
+                    <div className="flex space-x-1 text-amber-500">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} size={14} fill="currentColor" />
                       ))}
                     </div>
-                    <p className="text-slate-300 italic leading-relaxed text-xs">
+                    <p className="text-slate-600 dark:text-slate-300 italic leading-relaxed text-xs">
                       "{rev.description}"
                     </p>
                   </div>
-                  <div className="mt-6 border-t border-slate-800/80 pt-4 flex flex-col">
-                    <span className="font-bold text-white text-sm">{rev.name}</span>
+                  <div className="mt-6 border-t border-slate-100 dark:border-slate-800/80 pt-4 flex flex-col">
+                    <span className="font-bold text-slate-900 dark:text-white text-sm">{rev.name}</span>
                     <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-0.5">{rev.post || rev.Post || "Farmer / Customer"}</span>
                   </div>
                 </div>
@@ -474,29 +594,27 @@ const Home = () => {
         </div>
       </section>
 
-
-
       {/* OVERLAY MODAL: Product details display */}
       {selectedProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md p-4 animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative flex flex-col md:flex-row">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md p-4 animate-fade-in text-left">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative flex flex-col md:flex-row animate-fade-in-up">
             {/* Close button */}
             <button
               onClick={() => setSelectedProduct(null)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-xl bg-slate-950/80 border border-slate-800 z-10 hover:scale-105 transition-all"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 dark:hover:text-white p-2 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 z-10 hover:scale-105 transition-all shadow-sm"
             >
               <X size={18} />
             </button>
 
             {/* Product Image */}
-            <div className="md:w-1/2 h-64 md:h-auto bg-slate-950 relative">
+            <div className="md:w-1/2 h-64 md:h-auto bg-slate-100 dark:bg-slate-950 relative">
               <img
                 src={selectedProduct.image}
                 alt={selectedProduct.title}
                 className="w-full h-full object-cover"
                 onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
               />
-              <span className="absolute top-4 left-4 bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+              <span className="absolute top-4 left-4 bg-blue-50 dark:bg-blue-500/10 border border-blue-105 dark:border-blue-500/20 text-blue-650 dark:text-blue-400 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
                 {selectedProduct.category?.replace("_", " ")}
               </span>
             </div>
@@ -504,23 +622,23 @@ const Home = () => {
             {/* Details panel */}
             <div className="md:w-1/2 p-6 flex flex-col justify-between space-y-6 text-left">
               <div className="space-y-4">
-                <h3 className="text-xl font-extrabold text-white leading-tight">{selectedProduct.title}</h3>
-                <p className="text-slate-400 text-xs leading-relaxed max-h-[160px] overflow-y-auto pr-2">
+                <h3 className="text-xl font-extrabold text-slate-900 dark:text-white leading-tight">{selectedProduct.title}</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed max-h-[160px] overflow-y-auto pr-2 font-sans">
                   {selectedProduct.description}
                 </p>
                 {selectedProduct.location && (
                   <p className="text-slate-500 text-[10px] flex items-center space-x-1.5 font-bold uppercase tracking-wider">
-                    <MapPin size={12} className="text-emerald-400" />
+                    <MapPin size={12} className="text-blue-655" />
                     <span>Location: {selectedProduct.location}</span>
                   </p>
                 )}
               </div>
 
               {/* Buying option inside modal */}
-              <div className="space-y-4 border-t border-slate-800/80 pt-4 flex flex-col justify-end">
+              <div className="space-y-4 border-t border-slate-100 dark:border-slate-800/80 pt-4 flex flex-col justify-end">
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-slate-500 font-bold uppercase tracking-wider">Price</span>
-                  <span className="text-2xl font-extrabold text-emerald-400">₹{selectedProduct.price}</span>
+                  <span className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">₹{selectedProduct.price}</span>
                 </div>
 
                 {canBuy ? (
@@ -529,7 +647,7 @@ const Home = () => {
                       handleAddToCart(selectedProduct._id);
                       setSelectedProduct(null);
                     }}
-                    className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 text-xs"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-sm text-xs transition-all transform active:scale-95"
                   >
                     <ShoppingCart size={14} />
                     <span>Add to Cart</span>
@@ -537,12 +655,12 @@ const Home = () => {
                 ) : !user ? (
                   <button
                     onClick={() => navigate("/login")}
-                    className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl text-center text-xs"
+                    className="w-full bg-blue-600 hover:bg-blue-755 text-white font-bold py-3 px-6 rounded-xl text-center text-xs shadow-sm"
                   >
                     Sign In to Purchase
                   </button>
                 ) : (
-                  <span className="text-[10px] text-slate-500 font-bold uppercase text-center block bg-slate-950/40 p-2 rounded-lg border border-slate-850">
+                  <span className="text-[10px] text-slate-500 font-bold uppercase text-center block bg-slate-50 dark:bg-slate-950/40 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
                     Sellers & Admins cannot purchase items
                   </span>
                 )}

@@ -265,35 +265,35 @@ const Shop = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center text-white">
+      <div className="min-h-[80vh] flex items-center justify-center text-slate-800 dark:text-white">
         <div className="flex flex-col items-center space-y-4">
-          <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-slate-400 text-sm font-semibold tracking-wider font-sans">Connecting to shop...</p>
+          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold tracking-wider font-sans">Connecting to shop...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-[80vh] py-8 space-y-8 animate-fade-in-up">
+    <div className="min-h-[80vh] py-8 space-y-8 animate-fade-in-up text-left">
       {message && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-emerald-500 text-slate-950 px-6 py-3 rounded-2xl shadow-2xl font-bold">
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-emerald-600 border border-emerald-500 text-white px-6 py-3 rounded-2xl shadow-lg font-bold">
           {message}
         </div>
       )}
 
       {/* Header Banner */}
-      <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-800 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="bg-white dark:bg-slate-900 p-8 sm:p-12 rounded-3xl border border-slate-200 dark:border-slate-800 relative overflow-hidden text-left shadow-sm">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
         <div className="max-w-3xl space-y-4 relative z-10">
-          <div className="flex items-center space-x-2 text-emerald-400 font-bold tracking-wider text-xs uppercase">
+          <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 font-bold tracking-wider text-xs uppercase">
             <ShoppingBag size={14} />
             <span>Trishastik Hub Marketplace</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Agricultural Products & Inputs
           </h1>
-          <p className="text-sm text-slate-400 leading-relaxed">
+          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
             Order organic farm fresh crops directly from farmers, or procure lab-prescribed fertilizers, additives, and high-performance equipment (for purchase or hire).
           </p>
         </div>
@@ -301,22 +301,22 @@ const Shop = () => {
 
       {/* Sub tabs - hidden for standard customers */}
       {user && user.role !== "customer" && (
-        <div className="flex space-x-4 border-b border-slate-800 pb-4">
+        <div className="flex space-x-4 border-b border-slate-200 dark:border-slate-800 pb-4">
           <button
             onClick={() => setShopTab("catalog")}
-            className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "catalog" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
+            className={`pb-2 text-xs font-semibold tracking-wider uppercase border-b-2 transition-all ${shopTab === "catalog" ? "border-blue-600 text-blue-600 dark:text-blue-400 font-extrabold" : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"}`}
           >
             Explore Catalog
           </button>
           <button
             onClick={() => setShopTab("cart")}
-            className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "cart" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
+            className={`pb-2 text-xs font-semibold tracking-wider uppercase border-b-2 transition-all ${shopTab === "cart" ? "border-blue-600 text-blue-600 dark:text-blue-400 font-extrabold" : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"}`}
           >
             My Cart ({cart.length})
           </button>
           <button
             onClick={() => setShopTab("orders")}
-            className={`pb-2 text-sm font-bold border-b-2 transition-all ${shopTab === "orders" ? "border-emerald-500 text-emerald-400 font-bold" : "border-transparent text-slate-400 hover:text-white"}`}
+            className={`pb-2 text-xs font-semibold tracking-wider uppercase border-b-2 transition-all ${shopTab === "orders" ? "border-blue-600 text-blue-600 dark:text-blue-400 font-extrabold" : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"}`}
           >
             My Purchases & Tracking ({myOrders.length})
           </button>
@@ -331,13 +331,13 @@ const Shop = () => {
 
             {/* Search Bar */}
             <div className="relative w-full md:w-80">
-              <Search className="absolute left-3 top-2.5 text-slate-500" size={16} />
+              <Search className="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500" size={16} />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search products..."
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-800 text-white rounded-xl text-xs focus:outline-none focus:border-emerald-500"
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl text-xs focus:outline-none focus:border-blue-600"
               />
             </div>
 
@@ -365,9 +365,9 @@ const Shop = () => {
                 <button
                   key={c.id}
                   onClick={() => setActiveCategory(c.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${activeCategory === c.id
-                    ? "bg-emerald-500 border-emerald-400 text-slate-950 shadow"
-                    : "bg-slate-900 border-slate-800 text-slate-300 hover:text-white"
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border shadow-sm ${activeCategory === c.id
+                    ? "bg-blue-600 border-blue-500 text-white font-extrabold scale-105"
+                    : "bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900"
                     }`}
                 >
                   {c.label}
@@ -378,7 +378,7 @@ const Shop = () => {
 
           {/* Catalog grid */}
           {filteredListings.length === 0 ? (
-            <div className="text-center py-16 bg-slate-900/20 rounded-3xl border border-slate-850 text-slate-500 font-semibold">
+            <div className="text-center py-16 bg-slate-50 dark:bg-slate-900/20 rounded-3xl border border-slate-200 dark:border-slate-800 text-slate-500 font-semibold">
               No products found under this category.
             </div>
           ) : (
@@ -390,39 +390,39 @@ const Shop = () => {
                   <div
                     key={item._id}
                     onClick={() => navigate(`/product/${item._id}`)}
-                    className="cursor-pointer bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg hover:border-slate-800 transition-all flex flex-col justify-between group"
+                    className="cursor-pointer bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl overflow-hidden shadow-sm hover:border-slate-350 dark:hover:border-slate-750 transition-all flex flex-col justify-between group"
                   >
                     <div>
-                      <div className="relative h-44 overflow-hidden bg-slate-950">
+                      <div className="relative h-44 overflow-hidden bg-slate-105 dark:bg-slate-950">
                         <img
                           src={item.image}
                           alt={item.title}
                           className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
                           onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
                         />
-                        <span className={`absolute top-2 right-2 text-[8px] font-extrabold px-2 py-0.5 rounded-md border uppercase ${item.category === "organic_product" ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-400" :
-                          item.category === "medicine_fertilizer" ? "bg-purple-500/10 border-purple-500/25 text-purple-400" :
-                            item.category === "instrument_sale" ? "bg-amber-500/10 border-amber-500/25 text-amber-400" :
-                              "bg-sky-500/10 border-sky-500/25 text-sky-400"
+                        <span className={`absolute top-2 right-2 text-[8px] font-extrabold px-2 py-0.5 rounded-md border uppercase shadow-sm ${item.category === "organic_product" ? "bg-emerald-50 dark:bg-emerald-500/10 border-emerald-100 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400" :
+                          item.category === "medicine_fertilizer" ? "bg-purple-50 dark:bg-purple-500/10 border-purple-100 dark:border-purple-500/20 text-purple-600 dark:text-purple-400" :
+                            item.category === "instrument_sale" ? "bg-amber-50 dark:bg-amber-500/10 border-amber-100 dark:border-amber-500/20 text-amber-600 dark:text-amber-400" :
+                              "bg-sky-50 dark:bg-sky-500/10 border-sky-100 dark:border-sky-500/20 text-sky-600 dark:text-sky-400"
                           }`}>
                           {item.category?.replace("_", " ")}
                         </span>
                       </div>
-                      <div className="p-4 space-y-1">
-                        <h3 className="text-sm font-bold text-white line-clamp-1 group-hover:text-emerald-400 transition-colors">{item.title}</h3>
-                        <p className="text-xs text-slate-400 line-clamp-2 min-h-[2rem] leading-relaxed">{item.description}</p>
+                      <div className="p-4 space-y-1.5 text-left">
+                        <h3 className="text-sm font-bold text-slate-800 dark:text-white line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{item.title}</h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 min-h-[2rem] leading-relaxed font-sans">{item.description}</p>
                         {item.location && (
-                          <p className="text-[10px] text-slate-500 flex items-center space-x-1">
-                            <MapPin size={10} />
+                          <p className="text-[10px] text-slate-400 dark:text-slate-500 flex items-center space-x-1 font-sans">
+                            <MapPin size={10} className="text-blue-600 dark:text-blue-400" />
                             <span className="truncate">{item.location}</span>
                           </p>
                         )}
                       </div>
                     </div>
 
-                    <div className="p-4 pt-0 space-y-3 mt-2">
-                      <p className="text-lg font-extrabold text-emerald-400">
-                        ₹{item.price} <span className="text-xs text-slate-500 font-bold">/ {item.priceUnit || "kg"}</span>
+                    <div className="p-4 pt-0 space-y-3 mt-2 text-left">
+                      <p className="text-lg font-extrabold text-emerald-600 dark:text-emerald-400 font-sans">
+                        ₹{item.price} <span className="text-xs text-slate-400 dark:text-slate-500 font-bold">/ {item.priceUnit || "kg"}</span>
                       </p>
 
                       {getCanBuy(item) && (
@@ -430,7 +430,7 @@ const Shop = () => {
                           <button
                             disabled
                             onClick={(e) => e.stopPropagation()}
-                            className="w-full bg-slate-900 text-slate-500 font-bold py-2 rounded-xl text-xs border border-slate-800 cursor-not-allowed"
+                            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-400 cursor-not-allowed font-bold py-2 rounded-xl text-xs"
                           >
                             My Product Listing
                           </button>
@@ -440,7 +440,7 @@ const Shop = () => {
                               e.stopPropagation();
                               handleAddToCart(item._id);
                             }}
-                            className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 px-4 rounded-xl flex items-center justify-center space-x-1.5 transition-all text-xs active:scale-95"
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl flex items-center justify-center space-x-1.5 transition-all text-xs active:scale-95 shadow-sm"
                           >
                             <ShoppingBag size={14} />
                             <span>Add to Cart</span>
@@ -469,7 +469,7 @@ const Shop = () => {
                               }
                             }
                           }}
-                          className="w-full bg-red-500/10 hover:bg-red-500/25 border border-red-500/20 text-red-400 font-bold py-2 rounded-xl text-xs transition-all active:scale-95 flex items-center justify-center space-x-1.5"
+                          className="w-full bg-red-50 dark:bg-red-500/10 hover:bg-red-100/50 dark:hover:bg-red-500/20 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 font-bold py-2 rounded-xl text-xs transition-all active:scale-95 flex items-center justify-center space-x-1.5"
                         >
                           <Trash2 size={14} />
                           <span>Delete Listing</span>
@@ -486,22 +486,22 @@ const Shop = () => {
 
       {/* SHOPPING CART TAB */}
       {shopTab === "cart" && (
-        <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
-          <div className="flex items-center space-x-3 border-b border-slate-850 pb-4">
-            <ShoppingBag className="text-emerald-400" size={24} />
-            <h2 className="text-xl font-bold text-white tracking-tight">Active Items Cart</h2>
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm space-y-6 text-left">
+          <div className="flex items-center space-x-3 border-b border-slate-100 dark:border-slate-800 pb-4">
+            <ShoppingBag className="text-blue-600 dark:text-blue-400" size={24} />
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Active Items Cart</h2>
           </div>
 
           {cart.length > 0 && (
-            <div className="bg-gradient-to-r from-emerald-500 to-green-600 p-6 rounded-2xl text-slate-950 shadow-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-6 rounded-2xl text-white shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div className="space-y-1">
-                <p className="text-xs font-bold uppercase tracking-wider text-emerald-950/70">Receipt Summary</p>
-                <p className="text-2xl font-extrabold text-slate-950">Total Invoice: ₹{totalAmount.toFixed(2)}</p>
-                <p className="text-xs font-medium text-emerald-950/80 truncate max-w-lg">Products: {cartTitles}</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-blue-100">Receipt Summary</p>
+                <p className="text-2xl font-extrabold text-white font-sans">Total Invoice: ₹{totalAmount.toFixed(2)}</p>
+                <p className="text-xs font-medium text-blue-50 truncate max-w-lg">Products: {cartTitles}</p>
               </div>
               <Link
                 to="/checkout"
-                className="bg-slate-950 text-white hover:bg-slate-900 font-bold px-6 py-3 rounded-xl flex items-center space-x-2 shadow-xl transition-all transform active:scale-95 text-xs"
+                className="bg-white text-blue-600 hover:bg-blue-50 font-bold px-6 py-3 rounded-xl flex items-center space-x-2 shadow-md transition-all transform active:scale-95 text-xs shrink-0"
               >
                 <CreditCard size={14} />
                 <span>Confirm order checkout</span>
@@ -512,11 +512,11 @@ const Shop = () => {
 
           <div>
             {cart.length === 0 ? (
-              <div className="text-center py-16 bg-slate-900/20 rounded-2xl border border-dashed border-slate-800 text-slate-400 space-y-3">
+              <div className="text-center py-16 bg-slate-50 dark:bg-slate-900/20 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 text-slate-400 space-y-3">
                 <p className="text-sm font-semibold">Your shopping cart is empty.</p>
                 <button
                   onClick={() => setShopTab("catalog")}
-                  className="text-emerald-400 hover:text-emerald-300 font-bold flex items-center justify-center space-x-1 text-xs mx-auto"
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-700 font-bold flex items-center justify-center space-x-1 text-xs mx-auto"
                 >
                   <span>Explore catalog items</span>
                   <ArrowRight size={12} />
@@ -536,9 +536,9 @@ const Shop = () => {
                     }
                   });
                   return groupedCart.map((item) => (
-                    <div key={item._id} className="bg-slate-900/40 border border-slate-850 rounded-2xl overflow-hidden shadow-lg flex flex-col justify-between group">
+                    <div key={item._id} className="bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between group">
                       <div>
-                        <div className="h-44 overflow-hidden bg-slate-950">
+                        <div className="h-44 overflow-hidden bg-slate-100 dark:bg-slate-950">
                           <img
                             src={item.image}
                             alt={item.title}
@@ -546,45 +546,45 @@ const Shop = () => {
                             onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
                           />
                         </div>
-                        <div className="p-4 space-y-2">
-                          <h4 className="font-bold text-white text-sm truncate">{item.title}</h4>
-                          <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">{item.description}</p>
-                          <div className="text-[10px] text-slate-500 font-semibold">
+                        <div className="p-4 space-y-2 text-left">
+                          <h4 className="font-bold text-slate-900 dark:text-white text-sm truncate">{item.title}</h4>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed font-sans">{item.description}</p>
+                          <div className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-wider font-sans">
                             Unit Price: ₹{item.price} / {item.priceUnit || "kg"}
                           </div>
                         </div>
                       </div>
 
-                      <div className="p-4 pt-0 border-t border-slate-900/60 pt-3 space-y-3">
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-slate-400 font-medium">Quantity:</span>
-                          <div className="flex items-center space-x-2 bg-slate-950 border border-slate-800 rounded-lg p-0.5">
+                      <div className="p-4 pt-0 border-t border-slate-100 dark:border-slate-900/60 pt-3 space-y-3">
+                        <div className="flex justify-between items-center text-xs font-semibold">
+                          <span className="text-slate-500 dark:text-slate-400">Quantity:</span>
+                          <div className="flex items-center space-x-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-0.5 shadow-sm">
                             <button
                               type="button"
                               onClick={() => handleDecrementQuantity(item._id)}
-                              className="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-white rounded hover:bg-slate-800 active:scale-95 transition-all text-xs font-bold"
+                              className="w-6 h-6 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition-all text-xs font-bold"
                             >
                               -
                             </button>
-                            <span className="w-6 text-center font-bold text-white text-xs">{item.quantity}</span>
+                            <span className="w-6 text-center font-bold text-slate-800 dark:text-white text-xs">{item.quantity}</span>
                             <button
                               type="button"
                               onClick={() => handleAddToCart(item._id)}
-                              className="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-white rounded hover:bg-slate-800 active:scale-95 transition-all text-xs font-bold"
+                              className="w-6 h-6 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition-all text-xs font-bold"
                             >
                               +
                             </button>
                           </div>
                         </div>
 
-                        <div className="flex justify-between items-center">
-                          <div className="flex flex-col">
-                            <span className="text-[9px] uppercase font-bold text-slate-500">Subtotal</span>
-                            <span className="text-base font-extrabold text-emerald-400">₹{(item.price * item.quantity).toFixed(2)}</span>
+                        <div className="flex justify-between items-center pt-1">
+                          <div className="flex flex-col text-left">
+                            <span className="text-[9px] uppercase font-bold text-slate-400 dark:text-slate-500">Subtotal</span>
+                            <span className="text-base font-extrabold text-emerald-605 dark:text-emerald-450 font-sans">₹{(item.price * item.quantity).toFixed(2)}</span>
                           </div>
                           <button
                             onClick={() => handleRemoveFromCart(item._id)}
-                            className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-2 rounded-xl transition-all"
+                            className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-700 p-2 rounded-xl transition-all"
                             title="Remove item"
                           >
                             <Trash2 size={16} />
@@ -602,10 +602,10 @@ const Shop = () => {
 
       {/* MY PURCHASES TAB (Flipkart-style Order Tracker) */}
       {shopTab === "orders" && (
-        <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
-          <div className="flex items-center space-x-3 border-b border-slate-850 pb-4">
-            <Clock className="text-emerald-400" size={24} />
-            <h2 className="text-xl font-bold text-white tracking-tight">Inbound Deliveries & Purchases</h2>
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm space-y-6 text-left">
+          <div className="flex items-center space-x-3 border-b border-slate-100 dark:border-slate-800 pb-4">
+            <Clock className="text-blue-600 dark:text-blue-400" size={24} />
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Inbound Deliveries & Purchases</h2>
           </div>
 
           {myOrders.length === 0 ? (
@@ -616,21 +616,21 @@ const Shop = () => {
                 const canCancel = order.status === "Pending" || order.status === "Accepted";
 
                 return (
-                  <div key={order._id} className="bg-slate-900/40 p-6 rounded-2xl border border-slate-850 space-y-4 hover:border-slate-800 transition-all">
+                  <div key={order._id} className="bg-slate-50 dark:bg-slate-950/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4 hover:border-slate-300 dark:hover:border-slate-800 transition-all text-left">
 
                     {/* Header */}
-                    <div className="flex flex-wrap justify-between items-start gap-4 border-b border-slate-850 pb-3">
-                      <div>
-                        <h4 className="font-extrabold text-white text-base">{order.product?.title}</h4>
-                        <p className="text-[10px] text-slate-500 font-bold uppercase mt-1">
+                    <div className="flex flex-wrap justify-between items-start gap-4 border-b border-slate-100 dark:border-slate-800 pb-3">
+                      <div className="text-left">
+                        <h4 className="font-extrabold text-slate-900 dark:text-white text-base">{order.product?.title}</h4>
+                        <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase mt-1">
                           Seller: {order.seller?.fullName || order.seller?.username} | Price: ₹{order.price}
                         </p>
                       </div>
 
                       <div className="flex items-center space-x-3">
-                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold border uppercase tracking-wider ${order.status === "Delivered" ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" :
-                          order.status === "Cancelled" ? "bg-red-500/10 border-red-500/20 text-red-400" :
-                            "bg-sky-500/10 border-sky-500/20 text-sky-400 animate-pulse"
+                        <span className={`px-2.5 py-1 rounded-full text-[9px] font-extrabold border uppercase tracking-wider shadow-sm ${order.status === "Delivered" ? "bg-emerald-50 dark:bg-emerald-500/10 border-emerald-100 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400" :
+                          order.status === "Cancelled" ? "bg-red-50 dark:bg-red-500/10 border-red-100 dark:border-red-500/20 text-red-650 dark:text-red-400" :
+                            "bg-blue-50 dark:bg-blue-500/10 border-blue-100 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 animate-pulse"
                           }`}>
                           {order.status}
                         </span>
@@ -638,7 +638,7 @@ const Shop = () => {
                         {canCancel && (
                           <button
                             onClick={() => handleCancelOrder(order._id)}
-                            className="bg-red-500/10 hover:bg-red-500/25 border border-red-500/20 text-red-400 font-bold px-3 py-1 rounded-lg text-[10px] transition-all"
+                            className="bg-red-55 dark:bg-red-500/10 hover:bg-red-100/50 dark:hover:bg-red-500/25 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 font-bold px-3 py-1 rounded-lg text-[9px] transition-all"
                           >
                             Cancel Order
                           </button>
@@ -647,7 +647,7 @@ const Shop = () => {
                         {order.status === "Delivered" && !order.review?.rating && (
                           <button
                             onClick={() => setReviewOrderId(order._id)}
-                            className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-3 py-1 rounded-lg text-[10px] transition-all"
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1.5 rounded-lg text-[9px] transition-all shadow-sm active:scale-95"
                           >
                             Leave Review
                           </button>
@@ -658,18 +658,18 @@ const Shop = () => {
                     {/* Order Details & Logistics Status Timeline */}
                     <div className="pt-2">
                       <div className="flex justify-between items-center relative">
-                        <div className="absolute left-2 right-2 h-0.5 bg-slate-850 pointer-events-none -z-10"></div>
+                        <div className="absolute left-2 right-2 h-0.5 bg-slate-200 dark:bg-slate-800 pointer-events-none -z-10"></div>
                         {["Pending", "Accepted", "Transit Requested", "In Transit", "Delivered"].map((stage, idx) => {
                           const stages = ["Pending", "Accepted", "Transit Requested", "In Transit", "Delivered"];
                           const currentIdx = stages.indexOf(order.status);
                           const isPast = idx < currentIdx;
                           const isCurrent = idx === currentIdx;
 
-                          let circleBg = "bg-slate-950 border-slate-850 text-slate-600";
-                          if (isPast) circleBg = "bg-emerald-500 border-emerald-400 text-slate-950";
-                          if (isCurrent) circleBg = "bg-emerald-400 border-emerald-300 text-slate-950 animate-pulse";
+                          let circleBg = "bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-600";
+                          if (isPast) circleBg = "bg-blue-600 border-blue-500 text-white shadow-sm";
+                          if (isCurrent) circleBg = "bg-blue-500 border-blue-400 text-white animate-pulse shadow-sm";
                           if (order.status === "Cancelled") {
-                            circleBg = "bg-red-500/10 border-red-500/25 text-red-400";
+                            circleBg = "bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/25 text-red-400";
                           }
 
                           return (
@@ -677,8 +677,8 @@ const Shop = () => {
                               <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center text-[10px] font-bold ${circleBg}`}>
                                 {isPast ? "✓" : idx + 1}
                               </div>
-                              <span className={`text-[8px] font-bold uppercase tracking-wider text-center hidden sm:block ${isCurrent ? "text-emerald-400" : "text-slate-500"}`}>
-                                {stage.replace("Requested", "")}
+                              <span className={`text-[8px] font-bold uppercase tracking-wider text-center hidden sm:block ${isCurrent ? "text-blue-600 dark:text-blue-400 font-extrabold" : "text-slate-400 dark:text-slate-500"}`}>
+                                {stage.replace("Transit Requested", "Transit").replace("Requested", "")}
                               </span>
                             </div>
                           );
@@ -688,23 +688,23 @@ const Shop = () => {
 
                     {/* Tracking Location Description & Tracking Map Link */}
                     {order.status !== "Cancelled" && (
-                      <div className="bg-slate-950/30 p-4 rounded-xl border border-slate-850 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs">
-                        <div className="space-y-1">
-                          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Shipment Tracking Update</span>
-                          <p className="font-bold text-slate-300">
-                            Current Location: <span className="text-amber-400 font-extrabold">{order.currentLocation?.name || "Seller Warehouse"}</span>
+                      <div className="bg-white dark:bg-slate-950/30 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs font-semibold">
+                        <div className="space-y-1 text-left">
+                          <span className="text-[9px] text-slate-400 dark:text-slate-550 font-bold uppercase tracking-wider block">Shipment Tracking Update</span>
+                          <p className="font-bold text-slate-800 dark:text-slate-300 font-sans">
+                            Current Location: <span className="text-blue-600 dark:text-blue-400 font-extrabold">{order.currentLocation?.name || "Seller Warehouse"}</span>
                           </p>
                           {order.transporter && (
-                            <p className="text-slate-400 text-[11px]">Transporter: {order.transporter?.fullName || order.transporter?.username} ({order.transporter?.phone})</p>
+                            <p className="text-slate-500 dark:text-slate-400 text-[10px] font-sans">Transporter: {order.transporter?.fullName || order.transporter?.username} ({order.transporter?.phone})</p>
                           )}
                         </div>
 
                         {order.status !== "Pending" && (
                           <button
                             onClick={() => setTrackingOrder(order)}
-                            className="bg-slate-900 border border-slate-850 hover:border-emerald-500/20 text-emerald-400 hover:text-white px-4 py-2 rounded-xl font-bold flex items-center space-x-1.5"
+                            className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white px-4 py-2 rounded-xl text-xs text-slate-700 dark:text-slate-200 font-bold flex items-center space-x-1.5 transition-all shadow-sm"
                           >
-                            <MapPin size={12} />
+                            <MapPin size={12} className="text-blue-600 dark:text-blue-400" />
                             <span>Live Track Dispatch Map</span>
                           </button>
                         )}
@@ -713,39 +713,39 @@ const Shop = () => {
 
                     {/* Rental Details Section */}
                     {order.isRental && (
-                      <div className="bg-slate-950/40 p-4 rounded-xl border border-slate-850 space-y-3 text-xs">
-                        <div className="flex justify-between items-center pb-2 border-b border-slate-900">
-                          <span className="text-[10px] text-emerald-400 font-extrabold uppercase tracking-wider bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 flex items-center space-x-1">
+                      <div className="bg-white dark:bg-slate-950/40 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+                        <div className="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-slate-900">
+                          <span className="text-[9px] text-blue-600 dark:text-blue-400 font-extrabold uppercase tracking-wider bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded border border-blue-100 dark:border-blue-500/20 flex items-center space-x-1 shadow-sm">
                             <Calendar size={10} />
                             <span>Rental Order</span>
                           </span>
-                          <span className="text-slate-400 font-semibold">
+                          <span className="text-slate-500 dark:text-slate-400 font-semibold font-sans">
                             Duration: {order.rentalDurationDays} Days
                           </span>
                         </div>
-                        <div className="grid grid-cols-2 gap-4 text-[11px] text-slate-300">
+                        <div className="grid grid-cols-2 gap-4 text-[10px] text-slate-600 dark:text-slate-300 text-left font-sans">
                           <div>
-                            <span className="text-[9px] text-slate-500 font-bold uppercase block">Rental Start</span>
-                            <span>{order.rentalStartDate ? new Date(order.rentalStartDate).toLocaleDateString() : "Pending Delivery"}</span>
+                            <span className="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase block">Rental Start</span>
+                            <span className="font-semibold">{order.rentalStartDate ? new Date(order.rentalStartDate).toLocaleDateString() : "Pending Delivery"}</span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-slate-500 font-bold uppercase block">Return Due Date</span>
-                            <span>{order.rentalEndDate ? new Date(order.rentalEndDate).toLocaleDateString() : "Pending Delivery"}</span>
+                            <span className="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase block">Return Due Date</span>
+                            <span className="font-semibold">{order.rentalEndDate ? new Date(order.rentalEndDate).toLocaleDateString() : "Pending Delivery"}</span>
                           </div>
                         </div>
 
                         {/* Return Actions and Badges */}
-                        <div className="pt-2 flex justify-between items-center border-t border-slate-900/60 mt-1">
-                          <div>
-                            <span className="text-[9px] text-slate-500 font-bold uppercase block">Return Status</span>
+                        <div className="pt-2 flex justify-between items-center border-t border-slate-100 dark:border-slate-900/60 mt-1">
+                          <div className="text-left">
+                            <span className="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase block">Return Status</span>
                             {order.rentalReturnStatus === "None" ? (
-                              <span className="text-amber-400 font-extrabold uppercase text-[10px]">Active / Held by Farmer</span>
+                              <span className="text-amber-600 dark:text-amber-400 font-extrabold uppercase text-[10px]">Active / Held by Farmer</span>
                             ) : order.rentalReturnStatus === "Return Pending" ? (
                               <span className="text-amber-500 font-extrabold uppercase text-[10px] animate-pulse">Return Awaiting Confirmation</span>
                             ) : order.rentalReturnStatus === "Returned" ? (
-                              <span className="text-emerald-400 font-extrabold uppercase text-[10px]">Returned Successfully</span>
+                              <span className="text-emerald-600 dark:text-emerald-400 font-extrabold uppercase text-[10px]">Returned Successfully</span>
                             ) : (
-                              <span className="text-red-400 font-extrabold uppercase text-[10px]">Overdue</span>
+                              <span className="text-red-655 dark:text-red-405 font-extrabold uppercase text-[10px]">Overdue</span>
                             )}
                           </div>
 
@@ -753,7 +753,7 @@ const Shop = () => {
                           {order.status === "Delivered" && order.rentalReturnStatus === "None" && (
                             <button
                               onClick={() => handleInitiateReturn(order._id)}
-                              className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 transition-all shadow-lg shadow-emerald-500/5 active:scale-95"
+                              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 transition-all shadow-sm active:scale-95"
                             >
                               <Calendar size={12} />
                               <span>Initiate Return (वापसी शुरू करें)</span>
@@ -762,8 +762,8 @@ const Shop = () => {
 
                           {order.rentalReturnStatus === "Returned" && order.rentalOverdueCharges > 0 && (
                             <div className="text-right">
-                              <span className="text-[9px] text-slate-500 font-bold uppercase block">Late Overdue Fees</span>
-                              <span className="text-red-400 font-extrabold">₹{order.rentalOverdueCharges}</span>
+                              <span className="text-[9px] text-slate-400 dark:text-slate-500 font-bold uppercase block">Late Overdue Fees</span>
+                              <span className="text-red-500 dark:text-red-400 font-extrabold">₹{order.rentalOverdueCharges}</span>
                             </div>
                           )}
                         </div>
@@ -772,13 +772,13 @@ const Shop = () => {
 
                     {/* Review Display */}
                     {order.review?.rating > 0 && (
-                      <div className="bg-slate-950/30 p-3 rounded-xl border border-slate-850 text-xs space-y-1">
-                        <div className="flex space-x-0.5 text-amber-400">
+                      <div className="bg-white dark:bg-slate-950/30 p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-xs space-y-1 text-left">
+                        <div className="flex space-x-0.5 text-amber-500">
                           {[...Array(5)].map((_, i) => (
-                            <Star key={i} size={11} fill={i < order.review.rating ? "currentColor" : "none"} className="text-amber-400" />
+                            <Star key={i} size={11} fill={i < order.review.rating ? "currentColor" : "none"} className="text-amber-500" />
                           ))}
                         </div>
-                        <p className="text-slate-400 italic">"{order.review.comment}"</p>
+                        <p className="text-slate-500 dark:text-slate-400 italic">"{order.review.comment}"</p>
                       </div>
                     )}
 
@@ -793,24 +793,24 @@ const Shop = () => {
       {/* OVERLAY MODAL: Live Track Dispatch Map */}
       {trackingOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-2xl w-full space-y-4 shadow-2xl">
-            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 max-w-2xl w-full space-y-4 shadow-lg text-left">
+            <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
               <div className="space-y-0.5 text-left">
-                <h3 className="text-base font-bold text-white flex items-center space-x-1.5">
-                  <MapPin className="text-emerald-400 animate-bounce" size={16} />
+                <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-1.5">
+                  <MapPin className="text-blue-600 dark:text-blue-400 animate-bounce" size={16} />
                   <span>Shipment Dispatch Tracking Map</span>
                 </h3>
-                <p className="text-[10px] text-slate-400">Tracking coordinates from {trackingOrder.seller?.fullName} to Destination Address</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400">Tracking coordinates from {trackingOrder.seller?.fullName} to Destination Address</p>
               </div>
               <button
                 onClick={() => setTrackingOrder(null)}
-                className="text-slate-400 hover:text-white"
+                className="text-slate-400 hover:text-slate-900 dark:hover:text-white p-1 rounded-lg"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <div className="h-96 w-full rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 relative">
+            <div className="h-96 w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 relative">
               <MapContainer
                 center={[
                   trackingOrder.currentLocation?.latitude || 27.56,
@@ -850,15 +850,15 @@ const Shop = () => {
               </MapContainer>
             </div>
 
-            <div className="bg-slate-950 p-4 rounded-xl border border-slate-850 flex justify-between gap-4 text-xs text-slate-400">
-              <div className="text-left space-y-1">
-                <span className="text-[9px] uppercase font-bold text-emerald-400">Current Progress</span>
-                <p className="font-bold text-white">{trackingOrder.currentLocation?.name || "Seller Warehouse"}</p>
-                <p className="text-[11px] text-slate-500">Transporter: {trackingOrder.transporter?.fullName || trackingOrder.transporter?.username} ({trackingOrder.transporter?.phone})</p>
+            <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+              <div className="text-left space-y-1 font-semibold">
+                <span className="text-[9px] uppercase font-bold text-blue-600 dark:text-blue-400">Current Progress</span>
+                <p className="font-bold text-slate-900 dark:text-white">{trackingOrder.currentLocation?.name || "Seller Warehouse"}</p>
+                <p className="text-[10px] text-slate-400 dark:text-slate-500 font-sans mt-0.5">Transporter: {trackingOrder.transporter?.fullName || trackingOrder.transporter?.username} ({trackingOrder.transporter?.phone})</p>
               </div>
-              <div className="text-right space-y-0.5 font-semibold">
-                <p className="text-[10px] text-slate-500">Invoice: ₹{trackingOrder.price}</p>
-                <p className="text-[10px] text-slate-500">Status: {trackingOrder.status}</p>
+              <div className="text-right space-y-0.5 font-bold">
+                <p className="text-[10px]">Invoice: ₹{trackingOrder.price}</p>
+                <p className="text-[10px]">Status: {trackingOrder.status}</p>
               </div>
             </div>
           </div>
@@ -868,39 +868,39 @@ const Shop = () => {
       {/* OVERLAY MODAL: Leave Review */}
       {reviewOrderId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl">
-            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
-              <h3 className="text-base font-bold text-white flex items-center space-x-1.5">
-                <Star className="text-emerald-400" size={16} />
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-lg text-left">
+            <div className="flex justify-between items-center border-b border-slate-105 dark:border-slate-800 pb-3">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-1.5">
+                <Star className="text-blue-600 dark:text-blue-400" size={16} />
                 <span>Rate & Review Product</span>
               </h3>
               <button
                 onClick={() => setReviewOrderId(null)}
-                className="text-slate-400 hover:text-white"
+                className="text-slate-400 hover:text-slate-900 dark:hover:text-white p-1 rounded-lg"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <form onSubmit={handleReviewSubmit} className="space-y-4 text-xs">
+            <form onSubmit={handleReviewSubmit} className="space-y-4 text-xs font-semibold">
               <div className="space-y-1.5 text-left">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Rating Star Scale</label>
+                <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Rating Star Scale</label>
                 <div className="flex space-x-1.5 mt-1">
                   {[1, 2, 3, 4, 5].map((val) => (
                     <button
                       key={val}
                       type="button"
                       onClick={() => setReviewRating(val)}
-                      className="p-1 rounded text-slate-500 hover:text-amber-400 transition-colors"
+                      className="p-1 rounded text-slate-400 hover:text-amber-500 transition-colors"
                     >
-                      <Star size={24} fill={val <= reviewRating ? "#fbbf24" : "none"} className={val <= reviewRating ? "text-amber-400" : "text-slate-500"} />
+                      <Star size={24} fill={val <= reviewRating ? "#eab308" : "none"} className={val <= reviewRating ? "text-amber-500" : "text-slate-300 dark:text-slate-600"} />
                     </button>
                   ))}
                 </div>
               </div>
 
               <div className="space-y-1.5 text-left">
-                <label htmlFor="revCom" className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Review Comments</label>
+                <label htmlFor="revCom" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Review Comments</label>
                 <textarea
                   id="revCom"
                   value={reviewComment}
@@ -915,13 +915,13 @@ const Shop = () => {
                 <button
                   type="button"
                   onClick={() => setReviewOrderId(null)}
-                  className="px-4 py-2 text-slate-400 hover:bg-slate-800 rounded-xl font-semibold"
+                  className="px-4 py-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-bold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-4 py-2 rounded-xl"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-xl shadow-sm"
                 >
                   Submit Review
                 </button>

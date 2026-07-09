@@ -193,10 +193,10 @@ const ProductDetails = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center text-white">
+      <div className="min-h-[80vh] bg-slate-50 dark:bg-slate-950 flex items-center justify-center text-slate-800 dark:text-white">
         <div className="flex flex-col items-center space-y-4">
-          <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-slate-400 text-sm font-semibold tracking-wider">Loading product details...</p>
+          <div className="w-12 h-12 border-4 border-blue-650 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold tracking-wider font-sans">Loading product details...</p>
         </div>
       </div>
     );
@@ -205,13 +205,13 @@ const ProductDetails = () => {
   if (error || !product) {
     return (
       <div className="min-h-[85vh] flex items-center justify-center">
-        <div className="glass-panel p-8 rounded-3xl border border-slate-800 text-center space-y-4 max-w-md w-full">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl text-center space-y-4 max-w-md w-full shadow-sm text-left">
           <AlertCircle className="text-red-500 mx-auto" size={40} />
-          <h2 className="text-lg font-bold text-white">Error Occurred</h2>
-          <p className="text-xs text-slate-400">{error || "Product could not be loaded."}</p>
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white text-center">Error Occurred</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400 text-center font-sans">{error || "Product could not be loaded."}</p>
           <button
             onClick={() => navigate(-1)}
-            className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2.5 px-6 rounded-xl text-xs"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl text-xs shadow-sm"
           >
             Go Back
           </button>
@@ -252,11 +252,11 @@ const ProductDetails = () => {
   ].filter((img, idx, arr) => img && img.trim() !== "" && arr.indexOf(img) === idx);
 
   return (
-    <div className="min-h-[85vh] py-8 animate-fade-in-up relative">
+    <div className="min-h-[85vh] py-8 animate-fade-in-up relative text-left">
       {/* Toast Alert */}
       {message.text && (
-        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-2xl shadow-2xl text-white font-semibold flex items-center space-x-2 animate-bounce border ${
-          message.type === "success" ? "bg-emerald-500 border-emerald-400 text-slate-950" : "bg-red-500 border-red-400"
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-2xl shadow-lg text-white font-semibold flex items-center space-x-2 border ${
+          message.type === "success" ? "bg-emerald-600 border-emerald-500 text-white" : "bg-red-650 border-red-500 text-white"
         }`}>
           <span>{message.text}</span>
         </div>
@@ -266,26 +266,26 @@ const ProductDetails = () => {
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center space-x-1.5 text-slate-400 hover:text-emerald-400 font-semibold mb-2 transition-colors text-xs"
+          className="flex items-center space-x-1.5 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 font-semibold mb-2 transition-colors text-xs"
         >
           <ArrowLeft size={14} />
           <span>Back to marketplace</span>
         </button>
 
         {/* Product Details Grid */}
-        <div className="glass-panel rounded-3xl border border-slate-800/80 overflow-hidden grid grid-cols-1 md:grid-cols-12 gap-8 p-6 sm:p-8 relative">
-          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm grid grid-cols-1 md:grid-cols-12 gap-8 relative text-left">
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-blue-500/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
           {/* Left Column: Interactive Multi-Image Gallery */}
           <div className="md:col-span-5 space-y-4">
-            <div className="relative aspect-square rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 flex items-center justify-center">
+            <div className="relative aspect-square rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-center shadow-sm">
               <img
                 src={activeImage || product.image}
                 alt={product.title}
                 className="w-full h-full object-cover"
                 onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
               />
-              <span className="absolute top-4 left-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+              <span className="absolute top-4 left-4 bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
                 {categoryName}
               </span>
             </div>
@@ -298,8 +298,8 @@ const ProductDetails = () => {
                     key={index}
                     onClick={() => setActiveImage(imgUrl)}
                     onMouseEnter={() => setActiveImage(imgUrl)}
-                    className={`w-16 h-16 rounded-xl overflow-hidden border-2 bg-slate-950 transition-all shrink-0 ${
-                      (activeImage || product.image) === imgUrl ? "border-emerald-500 scale-105" : "border-slate-800 hover:border-slate-700"
+                    className={`w-16 h-16 rounded-xl overflow-hidden border-2 bg-slate-50 dark:bg-slate-950 transition-all shrink-0 shadow-sm ${
+                      (activeImage || product.image) === imgUrl ? "border-blue-600 scale-105" : "border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700"
                     }`}
                   >
                     <img
@@ -318,58 +318,58 @@ const ProductDetails = () => {
           <div className="md:col-span-7 flex flex-col justify-between space-y-6 text-left">
             <div className="space-y-4">
               <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white leading-tight">
                   {product.title}
                 </h1>
                 
                 {reviews.length > 0 ? (
                   <div className="flex items-center space-x-2 mt-2">
-                    <div className="bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-0.5 rounded-lg flex items-center space-x-1 text-emerald-400 text-xs font-bold">
+                    <div className="bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 px-2.5 py-0.5 rounded-lg flex items-center space-x-1 text-blue-600 dark:text-blue-400 text-xs font-bold shadow-sm">
                       <span>{avgRating}</span>
                       <Star size={12} fill="currentColor" />
                     </div>
-                    <span className="text-xs text-slate-500 font-medium">({reviews.length} customer reviews)</span>
+                    <span className="text-xs text-slate-500 font-semibold font-sans">({reviews.length} customer reviews)</span>
                   </div>
                 ) : (
-                  <p className="text-xs text-slate-500 mt-2 font-medium">No reviews yet for this product</p>
+                  <p className="text-xs text-slate-400 dark:text-slate-550 mt-2 font-semibold">No reviews yet for this product</p>
                 )}
               </div>
 
               {/* Price section */}
-              <div className="bg-slate-950/40 border border-slate-850 p-4 rounded-2xl">
-                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Special Price</span>
+              <div className="bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl">
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Special Price</span>
                 <div className="flex items-baseline space-x-2 mt-1">
-                  <span className="text-3xl font-extrabold text-emerald-400">₹{product.price}</span>
-                  <span className="text-xs text-slate-400 font-bold">/ {product.priceUnit || "kg"}</span>
+                  <span className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 font-sans">₹{product.price}</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-bold">/ {product.priceUnit || "kg"}</span>
                 </div>
               </div>
 
               {/* Description */}
-              <div className="space-y-1.5">
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Product Highlights</h3>
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap">
+              <div className="space-y-1.5 text-left">
+                <h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Product Highlights</h3>
+                <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed font-sans whitespace-pre-wrap">
                   {product.description}
                 </p>
               </div>
 
               {/* Location & Seller info */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-slate-100 dark:border-slate-800/60 mt-1">
                 {product.location && (
                   <div className="flex items-start space-x-2 text-xs">
-                    <MapPin size={16} className="text-emerald-400 mt-0.5 shrink-0" />
+                    <MapPin size={16} className="text-blue-600 dark:text-blue-405 mt-0.5 shrink-0" />
                     <div>
-                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Pickup Address</span>
-                      <span className="text-slate-300 font-medium">{product.location}</span>
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Pickup Address</span>
+                      <span className="text-slate-700 dark:text-slate-300 font-semibold">{product.location}</span>
                     </div>
                   </div>
                 )}
                 {product.owner && (
                   <div className="flex items-start space-x-2 text-xs">
-                    <User size={16} className="text-emerald-400 mt-0.5 shrink-0" />
+                    <User size={16} className="text-blue-600 dark:text-blue-405 mt-0.5 shrink-0" />
                     <div>
-                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Seller Profile</span>
-                      <span className="text-slate-300 font-medium">{product.owner.fullName || product.owner.username}</span>
-                      <span className="text-slate-500 text-[10px] block mt-0.5 truncate">{product.owner.email}</span>
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Seller Profile</span>
+                      <span className="text-slate-700 dark:text-slate-300 font-semibold">{product.owner.fullName || product.owner.username}</span>
+                      <span className="text-slate-500 text-[10px] block mt-0.5 truncate font-sans">{product.owner.email}</span>
                     </div>
                   </div>
                 )}
@@ -377,13 +377,13 @@ const ProductDetails = () => {
             </div>
 
             {/* E-Commerce & Management Buttons */}
-            <div className="border-t border-slate-800/80 pt-6 space-y-4">
+            <div className="border-t border-slate-100 dark:border-slate-800/80 pt-6 space-y-4">
               {/* If owner or admin, show Delete button */}
               {(isOwnListing || isAdmin) && (
                 <button
                   onClick={handleDeleteListing}
                   disabled={deleting}
-                  className="w-full bg-red-500/10 hover:bg-red-500/25 border border-red-500/20 text-red-400 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50 text-xs shadow-md mb-2"
+                  className="w-full bg-red-50 dark:bg-red-500/10 hover:bg-red-100/50 dark:hover:bg-red-500/25 border border-red-200 dark:border-red-500/20 text-red-650 dark:text-red-400 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50 text-xs shadow-sm mb-2"
                 >
                   <Trash2 size={14} />
                   <span>{deleting ? "Deleting Product..." : "Delete Product Listing"}</span>
@@ -391,20 +391,20 @@ const ProductDetails = () => {
               )}
 
               {isOwnListing ? (
-                <div className="bg-slate-950/40 border border-slate-850 p-3.5 rounded-xl text-center text-xs text-slate-500 font-semibold">
+                <div className="bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-3.5 rounded-xl text-center text-xs text-slate-500 font-semibold">
                   This is your own product listing.
                 </div>
               ) : !user ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <button
                     onClick={() => navigate("/login")}
-                    className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 px-6 rounded-xl text-center text-xs shadow-lg transition-all"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl text-center text-xs shadow-sm transition-all"
                   >
                     Sign In to Purchase
                   </button>
                   <button
                     onClick={() => navigate(-1)}
-                    className="w-full bg-slate-900 hover:bg-slate-850 border border-slate-800 text-white font-semibold py-3.5 px-6 rounded-xl text-center text-xs transition-all"
+                    className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white font-semibold py-3.5 px-6 rounded-xl text-center text-xs transition-all hover:bg-slate-100"
                   >
                     Keep Browsing
                   </button>
@@ -413,7 +413,7 @@ const ProductDetails = () => {
                 product.category === "instrument_rent" ? (
                   <button
                     onClick={() => setShowRentModal(true)}
-                    className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-4 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 text-xs shadow-lg hover:shadow-emerald-500/10 font-extrabold tracking-wide uppercase"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-4 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 text-xs shadow-sm tracking-wide uppercase"
                   >
                     <Calendar size={14} />
                     <span>Rent Equipment (किराए पर लें)</span>
@@ -423,7 +423,7 @@ const ProductDetails = () => {
                     <button
                       onClick={handleAddToCart}
                       disabled={addingToCart}
-                      className="bg-slate-900 hover:bg-slate-850 border border-slate-800 text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50 text-xs shadow-md"
+                      className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50 text-xs shadow-sm hover:bg-slate-100"
                     >
                       <ShoppingCart size={14} />
                       <span>{addingToCart ? "Adding..." : "Add to Cart"}</span>
@@ -431,7 +431,7 @@ const ProductDetails = () => {
                     <button
                       onClick={handleBuyNow}
                       disabled={buying}
-                      className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50 text-xs shadow-lg hover:shadow-emerald-500/10"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50 text-xs shadow-sm"
                     >
                       <CreditCard size={14} />
                       <span>{buying ? "Ordering..." : "Buy Now"}</span>
@@ -439,8 +439,8 @@ const ProductDetails = () => {
                   </div>
                 )
               ) : (
-                <div className="bg-slate-950/40 border border-slate-850 p-3.5 rounded-xl text-center text-xs text-slate-500 font-semibold flex items-center justify-center space-x-2">
-                  <ShieldCheck size={14} className="text-slate-600" />
+                <div className="bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-3.5 rounded-xl text-center text-xs text-slate-550 font-semibold flex items-center justify-center space-x-2">
+                  <ShieldCheck size={14} className="text-slate-500" />
                   <span>Purchases are restricted based on your current user account role.</span>
                 </div>
               )}
@@ -450,14 +450,14 @@ const ProductDetails = () => {
 
         {/* Optional Video demonstration player */}
         {product.video && product.video.trim() !== "" && (
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800/80 text-left space-y-4">
-            <h2 className="text-lg font-bold text-white tracking-tight flex items-center space-x-2.5">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm text-left space-y-4">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight flex items-center space-x-2.5">
+              <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center shadow-sm">
                 <Video size={16} />
               </div>
               <span>Product Demonstration Video</span>
             </h2>
-            <div className="relative aspect-video max-w-2xl mx-auto rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl">
+            <div className="relative aspect-video max-w-2xl mx-auto rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 shadow-sm">
               {getYouTubeEmbedUrl(product.video) ? (
                 <iframe
                   src={getYouTubeEmbedUrl(product.video)}
@@ -480,37 +480,37 @@ const ProductDetails = () => {
 
         {/* Rental Policies Section (if category is instrument_rent) */}
         {product.category === "instrument_rent" && (
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800/80 text-left space-y-6">
-            <div className="flex items-center space-x-2.5 border-b border-slate-850 pb-4">
-              <ShieldCheck className="text-emerald-400" size={20} />
-              <h2 className="text-lg font-bold text-white tracking-tight">Rental Policies & Terms</h2>
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm text-left space-y-6">
+            <div className="flex items-center space-x-2.5 border-b border-slate-100 dark:border-slate-800 pb-4">
+              <ShieldCheck className="text-blue-600 dark:text-blue-400" size={20} />
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Rental Policies & Terms</h2>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs sm:text-sm">
-              <div className="bg-slate-950/30 p-4 border border-slate-850 rounded-2xl space-y-2">
-                <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider block">1. Security Deposit</span>
-                <p className="text-slate-300 leading-relaxed">
+              <div className="bg-slate-50 dark:bg-slate-950/30 p-4 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-2 text-left">
+                <span className="text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider block">1. Security Deposit</span>
+                <p className="text-slate-500 dark:text-slate-300 leading-relaxed font-sans">
                   A refundable security deposit may be collected before vehicle/equipment transit begins. This will be fully returned once the tool is returned damage-free.
                 </p>
               </div>
 
-              <div className="bg-slate-950/30 p-4 border border-slate-850 rounded-2xl space-y-2">
-                <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider block">2. Rental Duration & Late Fees</span>
-                <p className="text-slate-300 leading-relaxed">
+              <div className="bg-slate-50 dark:bg-slate-950/30 p-4 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-2 text-left">
+                <span className="text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider block">2. Rental Duration & Late Fees</span>
+                <p className="text-slate-500 dark:text-slate-300 leading-relaxed font-sans">
                   The rental period starts when the equipment is picked up or delivered. A late return fee equal to 1.5x the daily rental rate applies for delays exceeding 24 hours.
                 </p>
               </div>
 
-              <div className="bg-slate-950/30 p-4 border border-slate-850 rounded-2xl space-y-2">
-                <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider block">3. Usage & Mechanical Breakage</span>
-                <p className="text-slate-300 leading-relaxed">
+              <div className="bg-slate-50 dark:bg-slate-950/30 p-4 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-2 text-left">
+                <span className="text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider block">3. Usage & Mechanical Breakage</span>
+                <p className="text-slate-550 dark:text-slate-300 leading-relaxed font-sans">
                   Renters are expected to operate tools responsibly. The renter is responsible for physical damage or parts failure caused by improper usage or neglect.
                 </p>
               </div>
 
-              <div className="bg-slate-950/30 p-4 border border-slate-850 rounded-2xl space-y-2">
-                <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider block">4. Cancellation Policy</span>
-                <p className="text-slate-300 leading-relaxed">
+              <div className="bg-slate-50 dark:bg-slate-950/30 p-4 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-2 text-left">
+                <span className="text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider block">4. Cancellation Policy</span>
+                <p className="text-slate-500 dark:text-slate-300 leading-relaxed font-sans">
                   You can cancel your rental booking up to 24 hours prior to the scheduled delivery time for a full refund of any reservation fees paid.
                 </p>
               </div>
@@ -519,10 +519,10 @@ const ProductDetails = () => {
         )}
 
         {/* Customer Reviews Section */}
-        <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800/80 text-left space-y-6">
-          <div className="flex items-center space-x-2.5 border-b border-slate-850 pb-4">
-            <MessageSquare className="text-emerald-400" size={20} />
-            <h2 className="text-lg font-bold text-white tracking-tight">Verified Buyer Reviews</h2>
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm text-left space-y-6">
+          <div className="flex items-center space-x-2.5 border-b border-slate-100 dark:border-slate-800 pb-4">
+            <MessageSquare className="text-blue-600 dark:text-blue-400" size={20} />
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Verified Buyer Reviews</h2>
           </div>
 
           {reviews.length === 0 ? (
@@ -534,30 +534,30 @@ const ProductDetails = () => {
               {reviews.map((rev) => (
                 <div
                   key={rev._id}
-                  className="bg-slate-950/30 p-5 rounded-2xl border border-slate-850/80 flex flex-col justify-between space-y-4 hover:border-slate-850 transition-all"
+                  className="bg-slate-50 dark:bg-slate-950/30 p-5 rounded-2xl border border-slate-200 dark:border-slate-800/85 flex flex-col justify-between space-y-4 hover:border-slate-300 transition-all text-left"
                 >
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <div className="flex space-x-0.5 text-amber-400">
+                      <div className="flex space-x-0.5 text-amber-500">
                         {[...Array(5)].map((_, i) => (
                           <Star
                              key={i}
                              size={12}
                              fill={i < rev.rating ? "currentColor" : "none"}
-                             className="text-amber-400"
+                             className="text-amber-500"
                           />
                         ))}
                       </div>
-                      <span className="text-[10px] text-slate-500 font-medium">
+                      <span className="text-[10px] text-slate-500 font-medium font-sans">
                         {new Date(rev.createdAt).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className="text-slate-300 text-xs italic leading-relaxed">
+                    <p className="text-slate-600 dark:text-slate-300 text-xs italic leading-relaxed font-sans">
                       "{rev.comment}"
                     </p>
                   </div>
-                  <div className="flex items-center space-x-1.5 border-t border-slate-900/60 pt-3 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
-                    <User size={10} className="text-emerald-400" />
+                  <div className="flex items-center space-x-1.5 border-t border-slate-100 dark:border-slate-900/60 pt-3 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+                    <User size={10} className="text-blue-600 dark:text-blue-400" />
                     <span>{rev.reviewer}</span>
                   </div>
                 </div>
@@ -569,27 +569,27 @@ const ProductDetails = () => {
 
       {/* RENTAL REGISTER MODAL */}
       {showRentModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl relative flex flex-col p-6 space-y-4 text-left">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 animate-fade-in text-left">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl relative flex flex-col p-6 space-y-4 text-left">
             <button
               onClick={() => setShowRentModal(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-xl bg-slate-950/50 border border-slate-800 z-10 transition-all"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 dark:hover:text-white p-2 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 z-10 transition-all shadow-sm"
             >
               <X size={16} />
             </button>
 
-            <div className="flex items-center space-x-3 pb-3 border-b border-slate-850">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+            <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-650 dark:text-blue-400 flex items-center justify-center shadow-sm">
                 <Calendar size={18} />
               </div>
-              <div>
-                <h3 className="text-lg font-extrabold text-white">Equipment Rental Checkout</h3>
-                <p className="text-[10px] text-slate-400">Rent '{product.title}' directly from verified owner</p>
+              <div className="text-left">
+                <h3 className="text-lg font-extrabold text-slate-900 dark:text-white">Equipment Rental Checkout</h3>
+                <p className="text-[10px] text-slate-400 dark:text-slate-500">Rent '{product.title}' directly from verified owner</p>
               </div>
             </div>
 
             {rentalError && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs p-3 rounded-xl flex items-center space-x-2">
+              <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-655 dark:text-red-400 text-xs p-3 rounded-xl flex items-center space-x-2 animate-pulse">
                 <AlertCircle size={14} className="shrink-0" />
                 <span>{rentalError}</span>
               </div>
@@ -597,19 +597,19 @@ const ProductDetails = () => {
 
             <form onSubmit={handleConfirmRental} className="space-y-4 text-xs sm:text-sm">
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Start Date (किराया शुरू तिथि)</label>
+                <div className="space-y-1 text-left">
+                  <label className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider block">Start Date (किराया शुरू तिथि)</label>
                   <input
                     type="date"
                     required
                     min={new Date().toISOString().split("T")[0]}
                     value={rentalStartDate}
                     onChange={(e) => setRentalStartDate(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-emerald-500 text-xs"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-800 dark:text-white focus:outline-none focus:border-blue-600 text-xs"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Duration (Days - कुल दिन)</label>
+                <div className="space-y-1 text-left">
+                  <label className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider block">Duration (Days - कुल दिन)</label>
                   <input
                     type="number"
                     required
@@ -617,25 +617,25 @@ const ProductDetails = () => {
                     max="30"
                     value={rentalDuration}
                     onChange={(e) => setRentalDuration(Math.max(1, parseInt(e.target.value) || 1))}
-                    className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-emerald-500 text-xs"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-800 dark:text-white focus:outline-none focus:border-blue-600 text-xs"
                   />
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Full Name (पूरा नाम)</label>
+              <div className="space-y-1 text-left">
+                <label className="text-[10px] text-slate-550 dark:text-slate-400 font-bold uppercase tracking-wider block">Full Name (पूरा नाम)</label>
                 <input
                   type="text"
                   required
                   value={rentalFullName}
                   onChange={(e) => setRentalFullName(e.target.value)}
                   placeholder="Enter recipient full name"
-                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 text-xs"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Phone Number (मोबाइल नंबर)</label>
+              <div className="space-y-1 text-left">
+                <label className="text-[10px] text-slate-550 dark:text-slate-400 font-bold uppercase tracking-wider block">Phone Number (मोबाइल नंबर)</label>
                 <input
                   type="tel"
                   required
@@ -643,44 +643,44 @@ const ProductDetails = () => {
                   value={rentalPhone}
                   onChange={(e) => setRentalPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
                   placeholder="10-digit mobile number"
-                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 text-xs"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Shipping Address (डिलिवरी पता)</label>
+              <div className="space-y-1 text-left">
+                <label className="text-[10px] text-slate-550 dark:text-slate-400 font-bold uppercase tracking-wider block">Shipping Address (डिलिवरी पता)</label>
                 <textarea
                   required
                   rows="2"
                   value={rentalAddress}
                   onChange={(e) => setRentalAddress(e.target.value)}
                   placeholder="Enter complete delivery address with landmark"
-                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-emerald-500 text-xs resize-none"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-800 dark:text-white focus:outline-none focus:border-blue-650 text-xs resize-none"
                 />
               </div>
 
               {/* Dynamic Rent Calculation Banner */}
-              <div className="bg-slate-950/60 border border-slate-850 rounded-2xl p-4 flex justify-between items-center">
-                <div>
-                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Daily Rent Rate</span>
-                  <span className="text-emerald-400 font-bold">₹{product.price} / day</span>
+              <div className="bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex justify-between items-center">
+                <div className="text-left font-semibold">
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Daily Rent Rate</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-bold">₹{product.price} / day</span>
                 </div>
-                <div className="text-right">
-                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">Total Estimated Price</span>
-                  <span className="text-xl font-extrabold text-emerald-400">₹{(product.price * rentalDuration).toLocaleString()}</span>
+                <div className="text-right font-bold">
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider block">Total Estimated Price</span>
+                  <span className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400 font-sans">₹{(product.price * rentalDuration).toLocaleString()}</span>
                 </div>
               </div>
 
               {/* Liability checkbox */}
-              <div className="flex items-start space-x-2 pb-2">
+              <div className="flex items-start space-x-2 pb-2 text-left">
                 <input
                   type="checkbox"
                   id="rentalAgree"
                   checked={rentalAgreement}
                   onChange={(e) => setRentalAgreement(e.target.checked)}
-                  className="mt-0.5 border-slate-800 rounded bg-slate-950 text-emerald-500 focus:ring-0 focus:ring-offset-0"
+                  className="mt-0.5 border-slate-200 dark:border-slate-800 rounded bg-slate-50 dark:bg-slate-950 text-blue-600 focus:ring-0 focus:ring-offset-0"
                 />
-                <label htmlFor="rentalAgree" className="text-[10px] text-slate-400 leading-snug cursor-pointer select-none">
+                <label htmlFor="rentalAgree" className="text-[10px] text-slate-500 dark:text-slate-400 leading-snug cursor-pointer select-none">
                   I agree to return the equipment in the same working condition. Delayed returns exceeding 24 hours of scheduled end date are subject to overdue fees at <strong>1.5x daily rent</strong> (₹{(product.price * 1.5).toFixed(0)}/day).
                 </label>
               </div>
@@ -689,14 +689,14 @@ const ProductDetails = () => {
                 <button
                   type="button"
                   onClick={() => setShowRentModal(false)}
-                  className="w-1/2 bg-slate-950 hover:bg-slate-900 border border-slate-850 text-slate-300 font-semibold py-3 rounded-xl text-center text-xs transition-all"
+                  className="w-1/2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold py-3 rounded-xl text-center text-xs transition-all hover:bg-slate-100"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={rentalSubmitting}
-                  className="w-1/2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl flex items-center justify-center space-x-1.5 transition-all disabled:opacity-50 text-xs shadow-lg"
+                  className="w-1/2 bg-blue-600 hover:bg-blue-755 text-white font-bold py-3 rounded-xl flex items-center justify-center space-x-1.5 transition-all disabled:opacity-50 text-xs shadow-sm"
                 >
                   <span>{rentalSubmitting ? "Processing..." : "Confirm & Rent"}</span>
                 </button>

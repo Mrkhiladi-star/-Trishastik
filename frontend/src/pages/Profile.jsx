@@ -469,17 +469,17 @@ const Profile = () => {
   const getStatusIcon = (status) => {
     switch (status) {
       case "Pending":
-        return <Hourglass className="text-amber-400" size={16} />;
+        return <Hourglass className="text-amber-500 dark:text-amber-400" size={16} />;
       case "Assigned":
-        return <HardHat className="text-sky-400" size={16} />;
+        return <HardHat className="text-blue-600 dark:text-blue-400" size={16} />;
       case "Sample Collected":
-        return <Droplets className="text-teal-400" size={16} />;
+        return <Droplets className="text-blue-600 dark:text-blue-400" size={16} />;
       case "Testing":
-        return <Activity className="text-indigo-400" size={16} />;
+        return <Activity className="text-blue-600 dark:text-blue-400" size={16} />;
       case "Report Ready":
-        return <FileText className="text-purple-400" size={16} />;
+        return <FileText className="text-blue-650 dark:text-blue-400" size={16} />;
       case "Completed":
-        return <CheckCircle2 className="text-emerald-400" size={16} />;
+        return <CheckCircle2 className="text-emerald-600 dark:text-emerald-400" size={16} />;
       default:
         return <Hourglass className="text-slate-400" size={16} />;
     }
@@ -487,23 +487,23 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="min-h-[70vh] flex items-center justify-center text-slate-300">
+      <div className="min-h-[70vh] bg-slate-50 dark:bg-slate-950 flex items-center justify-center text-slate-800 dark:text-white">
         <div className="text-center space-y-4">
-          <AlertTriangle className="text-amber-500 mx-auto" size={48} />
-          <p className="text-xl font-semibold">Please sign in to access your profile.</p>
+          <AlertTriangle className="text-amber-550 mx-auto" size={48} />
+          <p className="text-xl font-bold font-sans">Please sign in to access your profile.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up text-left">
 
       {/* Toast Alert Banner */}
       {message.text && (
-        <div className={`p-4 rounded-2xl mb-6 text-center font-semibold border flex items-center justify-center space-x-2 max-w-2xl mx-auto ${message.type === "success"
-            ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
-            : "bg-red-500/10 border-red-500/20 text-red-400"
+        <div className={`p-4 rounded-2xl mb-6 text-center font-bold border flex items-center justify-center space-x-2 max-w-2xl mx-auto text-xs ${message.type === "success"
+            ? "bg-emerald-50 border-emerald-200 text-emerald-600"
+            : "bg-red-50 border-red-200 text-red-650"
           }`}>
           {message.type === "success" ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}
           <span>{message.text}</span>
@@ -515,95 +515,95 @@ const Profile = () => {
 
         {/* Left Column: Summary Card */}
         <div className="lg:col-span-4 space-y-6">
-          <div className="glass-panel p-6 rounded-3xl border border-slate-800/80 flex flex-col items-center text-center relative overflow-hidden">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm flex flex-col items-center text-center relative overflow-hidden">
             {/* Background Accent */}
-            <div className="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-emerald-500 via-teal-500 to-green-600"></div>
+            <div className="absolute top-0 inset-x-0 h-1.5 bg-blue-600"></div>
 
             {/* Profile Photo */}
             <div className="relative group mt-4 mb-4">
-              <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-slate-800 bg-slate-900 flex items-center justify-center shadow-inner">
+              <div className="w-28 h-28 rounded-2xl overflow-hidden border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-center shadow-inner">
                 {user.profilePhoto ? (
                   <img src={user.profilePhoto} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
-                  <UserIcon className="text-slate-500 w-12 h-12" />
+                  <UserIcon className="text-slate-400 w-12 h-12" />
                 )}
               </div>
-              <label className="absolute bottom-1.5 right-1.5 p-2 rounded-xl bg-emerald-500 text-slate-950 cursor-pointer hover:bg-emerald-600 shadow-md transition-all">
+              <label className="absolute bottom-1.5 right-1.5 p-2 rounded-xl bg-blue-600 text-white cursor-pointer hover:bg-blue-700 shadow-sm transition-all">
                 <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} disabled={photoUploading} />
                 <Upload size={14} />
               </label>
               {photoUploading && (
-                <div className="absolute inset-0 bg-slate-950/80 rounded-2xl flex items-center justify-center text-[10px] font-bold text-emerald-400">
+                <div className="absolute inset-0 bg-slate-950/80 rounded-2xl flex items-center justify-center text-[10px] font-bold text-blue-400">
                   Uploading...
                 </div>
               )}
             </div>
 
             {/* Basic Info */}
-            <h3 className="text-xl font-bold text-white leading-tight">{user.fullName || user.username}</h3>
-            <p className="text-xs font-bold text-emerald-400 uppercase tracking-widest mt-1 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">{user.fullName || user.username}</h3>
+            <p className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mt-1 bg-blue-50 dark:bg-blue-500/10 px-3 py-1 rounded-full border border-blue-100 dark:border-blue-500/20">
               {user.role}
             </p>
-            <p className="text-xs text-slate-400 mt-2 truncate w-full">{user.email}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 truncate w-full font-sans font-semibold">{user.email}</p>
 
             {/* Statistics Quick-Look */}
-            <div className="grid grid-cols-2 gap-4 w-full mt-6 pt-6 border-t border-slate-800/80">
+            <div className="grid grid-cols-2 gap-4 w-full mt-6 pt-6 border-t border-slate-100 dark:border-slate-800/80 font-sans">
               {user.role === "farmer" && (
                 <>
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <Sprout size={12} className="text-emerald-400" />
+                  <div className="text-left bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <Sprout size={12} className="text-blue-600 dark:text-blue-400" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">Farm Area</span>
                     </div>
-                    <span className="text-sm font-bold text-white">{farmArea ? `${farmArea} Acres` : "Not Added"}</span>
+                    <span className="text-xs font-bold text-slate-800 dark:text-white">{farmArea ? `${farmArea} Acres` : "Not Added"}</span>
                   </div>
 
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <Activity size={12} className="text-amber-400" />
+                  <div className="text-left bg-slate-55 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <Activity size={12} className="text-blue-600 dark:text-blue-400" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">Soil Tests</span>
                     </div>
-                    <span className="text-sm font-bold text-white">{soilTests.length} Total</span>
+                    <span className="text-xs font-bold text-slate-800 dark:text-white">{soilTests.length} Total</span>
                   </div>
                 </>
               )}
 
               {user.role === "customer" && (
                 <>
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <ShoppingBag size={12} className="text-emerald-400" />
+                  <div className="text-left bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <ShoppingBag size={12} className="text-blue-600 dark:text-blue-400" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">Purchases</span>
                     </div>
-                    <span className="text-sm font-bold text-white">{ordersCount} Orders</span>
+                    <span className="text-xs font-bold text-slate-800 dark:text-white">{ordersCount} Orders</span>
                   </div>
 
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <UserIcon size={12} className="text-amber-400" />
+                  <div className="text-left bg-slate-55 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <UserIcon size={12} className="text-blue-600" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">Account Type</span>
                     </div>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Customer</span>
+                    <span className="text-[10px] font-extrabold text-slate-800 dark:text-white uppercase tracking-wider">Customer</span>
                   </div>
                 </>
               )}
 
               {(user.role === "fertilizer_seller" || user.role === "instrument_seller") && (
                 <>
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <Store size={12} className="text-emerald-400" />
+                  <div className="text-left bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <Store size={12} className="text-blue-600 dark:text-blue-400" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">Listed Items</span>
                     </div>
-                    <span className="text-sm font-bold text-white">{listingsCount} Products</span>
+                    <span className="text-xs font-bold text-slate-800 dark:text-white">{listingsCount} Products</span>
                   </div>
 
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <Tag size={12} className="text-amber-400" />
+                  <div className="text-left bg-slate-55 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <Tag size={12} className="text-blue-600" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">Shop Profile</span>
                     </div>
-                    <span className="text-[10px] font-bold text-white uppercase tracking-wider truncate block">
+                    <span className="text-[10px] font-extrabold text-slate-800 dark:text-white uppercase tracking-wider truncate block">
                       {user.role === "fertilizer_seller" ? "Fertilizers" : "Ag Instruments"}
                     </span>
                   </div>
@@ -612,60 +612,60 @@ const Profile = () => {
 
               {user.role === "transporter" && (
                 <>
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <Truck size={12} className="text-emerald-400" />
+                  <div className="text-left bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <Truck size={12} className="text-blue-600 dark:text-blue-400" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">Active Jobs</span>
                     </div>
-                    <span className="text-sm font-bold text-white">{activeJobsCount} Active</span>
+                    <span className="text-xs font-bold text-slate-800 dark:text-white">{activeJobsCount} Active</span>
                   </div>
 
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <Navigation size={12} className="text-amber-400" />
+                  <div className="text-left bg-slate-55 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <Navigation size={12} className="text-blue-600" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">Role</span>
                     </div>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider block">Transporter</span>
+                    <span className="text-[10px] font-extrabold text-slate-800 dark:text-white uppercase tracking-wider block">Transporter</span>
                   </div>
                 </>
               )}
 
               {user.role === "agent" && (
                 <>
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <Activity size={12} className="text-emerald-400" />
+                  <div className="text-left bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <Activity size={12} className="text-blue-600 dark:text-blue-400" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">Assigned Tests</span>
                     </div>
-                    <span className="text-sm font-bold text-white">{soilTests.length} Assigned</span>
+                    <span className="text-xs font-bold text-slate-800 dark:text-white">{soilTests.length} Assigned</span>
                   </div>
 
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <HardHat size={12} className="text-amber-400" />
+                  <div className="text-left bg-slate-55 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <HardHat size={12} className="text-blue-600" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">Role</span>
                     </div>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider block">Field Agent</span>
+                    <span className="text-[10px] font-extrabold text-slate-800 dark:text-white uppercase tracking-wider block">Field Agent</span>
                   </div>
                 </>
               )}
 
               {user.role === "admin" && (
                 <>
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <Shield size={12} className="text-emerald-400" />
+                  <div className="text-left bg-slate-50 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <Shield size={12} className="text-blue-600 dark:text-blue-400" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">System Admin</span>
                     </div>
-                    <span className="text-xs font-bold text-white">Full Access</span>
+                    <span className="text-[10px] font-extrabold text-slate-800 dark:text-white">Full Access</span>
                   </div>
 
-                  <div className="text-left bg-slate-900/60 p-3 rounded-2xl border border-slate-850">
-                    <div className="flex items-center space-x-1 text-slate-400 mb-1">
-                      <UserIcon size={12} className="text-amber-400" />
+                  <div className="text-left bg-slate-55 dark:bg-slate-950/40 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 mb-1">
+                      <UserIcon size={12} className="text-blue-600" />
                       <span className="text-[10px] font-bold uppercase tracking-wider block">Role</span>
                     </div>
-                    <span className="text-xs font-bold text-white uppercase tracking-wider block">Administrator</span>
+                    <span className="text-[10px] font-extrabold text-slate-800 dark:text-white uppercase tracking-wider block">Admin</span>
                   </div>
                 </>
               )}
@@ -673,12 +673,12 @@ const Profile = () => {
           </div>
 
           {/* Quick Shortcuts */}
-          <div className="glass-panel p-6 rounded-3xl border border-slate-800/80 space-y-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm space-y-4">
             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Navigation Tabs</h4>
             <div className="flex flex-col space-y-2">
               <button
                 onClick={() => setActiveTab("personal")}
-                className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-all ${activeTab === "personal" ? "bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500" : "hover:bg-slate-900 text-slate-300"}`}
+                className={`w-full text-left px-4 py-3 rounded-xl text-xs font-semibold flex items-center justify-between transition-all ${activeTab === "personal" ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 font-extrabold" : "hover:bg-slate-50 dark:hover:bg-slate-950 text-slate-600 dark:text-slate-400"}`}
               >
                 <div className="flex items-center space-x-3">
                   <UserIcon size={16} />
@@ -690,7 +690,7 @@ const Profile = () => {
               {user.role === "farmer" && (
                 <button
                   onClick={() => setActiveTab("farming")}
-                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-all ${activeTab === "farming" ? "bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500" : "hover:bg-slate-900 text-slate-300"}`}
+                  className={`w-full text-left px-4 py-3 rounded-xl text-xs font-semibold flex items-center justify-between transition-all ${activeTab === "farming" ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 font-extrabold" : "hover:bg-slate-50 dark:hover:bg-slate-950 text-slate-600 dark:text-slate-400"}`}
                 >
                   <div className="flex items-center space-x-3">
                     <Sprout size={16} />
@@ -703,7 +703,7 @@ const Profile = () => {
               {user.role === "farmer" && (
                 <button
                   onClick={() => setActiveTab("history")}
-                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-all ${activeTab === "history" ? "bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500" : "hover:bg-slate-900 text-slate-300"}`}
+                  className={`w-full text-left px-4 py-3 rounded-xl text-xs font-semibold flex items-center justify-between transition-all ${activeTab === "history" ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 font-extrabold" : "hover:bg-slate-50 dark:hover:bg-slate-950 text-slate-600 dark:text-slate-400"}`}
                 >
                   <div className="flex items-center space-x-3">
                     <FileText size={16} />
@@ -716,7 +716,7 @@ const Profile = () => {
               {user.role === "transporter" && (
                 <button
                   onClick={() => setActiveTab("vehicle")}
-                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-all ${activeTab === "vehicle" ? "bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500" : "hover:bg-slate-900 text-slate-300"}`}
+                  className={`w-full text-left px-4 py-3 rounded-xl text-xs font-semibold flex items-center justify-between transition-all ${activeTab === "vehicle" ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 font-extrabold" : "hover:bg-slate-50 dark:hover:bg-slate-950 text-slate-600 dark:text-slate-400"}`}
                 >
                   <div className="flex items-center space-x-3">
                     <Truck size={16} />
@@ -728,7 +728,7 @@ const Profile = () => {
 
               <button
                 onClick={() => setActiveTab("security")}
-                className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-all ${activeTab === "security" ? "bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500" : "hover:bg-slate-900 text-slate-300"}`}
+                className={`w-full text-left px-4 py-3 rounded-xl text-xs font-semibold flex items-center justify-between transition-all ${activeTab === "security" ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 font-extrabold" : "hover:bg-slate-50 dark:hover:bg-slate-950 text-slate-600 dark:text-slate-400"}`}
               >
                 <div className="flex items-center space-x-3">
                   <Lock size={16} />
@@ -742,112 +742,112 @@ const Profile = () => {
 
         {/* Right Column: Tab View */}
         <div className="lg:col-span-8">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800/80 min-h-[500px]">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-sm min-h-[500px]">
 
             {/* Tab: Personal Details */}
             {activeTab === "personal" && (
               <div>
-                <h3 className="text-xl font-bold text-white mb-6 border-b border-slate-800/80 pb-4">Personal & Contact Details</h3>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">Personal & Contact Details</h3>
                 <form onSubmit={handleProfileUpdate} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Full Name</label>
+                    <div className="space-y-1.5 text-left">
+                      <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Full Name</label>
                       <input
                         type="text"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                        className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                         placeholder="Enter full name"
                       />
                     </div>
 
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Phone Number</label>
+                    <div className="space-y-1.5 text-left">
+                      <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Phone Number</label>
                       <input
                         type="tel"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                        className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                         placeholder="Contact number"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-2">
-                      <h4 className="text-sm font-bold text-white uppercase tracking-wider">Address Details</h4>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-2 text-left">
+                      <h4 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Address Details</h4>
                       <button
                         type="button"
                         onClick={handleFetchGPSLocation}
-                        className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-[10px] flex items-center space-x-1 uppercase transition-all self-start"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1.5 rounded-lg text-[9px] flex items-center space-x-1 uppercase transition-all self-start shadow-sm"
                       >
                         <MapPin size={10} />
                         <span>Autofill GPS Address</span>
                       </button>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
                       <div className="sm:col-span-2 space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Street / Locality</label>
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Street / Locality</label>
                         <input
                           type="text"
                           value={street}
                           onChange={(e) => setStreet(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs"
                           placeholder="e.g. Near Sitapur Junction"
                         />
                       </div>
 
                       <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Postal Pincode</label>
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Postal Pincode</label>
                         <input
                           type="text"
                           value={pincode}
                           onChange={(e) => setPincode(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs"
                           placeholder="e.g. 261001"
                         />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
                       <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">District / City</label>
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">District / City</label>
                         <input
                           type="text"
                           value={city}
                           onChange={(e) => setCity(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs"
                           placeholder="District name"
                         />
                       </div>
 
                       <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">State</label>
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">State</label>
                         <input
                           type="text"
                           value={state}
                           onChange={(e) => setState(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs"
                           placeholder="State name"
                         />
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-4 mt-2">
-                      <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-850">
-                        <span className="text-[10px] uppercase font-bold text-slate-500 block">Latitude</span>
-                        <span className="text-xs font-semibold text-white">{latitude ? Number(latitude).toFixed(5) : "Not Set"}</span>
+                    <div className="grid grid-cols-2 gap-4 mt-2 font-sans font-semibold">
+                      <div className="bg-slate-50 dark:bg-slate-950/40 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm text-left">
+                        <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 block">Latitude</span>
+                        <span className="text-xs font-bold text-slate-800 dark:text-white font-mono">{latitude ? Number(latitude).toFixed(5) : "Not Set"}</span>
                       </div>
-                      <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-850">
-                        <span className="text-[10px] uppercase font-bold text-slate-500 block">Longitude</span>
-                        <span className="text-xs font-semibold text-white">{longitude ? Number(longitude).toFixed(5) : "Not Set"}</span>
+                      <div className="bg-slate-50 dark:bg-slate-950/40 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm text-left">
+                        <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 block">Longitude</span>
+                        <span className="text-xs font-bold text-slate-800 dark:text-white font-mono">{longitude ? Number(longitude).toFixed(5) : "Not Set"}</span>
                       </div>
                     </div>
 
                     {/* Profile map component */}
-                    <div className="space-y-1.5 mt-2">
-                      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Confirm Pinpoint on Map</label>
-                      <div className="h-48 w-full rounded-2xl overflow-hidden border border-slate-800">
+                    <div className="space-y-1.5 mt-2 text-left">
+                      <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Confirm Pinpoint on Map</label>
+                      <div className="h-48 w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 shadow-sm">
                         <MapContainer center={mapCenter} zoom={12} scrollWheelZoom={false} className="h-full w-full">
                           <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -864,7 +864,7 @@ const Profile = () => {
                   <button
                     type="submit"
                     disabled={saveLoading}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50"
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 text-xs"
                   >
                     <Save size={16} />
                     <span>{saveLoading ? "Saving Details..." : "Save Profile Details"}</span>
@@ -876,71 +876,71 @@ const Profile = () => {
             {/* Tab: Farming & Land Details */}
             {activeTab === "farming" && user.role === "farmer" && (
               <div>
-                <h3 className="text-xl font-bold text-white mb-6 border-b border-slate-800/80 pb-4">Farming & Land Information</h3>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">Farming & Land Information</h3>
                 <form onSubmit={handleProfileUpdate} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Farm Land Area (in Acres)</label>
+                      <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Total Farm Land Area (in Acres)</label>
                       <input
                         type="number"
                         step="0.1"
                         value={farmArea}
                         onChange={(e) => setFarmArea(e.target.value)}
-                        className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                        className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                         placeholder="e.g. 5.5"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Current Soil Type</label>
+                      <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Current Soil Type</label>
                       <select
                         value={soilType}
                         onChange={(e) => setSoilType(e.target.value)}
-                        className="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 font-semibold"
+                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white rounded-xl px-4 py-3 text-xs focus:outline-none font-bold"
                       >
-                        <option value="">Select Soil Type</option>
-                        <option value="Alluvial Soil">Alluvial Soil</option>
-                        <option value="Black Cotton Soil">Black Cotton Soil</option>
-                        <option value="Red/Yellow Soil">Red & Yellow Soil</option>
-                        <option value="Laterite Soil">Laterite Soil</option>
-                        <option value="Sandy/Arid Soil">Sandy / Arid Soil</option>
-                        <option value="Loamy Soil">Loamy Soil</option>
-                        <option value="Clayey Soil">Clayey Soil</option>
+                        <option value="" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Select Soil Type</option>
+                        <option value="Alluvial Soil" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Alluvial Soil</option>
+                        <option value="Black Cotton Soil" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Black Cotton Soil</option>
+                        <option value="Red/Yellow Soil" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Red & Yellow Soil</option>
+                        <option value="Laterite Soil" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Laterite Soil</option>
+                        <option value="Sandy/Arid Soil" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Sandy / Arid Soil</option>
+                        <option value="Loamy Soil" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Loamy Soil</option>
+                        <option value="Clayey Soil" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Clayey Soil</option>
                       </select>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Typical Crops Planned (Comma Separated)</label>
+                      <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Typical Crops Planned (Comma Separated)</label>
                       <input
                         type="text"
                         value={cropTypes}
                         onChange={(e) => setCropTypes(e.target.value)}
-                        className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                        className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                         placeholder="e.g. Wheat, Rice, Sugarcane"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Farming Experience (in Years)</label>
+                      <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Farming Experience (in Years)</label>
                       <input
                         type="number"
                         value={experienceYears}
                         onChange={(e) => setExperienceYears(e.target.value)}
-                        className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                        className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                         placeholder="e.g. 12"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Farm Geographical Coordinates / Location</label>
+                  <div className="space-y-1.5 text-left">
+                    <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Farm Geographical Coordinates / Location</label>
                     <input
                       type="text"
                       value={locationName}
                       onChange={(e) => setLocationName(e.target.value)}
-                      className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                      className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                       placeholder="e.g. Lat: 27.56, Lon: 80.68 | Sitapur Rural"
                     />
                   </div>
@@ -948,7 +948,7 @@ const Profile = () => {
                   <button
                     type="submit"
                     disabled={saveLoading}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50"
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 text-xs"
                   >
                     <Save size={16} />
                     <span>{saveLoading ? "Saving Details..." : "Save Land Details"}</span>
@@ -960,71 +960,71 @@ const Profile = () => {
             {/* Tab: Soil Testing History */}
             {activeTab === "history" && (
               <div>
-                <h3 className="text-xl font-bold text-white mb-6 border-b border-slate-800/80 pb-4">Soil Testing Registry</h3>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">Soil Testing Registry</h3>
 
                 {loadingTests ? (
                   <div className="flex justify-center items-center py-12">
-                    <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
                   </div>
                 ) : soilTests.length === 0 ? (
-                  <div className="text-center py-12 bg-slate-900/50 rounded-2xl border border-slate-800/80 text-slate-400">
-                    <Sprout size={32} className="mx-auto text-slate-500 mb-2" />
-                    <p className="text-sm font-semibold">No requested soil test records found.</p>
+                  <div className="text-center py-12 bg-slate-50 dark:bg-slate-950/50 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-450 font-semibold font-sans">
+                    <Sprout size={32} className="mx-auto text-slate-400 mb-2" />
+                    <p className="text-sm">No requested soil test records found.</p>
                   </div>
                 ) : (
-                  <div className="space-y-6">
+                  <div className="space-y-6 text-left">
                     {soilTests.map((test) => (
-                      <div key={test._id} className="bg-slate-900/60 p-5 rounded-2xl border border-slate-800/60 space-y-4">
+                      <div key={test._id} className="bg-slate-50 dark:bg-slate-950/40 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm text-left">
 
                         {/* Test Meta Header */}
-                        <div className="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800/60 pb-3">
-                          <div className="space-y-0.5">
-                            <h4 className="font-bold text-sm text-white">
+                        <div className="flex flex-wrap justify-between items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+                          <div className="space-y-0.5 text-left">
+                            <h4 className="font-bold text-sm text-slate-900 dark:text-white">
                               {test.cropPlanned} Planning Test
                             </h4>
-                            <p className="text-[10px] text-slate-500 flex items-center space-x-1">
+                            <p className="text-[10px] text-slate-500 flex items-center space-x-1 font-sans">
                               <Calendar size={12} />
                               <span>Requested: {new Date(test.requestedAt).toLocaleDateString()}</span>
                             </p>
                           </div>
-                          <div className="flex items-center space-x-1.5 px-3 py-1 bg-slate-950 border border-slate-850 rounded-full text-xs font-bold text-white">
+                          <div className="flex items-center space-x-1.5 px-3 py-1 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full text-xs font-bold text-slate-800 dark:text-white shadow-sm">
                             {getStatusIcon(test.status)}
-                            <span className="text-[10px]">{test.status}</span>
+                            <span className="text-[10px] uppercase font-extrabold tracking-wider">{test.status}</span>
                           </div>
                         </div>
 
                         {/* Summary details */}
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-semibold">
                           <div>
-                            <span className="text-slate-500 block mb-0.5">Soil Type</span>
-                            <span className="font-semibold text-white">{test.soilType || "Not Stated"}</span>
+                            <span className="text-slate-400 dark:text-slate-550 block mb-0.5 text-[9px] uppercase">Soil Type</span>
+                            <span className="font-bold text-slate-800 dark:text-white">{test.soilType || "Not Stated"}</span>
                           </div>
                           <div>
-                            <span className="text-slate-500 block mb-0.5">Farm Area</span>
-                            <span className="font-semibold text-white">{test.farmArea} Acres</span>
+                            <span className="text-slate-400 dark:text-slate-550 block mb-0.5 text-[9px] uppercase">Farm Area</span>
+                            <span className="font-bold text-slate-800 dark:text-white">{test.farmArea} Acres</span>
                           </div>
                           <div>
-                            <span className="text-slate-500 block mb-0.5">Address</span>
-                            <span className="font-semibold text-white truncate max-w-[120px] block">{test.address}</span>
+                            <span className="text-slate-400 dark:text-slate-550 block mb-0.5 text-[9px] uppercase">Address</span>
+                            <span className="font-bold text-slate-800 dark:text-white truncate max-w-[120px] block">{test.address}</span>
                           </div>
                           <div>
-                            <span className="text-slate-500 block mb-0.5">Agent Assigned</span>
-                            <span className="font-semibold text-white">{test.agent?.fullName || test.agent?.username || "Not Assigned"}</span>
+                            <span className="text-slate-400 dark:text-slate-550 block mb-0.5 text-[9px] uppercase">Agent Assigned</span>
+                            <span className="font-bold text-blue-600 dark:text-blue-400">{test.agent?.fullName || test.agent?.username || "Not Assigned"}</span>
                           </div>
                         </div>
 
                         {/* Published Report & AI details */}
                         {test.isPublished && (
-                          <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-850/80 space-y-3 mt-2 text-xs">
-                            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800/60 pb-2">
-                              <h5 className="font-bold text-emerald-400 flex items-center space-x-1.5">
+                          <div className="bg-white dark:bg-slate-950/60 p-4 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3 mt-2 text-xs font-sans text-left shadow-sm">
+                            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-2">
+                              <h5 className="font-bold text-blue-600 dark:text-blue-400 flex items-center space-x-1.5">
                                 <FileText size={14} />
                                 <span>Report Approved & Published</span>
                               </h5>
                               {test.labReportUrl && (
                                 <button
                                   onClick={() => handleDownloadPDF(test.labReportUrl, `Soil_Report_${test._id}.pdf`)}
-                                  className="flex items-center space-x-1 px-2.5 py-1 rounded bg-slate-900 border border-slate-800 hover:border-emerald-500/20 text-[10px] font-bold text-emerald-400 hover:text-white"
+                                  className="flex items-center space-x-1 px-2.5 py-1 rounded bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-[10px] font-bold text-blue-600 dark:text-blue-400 shadow-sm"
                                 >
                                   <Download size={10} />
                                   <span>Download Report</span>
@@ -1032,24 +1032,24 @@ const Profile = () => {
                               )}
                             </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
                               <div>
-                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Macronutrients Summary</span>
-                                <p className="text-slate-300 text-xs whitespace-pre-wrap">{test.reportContent || "No details provided."}</p>
+                                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase block mb-0.5">Macronutrients Summary</span>
+                                <p className="text-slate-700 dark:text-slate-300 text-xs whitespace-pre-wrap leading-relaxed">{test.reportContent || "No details provided."}</p>
                               </div>
                               <div>
-                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Recommended Inputs</span>
-                                <p className="text-slate-300 text-xs whitespace-pre-wrap">{test.recommendedFertilizers || "No inputs recommended."}</p>
+                                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase block mb-0.5">Recommended Inputs</span>
+                                <p className="text-slate-700 dark:text-slate-300 text-xs whitespace-pre-wrap leading-relaxed">{test.recommendedFertilizers || "No inputs recommended."}</p>
                               </div>
                             </div>
 
                             {test.aiAnalysis && test.aiAnalysis.fertilizerRecommendation && (
-                              <div className="bg-emerald-500/5 p-3 rounded-lg border border-emerald-500/10 space-y-2 mt-1">
-                                <h6 className="font-bold text-emerald-400 flex items-center space-x-1">
+                              <div className="bg-blue-50 dark:bg-blue-500/5 p-3 rounded-lg border border-blue-100 dark:border-blue-500/10 space-y-2 mt-1 text-left">
+                                <h6 className="font-extrabold text-blue-600 dark:text-blue-400 flex items-center space-x-1">
                                   <Award size={12} />
                                   <span>Grok-AI Recommendations</span>
                                 </h6>
-                                <p className="text-slate-300">{test.aiAnalysis.fertilizerRecommendation}</p>
+                                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{test.aiAnalysis.fertilizerRecommendation}</p>
                               </div>
                             )}
                           </div>
@@ -1057,7 +1057,7 @@ const Profile = () => {
 
                         {/* Unpublished Notice */}
                         {!test.isPublished && (test.status === "Report Ready" || test.status === "Completed") && (
-                          <div className="bg-amber-500/5 border border-amber-500/10 p-3.5 rounded-xl flex items-center space-x-2 text-[11px] text-amber-400 mt-2">
+                          <div className="bg-amber-50 dark:bg-amber-500/5 border border-amber-200 dark:border-amber-500/10 p-3.5 rounded-xl flex items-center space-x-2 text-[11px] text-amber-700 dark:text-amber-400 mt-2 font-sans font-semibold">
                             <AlertTriangle size={14} className="shrink-0" />
                             <span>Report is undergoing final administrative approval review.</span>
                           </div>
@@ -1072,69 +1072,69 @@ const Profile = () => {
             {/* Tab: Vehicle & Logistics Settings */}
             {activeTab === "vehicle" && user.role === "transporter" && (
               <div>
-                <h3 className="text-xl font-bold text-white mb-6 border-b border-slate-800/80 pb-4">Vehicle & Logistics Settings</h3>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">Vehicle & Logistics Settings</h3>
                 <form onSubmit={handleVehicleUpdate} className="space-y-6">
                   
                   {/* Vehicle Details Section */}
-                  <div className="space-y-4">
-                    <h4 className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Vehicle Specifications</h4>
+                  <div className="space-y-4 text-left">
+                    <h4 className="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Vehicle Specifications</h4>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Vehicle Category Type</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Vehicle Category Type</label>
                         <select
                           value={vehicleType}
                           onChange={(e) => setVehicleType(e.target.value)}
-                          className="w-full bg-slate-900 border border-slate-850 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 font-semibold"
+                          className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white rounded-xl px-4 py-3 text-xs focus:outline-none font-bold"
                           required
                         >
-                          <option className="bg-slate-900 text-white" value="two-wheeler">Two-Wheeler (Motorcycle / Scooter)</option>
-                          <option className="bg-slate-900 text-white" value="three-wheeler">Three-Wheeler (Auto-Rickshaw / Loader)</option>
-                          <option className="bg-slate-900 text-white" value="pickup">Pickup Truck (Mini Utility payload)</option>
-                          <option className="bg-slate-900 text-white" value="tata-ace">Tata Ace (Chota Hathi / Medium utility)</option>
-                          <option className="bg-slate-900 text-white" value="mini-truck">Mini-Truck (Commercial delivery transport)</option>
-                          <option className="bg-slate-900 text-white" value="large-truck">Large Cargo Truck (Multi-axle container)</option>
-                          <option className="bg-slate-900 text-white" value="refrigerated-truck">Refrigerated Cold-Chain Truck</option>
-                          <option className="bg-slate-900 text-white" value="container">Closed container transport</option>
+                          <option value="two-wheeler" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Two-Wheeler (Motorcycle / Scooter)</option>
+                          <option value="three-wheeler" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Three-Wheeler (Auto-Rickshaw / Loader)</option>
+                          <option value="pickup" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Pickup Truck (Mini Utility payload)</option>
+                          <option value="tata-ace" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Tata Ace (Chota Hathi / Medium utility)</option>
+                          <option value="mini-truck" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Mini-Truck (Commercial delivery transport)</option>
+                          <option value="large-truck" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Large Cargo Truck (Multi-axle container)</option>
+                          <option value="refrigerated-truck" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Refrigerated Cold-Chain Truck</option>
+                          <option value="container" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Closed container transport</option>
                         </select>
                       </div>
 
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Registration Number</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Registration Number</label>
                         <input
                           type="text"
                           value={registrationNumber}
                           onChange={(e) => setRegistrationNumber(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                           placeholder="e.g. MH-12-AB-1234"
                           required
                         />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
                       <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Payload Capacity (in Kg)</label>
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Payload Capacity (in Kg)</label>
                         <input
                           type="number"
                           value={capacityKg}
                           onChange={(e) => setCapacityKg(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                           placeholder="e.g. 500"
                           min="1"
                           required
                         />
                       </div>
 
-                      <div className="flex items-center space-x-3 pt-6">
+                      <div className="flex items-center space-x-3 pt-6 text-left font-sans">
                         <input
                           type="checkbox"
                           id="isAvailableCheck"
                           checked={isAvailable}
                           onChange={(e) => setIsAvailable(e.target.checked)}
-                          className="w-5 h-5 rounded border-slate-800 text-emerald-500 bg-slate-950 focus:ring-emerald-500 focus:ring-2 focus:ring-offset-slate-900"
+                          className="w-4 h-4 rounded border-slate-300 dark:border-slate-800 text-blue-600 bg-white dark:bg-slate-950 focus:ring-blue-500"
                         />
-                        <label htmlFor="isAvailableCheck" className="text-sm font-semibold text-slate-300 select-none">
+                        <label htmlFor="isAvailableCheck" className="text-xs font-bold text-slate-600 dark:text-slate-350 select-none">
                           Mark Vehicle as Available for Orders
                         </label>
                       </div>
@@ -1142,43 +1142,43 @@ const Profile = () => {
                   </div>
 
                   {/* Pricing Details Section */}
-                  <div className="space-y-4 pt-4 border-t border-slate-800/80">
-                    <h4 className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Fare & Pricing Structure (in ₹)</h4>
+                  <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 text-left">
+                    <h4 className="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Fare & Pricing Structure (in ₹)</h4>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Fare per KM</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Fare per KM</label>
                         <input
                           type="number"
                           value={pricePerKm}
                           onChange={(e) => setPricePerKm(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none text-emerald-600 dark:text-emerald-400 font-bold"
                           placeholder="e.g. 15"
                           min="1"
                           required
                         />
                       </div>
 
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Minimum Charge</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Minimum Charge</label>
                         <input
                           type="number"
                           value={minCharge}
                           onChange={(e) => setMinCharge(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                           placeholder="e.g. 50"
                           min="0"
                           required
                         />
                       </div>
 
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Loading/Unloading Charge</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Loading/Unloading Charge</label>
                         <input
                           type="number"
                           value={loadingCharge}
                           onChange={(e) => setLoadingCharge(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                           placeholder="e.g. 100"
                           min="0"
                           required
@@ -1188,41 +1188,41 @@ const Profile = () => {
                   </div>
 
                   {/* Driver details section */}
-                  <div className="space-y-4 pt-4 border-t border-slate-800/80">
-                    <h4 className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Driver & License Information</h4>
+                  <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 text-left">
+                    <h4 className="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Driver & License Information</h4>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Driver's Name</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Driver's Name</label>
                         <input
                           type="text"
                           value={driverName}
                           onChange={(e) => setDriverName(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                           placeholder="e.g. Ramesh Kumar"
                           required
                         />
                       </div>
 
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Driver's Mobile (Phone)</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Driver's Mobile (Phone)</label>
                         <input
                           type="tel"
                           value={driverPhone}
                           onChange={(e) => setDriverPhone(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                           placeholder="e.g. 9876543210"
                           required
                         />
                       </div>
 
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Driving License Number</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Driving License Number</label>
                         <input
                           type="text"
                           value={driverLicense}
                           onChange={(e) => setDriverLicense(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                           placeholder="e.g. DL-1420110012345"
                           required
                         />
@@ -1233,7 +1233,7 @@ const Profile = () => {
                   <button
                     type="submit"
                     disabled={saveLoading}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50"
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 text-xs"
                   >
                     <Save size={16} />
                     <span>{saveLoading ? "Saving Logistics Settings..." : "Save Vehicle & Driver Details"}</span>
@@ -1245,39 +1245,39 @@ const Profile = () => {
             {/* Tab: Security & Password */}
             {activeTab === "security" && (
               <div>
-                <h3 className="text-xl font-bold text-white mb-6 border-b border-slate-800/80 pb-4">Security & Password Management</h3>
-                <form onSubmit={handlePasswordChange} className="space-y-6 max-w-md">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">Security & Password Management</h3>
+                <form onSubmit={handlePasswordChange} className="space-y-6 max-w-md text-left">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Current Password</label>
+                    <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Current Password</label>
                     <input
                       type="password"
                       value={oldPassword}
                       onChange={(e) => setOldPassword(e.target.value)}
-                      className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                      className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                       placeholder="Enter current password"
                       required
                     />
                   </div>
 
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">New Password</label>
+                  <div className="space-y-1.5 text-left">
+                    <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">New Password</label>
                     <input
                       type="password"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                      className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                       placeholder="Enter new password"
                       required
                     />
                   </div>
 
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Confirm New Password</label>
+                  <div className="space-y-1.5 text-left">
+                    <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Confirm New Password</label>
                     <input
                       type="password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none"
+                      className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                       placeholder="Confirm new password"
                       required
                     />
@@ -1286,7 +1286,7 @@ const Profile = () => {
                   <button
                     type="submit"
                     disabled={saveLoading}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all transform active:scale-95 disabled:opacity-50"
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 text-xs"
                   >
                     <Lock size={16} />
                     <span>{saveLoading ? "Updating Password..." : "Update Security Credentials"}</span>

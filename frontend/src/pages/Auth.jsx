@@ -207,17 +207,17 @@ const Auth = () => {
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl w-full glass-panel rounded-3xl overflow-hidden shadow-2xl grid grid-cols-1 md:grid-cols-12 min-h-[600px] border border-slate-800">
+      <div className="max-w-5xl w-full bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-sm grid grid-cols-1 md:grid-cols-12 min-h-[600px] border border-slate-200 dark:border-slate-800 text-left animate-fade-in-up">
 
         {/* Left Side: Welcome Panel (AgriTech Branding & Highlights) */}
-        <div className="md:col-span-5 bg-gradient-to-br from-emerald-950 via-slate-950 to-slate-900 p-8 flex flex-col justify-between relative overflow-hidden border-r border-slate-800">
+        <div className="md:col-span-5 bg-gradient-to-br from-blue-950 via-slate-950 to-slate-900 p-8 flex flex-col justify-between relative overflow-hidden border-r border-slate-200 dark:border-slate-800">
           {/* Backdrop Glow */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="relative z-10">
             <div className="flex items-center space-x-2 mb-8">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
-                <Sprout className="text-emerald-400" size={20} />
+              <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center">
+                <Sprout className="text-blue-400" size={20} />
               </div>
               <span className="font-extrabold text-white text-lg tracking-tight">Trishastik</span>
             </div>
@@ -225,9 +225,9 @@ const Auth = () => {
             <div className="space-y-6 mt-12">
               <h2 className="text-3xl font-bold tracking-tight text-white leading-tight">
                 Empowering Bharat's <br />
-                <span className="gradient-text-emerald">Sustainable Farms</span>
+                <span className="text-blue-400">Sustainable Farms</span>
               </h2>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <p className="text-sm text-slate-400 leading-relaxed font-sans">
                 Join our integrated ecosystem for smart soil testing requests, secure marketplace transactions, and custom Grok-AI powered agronomy advice.
               </p>
             </div>
@@ -235,49 +235,49 @@ const Auth = () => {
 
           {/* Key Value Cards */}
           <div className="space-y-4 mt-8 relative z-10">
-            <div className="flex items-start space-x-3 p-3 bg-slate-900/60 rounded-xl border border-slate-850">
-              <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 mt-0.5">
+            <div className="flex items-start space-x-3 p-3 bg-slate-900/60 rounded-xl border border-slate-800">
+              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 mt-0.5 shadow-sm">
                 <ShieldCheck size={16} />
               </div>
-              <div>
-                <h4 className="text-xs font-bold text-white">Lab Certified Soil Reports</h4>
-                <p className="text-[11px] text-slate-400">Accurate testing by verified field agronomists.</p>
+              <div className="text-left">
+                <h4 className="text-xs font-bold text-white uppercase tracking-wider">Lab Certified Soil Reports</h4>
+                <p className="text-[10px] text-slate-400 font-sans mt-0.5">Accurate testing by verified field agronomists.</p>
               </div>
             </div>
 
-            <div className="flex items-start space-x-3 p-3 bg-slate-900/60 rounded-xl border border-slate-850">
-              <div className="p-2 rounded-lg bg-amber-500/10 text-amber-400 mt-0.5">
+            <div className="flex items-start space-x-3 p-3 bg-slate-900/60 rounded-xl border border-slate-800">
+              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 mt-0.5 shadow-sm">
                 <Leaf size={16} />
               </div>
-              <div>
-                <h4 className="text-xs font-bold text-white">Grok-AI Analytics</h4>
-                <p className="text-[11px] text-slate-400">Custom NPK analyses, fertilizer rates & water advice.</p>
+              <div className="text-left">
+                <h4 className="text-xs font-bold text-white uppercase tracking-wider">Grok-AI Analytics</h4>
+                <p className="text-[10px] text-slate-400 font-sans mt-0.5">Custom NPK analyses, fertilizer rates & water advice.</p>
               </div>
             </div>
           </div>
 
           {/* Footer inside Left Panel */}
-          <div className="text-[10px] text-slate-500 mt-8 relative z-10">
+          <div className="text-[9px] text-slate-500 mt-8 relative z-10 font-bold uppercase tracking-wide">
             &copy; {new Date().getFullYear()} Trishastik Bharat. Sustainable Agriculture Tools.
           </div>
         </div>
 
         {/* Right Side: Tabbed Form Panel */}
-        <div className="md:col-span-7 bg-slate-950 p-8 sm:p-12 flex flex-col justify-center">
+        <div className="md:col-span-7 bg-white dark:bg-slate-950 p-8 sm:p-12 flex flex-col justify-center text-left">
 
           {/* Tab Selection */}
           {!showForgot && (
-            <div className="flex bg-slate-900 p-1.5 rounded-2xl mb-8 border border-slate-800 max-w-sm mx-auto w-full">
+            <div className="flex bg-slate-50 dark:bg-slate-900 p-1.5 rounded-2xl mb-8 border border-slate-200 dark:border-slate-800 max-w-sm mx-auto w-full">
               <button
                 onClick={() => { setActiveTab("login"); setLoginError(""); setSignupError(""); }}
-                className={`flex-1 py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center space-x-2 transition-all duration-300 ${activeTab === "login" ? "bg-emerald-500 text-slate-950 shadow-md font-bold" : "text-slate-400 hover:text-white"}`}
+                className={`flex-1 py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center space-x-2 transition-all duration-300 ${activeTab === "login" ? "bg-blue-600 text-white shadow-sm font-bold" : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"}`}
               >
                 <LogIn size={16} />
                 <span>Sign In</span>
               </button>
               <button
                 onClick={() => { setActiveTab("signup"); setLoginError(""); setSignupError(""); }}
-                className={`flex-1 py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center space-x-2 transition-all duration-300 ${activeTab === "signup" ? "bg-emerald-500 text-slate-950 shadow-md font-bold" : "text-slate-400 hover:text-white"}`}
+                className={`flex-1 py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center space-x-2 transition-all duration-300 ${activeTab === "signup" ? "bg-blue-600 text-white shadow-sm font-bold" : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"}`}
               >
                 <UserPlus size={16} />
                 <span>Register</span>
@@ -297,22 +297,22 @@ const Auth = () => {
                   transition={{ duration: 0.2 }}
                 >
                   <div className="text-center md:text-left mb-6">
-                    <h3 className="text-2xl font-bold text-white">Reset Password</h3>
-                    <p className="text-sm text-slate-400">
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Reset Password</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
                       {forgotOtpRequired ? "Enter verification code and choose new password" : "Enter email to receive reset code"}
                     </p>
                   </div>
 
                   {forgotError && (
-                    <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3.5 rounded-xl mb-6 text-sm text-center font-medium animate-fade-in">
+                    <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-650 dark:text-red-400 p-3.5 rounded-xl mb-6 text-sm text-center font-medium animate-fade-in animate-pulse">
                       {forgotError}
                     </div>
                   )}
 
                   {forgotOtpRequired ? (
                     <form onSubmit={handleResetSubmit} className="space-y-4">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Verification Code (OTP)</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Verification Code (OTP)</label>
                         <input
                           type="text"
                           maxLength="6"
@@ -324,8 +324,8 @@ const Auth = () => {
                         />
                       </div>
 
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">New Password</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">New Password</label>
                         <input
                           type="password"
                           value={forgotNewPassword}
@@ -336,8 +336,8 @@ const Auth = () => {
                         />
                       </div>
 
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Confirm New Password</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Confirm New Password</label>
                         <input
                           type="password"
                           value={forgotConfirmPassword}
@@ -351,7 +351,7 @@ const Auth = () => {
                       <button
                         type="submit"
                         disabled={forgotLoading}
-                        className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/10 transition-all transform active:scale-95 disabled:opacity-50 mt-6"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 mt-6 text-xs"
                       >
                         <span>{forgotLoading ? "Resetting..." : "Reset Password"}</span>
                       </button>
@@ -359,15 +359,15 @@ const Auth = () => {
                       <button
                         type="button"
                         onClick={() => { setShowForgot(false); setForgotOtpRequired(false); }}
-                        className="w-full text-slate-400 hover:text-white text-xs font-semibold text-center mt-2 transition-colors"
+                        className="w-full text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white text-xs font-semibold text-center mt-2 transition-colors"
                       >
                         Back to Sign In
                       </button>
                     </form>
                   ) : (
                     <form onSubmit={handleForgotSubmit} className="space-y-4">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Email Address</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-550 dark:text-slate-400 uppercase tracking-wider block">Email Address</label>
                         <input
                           type="email"
                           value={forgotEmail}
@@ -381,16 +381,16 @@ const Auth = () => {
                       <button
                         type="submit"
                         disabled={forgotLoading}
-                        className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/10 transition-all transform active:scale-95 disabled:opacity-50 mt-6"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 mt-6 text-xs"
                       >
                         <span>{forgotLoading ? "Sending Code..." : "Send Verification Code"}</span>
-                        {!forgotLoading && <ArrowRight size={16} />}
+                        {!forgotLoading && <ArrowRight size={14} />}
                       </button>
 
                       <button
                         type="button"
                         onClick={() => setShowForgot(false)}
-                        className="w-full text-slate-400 hover:text-white text-xs font-semibold text-center mt-2 transition-colors"
+                        className="w-full text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white text-xs font-semibold text-center mt-2 transition-colors"
                       >
                         Back to Sign In
                       </button>
@@ -406,19 +406,19 @@ const Auth = () => {
                   transition={{ duration: 0.2 }}
                 >
                   <div className="text-center md:text-left mb-6">
-                    <h3 className="text-2xl font-bold text-white">Welcome Back</h3>
-                    <p className="text-sm text-slate-400">Sign in to access your dashboard</p>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome Back</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 font-sans mt-1">Sign in to access your dashboard</p>
                   </div>
 
                   {loginError && (
-                    <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3.5 rounded-xl mb-6 text-sm text-center font-medium animate-fade-in">
+                    <div className="bg-red-50 dark:bg-red-500/10 border border-red-205 dark:border-red-500/20 text-red-650 dark:text-red-400 p-3.5 rounded-xl mb-6 text-sm text-center font-medium animate-fade-in animate-pulse">
                       {loginError}
                     </div>
                   )}
 
                   <form onSubmit={handleLoginSubmit} className="space-y-4">
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Username</label>
+                    <div className="space-y-1.5 text-left">
+                      <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Username</label>
                       <input
                         type="text"
                         value={loginUsername}
@@ -429,13 +429,13 @@ const Auth = () => {
                       />
                     </div>
 
-                    <div className="space-y-1.5">
-                      <div className="flex justify-between items-center">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Password</label>
+                    <div className="space-y-1.5 text-left">
+                      <div className="flex justify-between items-center mb-1">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Password</label>
                         <button
                           type="button"
                           onClick={() => { setShowForgot(true); setForgotError(""); }}
-                          className="text-xs text-emerald-400 hover:text-emerald-300 font-semibold"
+                          className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-755 font-bold"
                         >
                           Forgot?
                         </button>
@@ -453,10 +453,10 @@ const Auth = () => {
                     <button
                       type="submit"
                       disabled={loginLoading}
-                      className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/10 transition-all transform active:scale-95 disabled:opacity-50 mt-6"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 mt-6 text-xs"
                     >
                       <span>{loginLoading ? "Verifying..." : "Sign In"}</span>
-                      {!loginLoading && <ArrowRight size={16} />}
+                      {!loginLoading && <ArrowRight size={14} />}
                     </button>
                   </form>
                 </motion.div>
@@ -469,12 +469,12 @@ const Auth = () => {
                   transition={{ duration: 0.2 }}
                 >
                   <div className="text-center md:text-left mb-6">
-                    <h3 className="text-2xl font-bold text-white">Create Account</h3>
-                    <p className="text-sm text-slate-400">Join Trishastik Sustainable Agriculture network</p>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Create Account</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 font-sans mt-1">Join Trishastik Sustainable Agriculture network</p>
                   </div>
 
                   {signupError && (
-                    <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3.5 rounded-xl mb-6 text-sm text-center font-medium animate-fade-in">
+                    <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-650 dark:text-red-400 p-3.5 rounded-xl mb-6 text-sm text-center font-medium animate-fade-in animate-pulse">
                       {signupError}
                     </div>
                   )}
@@ -482,32 +482,32 @@ const Auth = () => {
                   {otpRequired ? (
                     <form onSubmit={handleSignupSubmit} className="space-y-6">
                       <div className="text-center md:text-left space-y-2">
-                        <p className="text-xs font-semibold text-emerald-400">
+                        <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 font-sans">
                           A 6-digit verification code was sent to {signupEmail}.
                         </p>
                       </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Verification Code (OTP)</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Verification Code (OTP)</label>
                         <input
                           type="text"
                           maxLength="6"
                           value={otp}
                           onChange={(e) => setOtp(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none tracking-widest text-center font-bold text-lg"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-sm focus:outline-none tracking-widest text-center font-bold text-lg animate-pulse"
                           placeholder="000000"
                           required
                         />
-                        <div className="flex justify-between items-center text-[11px] mt-1.5 px-1">
+                        <div className="flex justify-between items-center text-[10px] mt-1.5 px-1 font-bold">
                           {timer > 0 ? (
-                            <span className="text-slate-400">
-                              Didn't receive code? Resend in <span className="text-emerald-400 font-bold">{timer}s</span>
+                            <span className="text-slate-500 dark:text-slate-500">
+                              Didn't receive code? Resend in <span className="text-blue-600 dark:text-blue-400">{timer}s</span>
                             </span>
                           ) : (
                             <button
                               type="button"
                               onClick={handleResendOtp}
                               disabled={resendLoading}
-                              className="text-emerald-400 hover:text-emerald-300 font-bold underline transition-all active:scale-95 disabled:opacity-50"
+                              className="text-blue-600 dark:text-blue-400 hover:text-blue-700 font-extrabold underline transition-all active:scale-95 disabled:opacity-50"
                             >
                               {resendLoading ? "Resending..." : "Resend OTP"}
                             </button>
@@ -518,25 +518,25 @@ const Auth = () => {
                       <button
                         type="submit"
                         disabled={signupLoading}
-                        className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/10 transition-all transform active:scale-95 disabled:opacity-50 mt-6"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 mt-6 text-xs"
                       >
                         <span>{signupLoading ? "Verifying..." : "Verify Code & Register"}</span>
-                        {!signupLoading && <ArrowRight size={16} />}
+                        {!signupLoading && <ArrowRight size={14} />}
                       </button>
 
                       <button
                         type="button"
                         onClick={() => { setOtpRequired(false); setTimer(60); }}
-                        className="w-full text-slate-400 hover:text-white text-xs font-semibold text-center mt-2 transition-colors"
+                        className="w-full text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white text-xs font-semibold text-center mt-2 transition-colors"
                       >
                         Back to Signup
                       </button>
                     </form>
                   ) : (
                     <form onSubmit={handleSignupSubmit} className="space-y-4">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
                         <div className="space-y-1.5">
-                          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Username</label>
+                          <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Username</label>
                           <input
                             type="text"
                             value={signupUsername}
@@ -548,7 +548,7 @@ const Auth = () => {
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Email Address</label>
+                          <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Email Address</label>
                           <input
                             type="email"
                             value={signupEmail}
@@ -560,8 +560,8 @@ const Auth = () => {
                         </div>
                       </div>
 
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Password</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Password</label>
                         <input
                           type="password"
                           value={signupPassword}
@@ -572,29 +572,29 @@ const Auth = () => {
                         />
                       </div>
 
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Select Account Type</label>
+                      <div className="space-y-1.5 text-left">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Select Account Type</label>
                         <select
                           value={signupRole}
                           onChange={(e) => setSignupRole(e.target.value)}
-                          className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 font-semibold dark:bg-slate-900 bg-white text-slate-900 dark:text-white"
+                          className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white rounded-xl px-4 py-3 text-xs focus:outline-none font-bold"
                         >
-                          <option value="customer">Customer / Buyer (Shop organic products)</option>
-                          <option value="farmer">Farmer (Sell organic products & request testing)</option>
-                          <option value="fertilizer_seller">Fertilizer & Agricultural Medicine Seller</option>
-                          <option value="instrument_seller">Ag Instruments Seller (Sale & Rent)</option>
-                          <option value="transporter">Transporter / Dispatcher</option>
-                          <option value="agent">Field Agent (Soil sample collection)</option>
+                          <option value="customer" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Customer / Buyer (Shop organic products)</option>
+                          <option value="farmer" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Farmer (Sell organic products & request testing)</option>
+                          <option value="fertilizer_seller" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Fertilizer & Agricultural Medicine Seller</option>
+                          <option value="instrument_seller" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Ag Instruments Seller (Sale & Rent)</option>
+                          <option value="transporter" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Transporter / Dispatcher</option>
+                          <option value="agent" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Field Agent (Soil sample collection)</option>
                         </select>
                       </div>
 
                       <button
                         type="submit"
                         disabled={signupLoading}
-                        className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3.5 rounded-xl flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/10 transition-all transform active:scale-95 disabled:opacity-50 mt-6"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 mt-6 text-xs animate-fade-in-up"
                       >
                         <span>{signupLoading ? "Registering..." : "Create Account"}</span>
-                        {!signupLoading && <ArrowRight size={16} />}
+                        {!signupLoading && <ArrowRight size={14} />}
                       </button>
                     </form>
                   )}
