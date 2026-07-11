@@ -11,6 +11,7 @@ const createListingSchema = Joi.object({
     latitude: Joi.number().optional(),
     longitude: Joi.number().optional(),
     priceUnit: Joi.string().valid("kg", "quintal", "gram", "piece", "hour", "day").optional(),
+    weightKg: Joi.number().min(0).optional(),
     images: Joi.array().items(Joi.string().allow("")).optional(),
     video: Joi.string().allow("").optional(),
   }).required()

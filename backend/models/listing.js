@@ -19,6 +19,10 @@ const listingSchema = new Schema({
     enum: ["kg", "quintal", "gram", "piece", "hour", "day"],
     default: "kg"
   },
+  weightKg: {
+    type: Number,
+    default: 1.0
+  },
   images: {
     type: [String],
     default: []

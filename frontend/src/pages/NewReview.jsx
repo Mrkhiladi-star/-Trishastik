@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PlusCircle, ArrowLeft } from "lucide-react";
+import { PlusCircle, ArrowLeft, Star } from "lucide-react";
 
 const NewReview = () => {
   const navigate = useNavigate();
@@ -8,6 +8,7 @@ const NewReview = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [post, setPost] = useState("");
+  const [rating, setRating] = useState(5);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -24,7 +25,8 @@ const NewReview = () => {
           histing: {
             name,
             description,
-            post
+            post,
+            rating: Number(rating)
           }
         })
       });
@@ -60,7 +62,7 @@ const NewReview = () => {
         </div>
 
         {error && (
-          <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-650 dark:text-red-400 p-3 rounded-xl font-bold text-center text-xs animate-pulse">
+          <div className="bg-red-55 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-650 dark:text-red-400 p-3 rounded-xl font-bold text-center text-xs animate-pulse">
             {error}
           </div>
         )}
@@ -89,6 +91,32 @@ const NewReview = () => {
               placeholder="Share your experience with Trishastik Farms..."
               required
             />
+          </div>
+
+          <div className="space-y-1.5 text-left">
+            <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block font-sans">Rating (रेटिंग)</label>
+            <div className="flex items-center space-x-1.5 pt-0.5">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  onClick={() => setRating(star)}
+                  className="focus:outline-none transition-transform active:scale-125 hover:scale-110"
+                >
+                  <Star
+                    size={22}
+                    className={
+                      star <= rating
+                        ? "text-amber-500 fill-amber-500"
+                        : "text-slate-300 dark:text-slate-700"
+                    }
+                  />
+                </button>
+              ))}
+              <span className="text-xs font-extrabold text-slate-550 dark:text-slate-400 pl-3">
+                {rating} / 5 Stars
+              </span>
+            </div>
           </div>
 
           <div className="space-y-1.5 text-left">

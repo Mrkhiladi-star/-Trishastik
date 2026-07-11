@@ -14,8 +14,11 @@ const vehicleSchema = new Schema({
   },
   registrationNumber: {
     type: String,
-    required: true,
-    unique: true
+    required: true
+  },
+  availableCount: {
+    type: Number,
+    default: 1
   },
   capacityKg: {
     type: Number,

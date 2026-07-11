@@ -34,7 +34,7 @@ const createListing = async (req, res, next) => {
       return res.status(403).json({ error: "Access denied: Administrators cannot list products." });
     }
 
-    const { title, description, price, image, category, location, latitude, longitude, priceUnit, images, video } = req.body.listing || req.body;
+    const { title, description, price, image, category, location, latitude, longitude, priceUnit, weightKg, images, video } = req.body.listing || req.body;
     const newListing = new Listing({
       title,
       description,
@@ -45,6 +45,7 @@ const createListing = async (req, res, next) => {
       latitude: latitude !== undefined ? Number(latitude) : 27.56,
       longitude: longitude !== undefined ? Number(longitude) : 80.68,
       priceUnit: priceUnit || "kg",
+      weightKg: weightKg !== undefined ? Number(weightKg) : 1.0,
       images: images || [],
       video: video || "",
       owner: req.user._id,

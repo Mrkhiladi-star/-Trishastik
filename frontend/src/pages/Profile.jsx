@@ -4,7 +4,7 @@ import {
   User as UserIcon, Mail, Phone, MapPin, Sprout, Shield, Lock,
   Settings, Save, Upload, Calendar, ChevronRight, Activity,
   TrendingUp, Award, Droplets, HardHat, FileText, CheckCircle2,
-  AlertTriangle, Hourglass, ShoppingBag, Store, Tag, Truck, Navigation
+  AlertTriangle, Hourglass, ShoppingBag, Store, Tag, Truck, Navigation, Edit, Trash2
 } from "lucide-react";
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import L from "leaflet";
@@ -120,10 +120,13 @@ const Profile = () => {
 
   // Transporter custom logistics settings
   const [vehicle, setVehicle] = useState(null);
+  const [vehicles, setVehicles] = useState([]);
+  const [editingVehicleId, setEditingVehicleId] = useState(null);
   const [vehicleType, setVehicleType] = useState("two-wheeler");
   const [registrationNumber, setRegistrationNumber] = useState("");
   const [capacityKg, setCapacityKg] = useState(500);
   const [isAvailable, setIsAvailable] = useState(true);
+  const [availableCount, setAvailableCount] = useState(1);
   const [pricePerKm, setPricePerKm] = useState(15);
   const [minCharge, setMinCharge] = useState(50);
   const [loadingCharge, setLoadingCharge] = useState(100);
@@ -285,25 +288,72 @@ const Profile = () => {
       const response = await fetch("/api/profile/vehicle");
       if (response.ok) {
         const data = await response.json();
+        if (data.vehicles) {
+          setVehicles(data.vehicles);
+        }
         if (data.vehicle) {
           const veh = data.vehicle;
           setVehicle(veh);
-          setVehicleType(veh.vehicleType || "two-wheeler");
-          setRegistrationNumber(veh.registrationNumber || "");
-          setCapacityKg(veh.capacityKg || 500);
-          setIsAvailable(veh.isAvailable !== undefined ? veh.isAvailable : true);
-          setPricePerKm(veh.pricePerKm || 15);
-          setMinCharge(veh.minCharge || 50);
-          setLoadingCharge(veh.loadingCharge || 100);
-          setWaitingCharge(veh.waitingCharge || 50);
-          setNightSurcharge(veh.nightSurcharge || 0);
-          setDriverName(veh.driverDetails?.name || "");
-          setDriverPhone(veh.driverDetails?.phone || "");
-          setDriverLicense(veh.driverDetails?.licenseNumber || "");
         }
       }
     } catch (err) {
       console.error("Failed to load vehicle details:", err);
+    }
+  };
+
+  const resetVehicleForm = () => {
+    setEditingVehicleId(null);
+    setVehicleType("two-wheeler");
+    setRegistrationNumber("");
+    setCapacityKg(150);
+    setIsAvailable(true);
+    setAvailableCount(1);
+    setPricePerKm(15);
+    setMinCharge(50);
+    setLoadingCharge(100);
+    setWaitingCharge(50);
+    setNightSurcharge(0);
+    setDriverName("");
+    setDriverPhone("");
+    setDriverLicense("");
+  };
+
+  const handleEditVehicleClick = (veh) => {
+    setEditingVehicleId(veh._id);
+    setVehicleType(veh.vehicleType || "two-wheeler");
+    setRegistrationNumber(veh.registrationNumber || "");
+    setCapacityKg(veh.capacityKg || 150);
+    setIsAvailable(veh.isAvailable !== undefined ? veh.isAvailable : true);
+    setAvailableCount(veh.availableCount || 1);
+    setPricePerKm(veh.pricePerKm || 15);
+    setMinCharge(veh.minCharge || 50);
+    setLoadingCharge(veh.loadingCharge || 100);
+    setWaitingCharge(veh.waitingCharge || 50);
+    setNightSurcharge(veh.nightSurcharge || 0);
+    setDriverName(veh.driverDetails?.name || "");
+    setDriverPhone(veh.driverDetails?.phone || "");
+    setDriverLicense(veh.driverDetails?.licenseNumber || "");
+  };
+
+  const handleDeleteVehicleClick = async (vehId) => {
+    if (!window.confirm("Are you sure you want to remove this vehicle?")) return;
+    try {
+      const response = await fetch(`/api/profile/vehicle/${vehId}`, {
+        method: "DELETE"
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setMessage({ text: "Vehicle removed successfully!", type: "success" });
+        setVehicles(data.vehicles || []);
+        if (editingVehicleId === vehId) {
+          resetVehicleForm();
+        }
+        await refreshUser();
+      } else {
+        setMessage({ text: data.error || "Failed to delete vehicle.", type: "error" });
+      }
+    } catch (err) {
+      setMessage({ text: "Network error occurred.", type: "error" });
     }
   };
 
@@ -312,14 +362,18 @@ const Profile = () => {
     setSaveLoading(true);
     setMessage({ text: "", type: "" });
     try {
-      const response = await fetch("/api/profile/vehicle", {
-        method: "POST",
+      const url = editingVehicleId ? `/api/profile/vehicle/${editingVehicleId}` : "/api/profile/vehicle";
+      const method = editingVehicleId ? "PUT" : "POST";
+      
+      const response = await fetch(url, {
+        method: method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           vehicleType,
           registrationNumber,
           capacityKg: Number(capacityKg),
           isAvailable,
+          availableCount: Number(availableCount),
           pricePerKm: Number(pricePerKm),
           minCharge: Number(minCharge),
           loadingCharge: Number(loadingCharge),
@@ -332,8 +386,9 @@ const Profile = () => {
       });
       const data = await response.json();
       if (response.ok && data.success) {
-        setMessage({ text: "Vehicle and logistics settings updated successfully!", type: "success" });
-        setVehicle(data.vehicle);
+        setMessage({ text: editingVehicleId ? "Vehicle updated successfully!" : "Vehicle registered successfully!", type: "success" });
+        setVehicles(data.vehicles || []);
+        resetVehicleForm();
         await refreshUser();
       } else {
         setMessage({ text: data.error || "Failed to update vehicle details.", type: "error" });
@@ -1073,12 +1128,70 @@ const Profile = () => {
             {activeTab === "vehicle" && user.role === "transporter" && (
               <div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">Vehicle & Logistics Settings</h3>
+                
+                {/* Registered Vehicles fleet List */}
+                <div className="mb-8 space-y-4 text-left">
+                  <h4 className="text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-wider font-sans">Registered Vehicles Fleet ({vehicles.length})</h4>
+                  {vehicles.length === 0 ? (
+                    <div className="text-center py-8 bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                      <p className="text-slate-500 dark:text-slate-400 text-xs font-bold font-sans">No vehicles registered yet. Please add a vehicle below.</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {vehicles.map((veh) => (
+                        <div key={veh._id} className="bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl flex flex-col justify-between shadow-sm relative">
+                          <div className="space-y-2 text-left">
+                            <div className="flex justify-between items-start">
+                              <span className="bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/25 text-blue-600 dark:text-blue-400 text-[10px] font-extrabold px-2.5 py-0.5 rounded-md uppercase tracking-wider font-sans">
+                                {veh.vehicleType}
+                              </span>
+                              <div className="flex space-x-1">
+                                <button
+                                  type="button"
+                                  onClick={() => handleEditVehicleClick(veh)}
+                                  className="text-blue-600 hover:text-blue-700 p-1 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-colors"
+                                  title="Edit Vehicle"
+                                >
+                                  <Edit size={13} />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteVehicleClick(veh._id)}
+                                  className="text-red-650 hover:text-red-700 p-1 rounded-lg hover:bg-red-55 dark:hover:bg-red-950/40 transition-colors"
+                                  title="Delete Vehicle"
+                                >
+                                  <Trash2 size={13} />
+                                </button>
+                              </div>
+                            </div>
+                            <p className="text-xs font-bold text-slate-800 dark:text-slate-205 font-sans">Plate No: <span className="font-mono bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-850 px-1.5 py-0.5 rounded text-slate-700 dark:text-slate-300">{veh.registrationNumber}</span></p>
+                            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold font-sans">Available Fleet Count: <strong className="text-slate-800 dark:text-slate-200">{veh.availableCount || 1}</strong></p>
+                            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold font-sans">Capacity: <strong className="text-slate-800 dark:text-slate-200">{veh.capacityKg} Kg</strong></p>
+                            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold font-sans">Fare: <strong>₹{veh.minCharge}</strong> base + <strong>₹{veh.pricePerKm}/km</strong></p>
+                            {veh.driverDetails?.name && (
+                              <p className="text-[10px] text-slate-450 dark:text-slate-500 font-sans leading-tight">Driver: {veh.driverDetails.name} ({veh.driverDetails.phone})</p>
+                            )}
+                          </div>
+                          <div className="mt-3 flex items-center space-x-1.5">
+                            <span className={`w-2.5 h-2.5 rounded-full ${veh.isAvailable ? "bg-emerald-500" : "bg-slate-400"}`}></span>
+                            <span className="text-[10px] font-bold text-slate-505 dark:text-slate-400 uppercase tracking-wider font-sans">
+                              {veh.isAvailable ? "Available" : "Offline"}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Register/Edit Vehicle Form */}
+                <h4 className="text-sm font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-4 border-t border-slate-100 dark:border-slate-800/80 pt-6">
+                  {editingVehicleId ? "Modify Registered Vehicle Details" : "Register a New Vehicle type"}
+                </h4>
+                
                 <form onSubmit={handleVehicleUpdate} className="space-y-6">
-                  
                   {/* Vehicle Details Section */}
                   <div className="space-y-4 text-left">
-                    <h4 className="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Vehicle Specifications</h4>
-                    
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-1.5 text-left">
                         <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Vehicle Category Type</label>
@@ -1105,14 +1218,14 @@ const Profile = () => {
                           type="text"
                           value={registrationNumber}
                           onChange={(e) => setRegistrationNumber(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none font-mono"
                           placeholder="e.g. MH-12-AB-1234"
                           required
                         />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
                       <div className="space-y-1.5">
                         <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Payload Capacity (in Kg)</label>
                         <input
@@ -1121,6 +1234,19 @@ const Profile = () => {
                           onChange={(e) => setCapacityKg(e.target.value)}
                           className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
                           placeholder="e.g. 500"
+                          min="1"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Vehicles Available (Quantity)</label>
+                        <input
+                          type="number"
+                          value={availableCount}
+                          onChange={(e) => setAvailableCount(e.target.value)}
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
+                          placeholder="e.g. 1"
                           min="1"
                           required
                         />
@@ -1135,7 +1261,7 @@ const Profile = () => {
                           className="w-4 h-4 rounded border-slate-300 dark:border-slate-800 text-blue-600 bg-white dark:bg-slate-950 focus:ring-blue-500"
                         />
                         <label htmlFor="isAvailableCheck" className="text-xs font-bold text-slate-600 dark:text-slate-350 select-none">
-                          Mark Vehicle as Available for Orders
+                          Mark Fleet Kind Active
                         </label>
                       </div>
                     </div>
@@ -1143,7 +1269,7 @@ const Profile = () => {
 
                   {/* Pricing Details Section */}
                   <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 text-left">
-                    <h4 className="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Fare & Pricing Structure (in ₹)</h4>
+                    <h4 className="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider font-sans">Fare & Pricing Structure (in ₹)</h4>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                       <div className="space-y-1.5 text-left">
@@ -1152,7 +1278,7 @@ const Profile = () => {
                           type="number"
                           value={pricePerKm}
                           onChange={(e) => setPricePerKm(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none text-emerald-600 dark:text-emerald-400 font-bold"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none text-emerald-600 dark:text-emerald-450 font-bold"
                           placeholder="e.g. 15"
                           min="1"
                           required
@@ -1189,7 +1315,7 @@ const Profile = () => {
 
                   {/* Driver details section */}
                   <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 text-left">
-                    <h4 className="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Driver & License Information</h4>
+                    <h4 className="text-xs font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider font-sans">Driver & License Information</h4>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                       <div className="space-y-1.5 text-left">
@@ -1210,7 +1336,7 @@ const Profile = () => {
                           type="tel"
                           value={driverPhone}
                           onChange={(e) => setDriverPhone(e.target.value)}
-                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-xs focus:outline-none font-sans"
                           placeholder="e.g. 9876543210"
                           required
                         />
@@ -1230,14 +1356,25 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={saveLoading}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 text-xs"
-                  >
-                    <Save size={16} />
-                    <span>{saveLoading ? "Saving Logistics Settings..." : "Save Vehicle & Driver Details"}</span>
-                  </button>
+                  <div className="flex items-center space-x-3">
+                    <button
+                      type="submit"
+                      disabled={saveLoading}
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center space-x-2 shadow-sm transition-all transform active:scale-95 disabled:opacity-50 text-xs"
+                    >
+                      <Save size={16} />
+                      <span>{saveLoading ? "Saving Logistics Settings..." : (editingVehicleId ? "Update Vehicle details" : "Add Vehicle to Fleet")}</span>
+                    </button>
+                    {editingVehicleId && (
+                      <button
+                        type="button"
+                        onClick={resetVehicleForm}
+                        className="bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 font-bold py-3 px-6 rounded-xl text-xs active:scale-95 transition-all"
+                      >
+                        Cancel Edit
+                      </button>
+                    )}
+                  </div>
                 </form>
               </div>
             )}

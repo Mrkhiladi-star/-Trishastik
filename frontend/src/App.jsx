@@ -19,6 +19,7 @@ import Profile from "./pages/Profile";
 import SoilTest from "./pages/SoilTest";
 import SellerDashboard from "./pages/SellerDashboard";
 import TransporterDashboard from "./pages/TransporterDashboard";
+import Testimonials from "./pages/Testimonials";
 
 // Form creation imports
 import NewListing from "./pages/NewListing";
@@ -42,6 +43,7 @@ function App() {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/education" element={<Education />} />
                 <Route path="/product/:id" element={<ProductDetails />} />
+                <Route path="/testimonials" element={<Testimonials />} />
 
                 {/* Authenticated Routes */}
                 <Route

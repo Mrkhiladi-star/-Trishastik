@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
@@ -24,6 +22,8 @@ connectDB();
 
 // Database startup repair for stuck transit requests
 const Order = require("./models/order");
+const WeightRule = require("./models/weightRule");
+const CategoryMarkup = require("./models/categoryMarkup");
 mongoose.connection.once("open", async () => {
   try {
     const result = await Order.updateMany(
@@ -33,8 +33,34 @@ mongoose.connection.once("open", async () => {
     if (result.modifiedCount > 0) {
       logger.info(`Startup Repair: Reset ${result.modifiedCount} stuck transit requests back to "Accepted".`);
     }
+
+    // Seed dynamic weight rules if empty
+    const countRules = await WeightRule.countDocuments();
+    if (countRules === 0) {
+      await WeightRule.insertMany([
+        { minWeightKg: 0, maxWeightKg: 30, vehicleType: "two-wheeler", displayName: "Two Wheeler" },
+        { minWeightKg: 30, maxWeightKg: 150, vehicleType: "three-wheeler", displayName: "Three Wheeler" },
+        { minWeightKg: 150, maxWeightKg: 1000, vehicleType: "pickup", displayName: "Mini Pickup" },
+        { minWeightKg: 1000, maxWeightKg: 3000, vehicleType: "mini-truck", displayName: "Small Truck" },
+        { minWeightKg: 3000, maxWeightKg: 10000, vehicleType: "large-truck", displayName: "Large Truck" },
+        { minWeightKg: 10000, maxWeightKg: 999999, vehicleType: "container", displayName: "Heavy Truck" }
+      ]);
+      logger.info("Database Seeding: Default weight rules seeded successfully.");
+    }
+
+    // Seed default markup percentages if empty
+    const countMarkups = await CategoryMarkup.countDocuments();
+    if (countMarkups === 0) {
+      await CategoryMarkup.insertMany([
+        { category: "organic_product", markupPercentage: 1 },
+        { category: "medicine_fertilizer", markupPercentage: 5 },
+        { category: "instrument_sale", markupPercentage: 6 },
+        { category: "instrument_rent", markupPercentage: 8 }
+      ]);
+      logger.info("Database Seeding: Default category markups seeded successfully.");
+    }
   } catch (err) {
-    logger.error("Startup Repair error:", err);
+    logger.error("Startup Repair / Seeding error:", err);
   }
 });
 

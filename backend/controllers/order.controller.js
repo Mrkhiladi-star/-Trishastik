@@ -156,7 +156,11 @@ async function findTransporterCandidates(order, radius) {
       let vehicle = await Vehicle.findOne({
         transporter: trans._id,
         vehicleType: { $in: matchingTypes },
-        isAvailable: true
+        isAvailable: true,
+        $or: [
+          { availableCount: { $exists: false } },
+          { availableCount: { $gt: 0 } }
+        ]
       });
       
       // Query-Time Fallback if transporter has no vehicle record
@@ -200,6 +204,23 @@ async function findTransporterCandidates(order, radius) {
   return candidates;
 }
 
+const refundPayment = async (paymentId, amountINR) => {
+  try {
+    const Razorpay = require("razorpay");
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
+    const refund = await razorpay.payments.refund(paymentId, {
+      amount: Math.round(amountINR * 100) // in paise
+    });
+    logger.info(`Razorpay Refund response for paymentId ${paymentId}: ${refund.id}`);
+    return refund;
+  } catch (err) {
+    logger.error(`Razorpay Refund API error for paymentId ${paymentId}: ${err.message}`);
+  }
+};
+
 async function assignNextTransporter(order) {
   const currentIndex = order.currentCandidateIndex;
   
@@ -218,41 +239,51 @@ async function assignNextTransporter(order) {
     const nextCandidate = order.transitCandidates[nextIndex];
     order.transporter = nextCandidate.transporter;
     order.deliveryPrice = nextCandidate.price;
-    order.requestExpiresAt = new Date(Date.now() + 12 * 60 * 60 * 1000); // 12 hours
+    order.requestExpiresAt = new Date(Date.now() + 5 * 60 * 60 * 1000); // 5 hours
     await order.save();
     logger.info(`Reassigned Order ${order._id} to next transporter candidate (Index: ${nextIndex})`);
   } else {
-    // Candidates exhausted!
-    if (order.transitRadius === 50) {
-      logger.info(`Exhausted 50KM radius. Expanding matching for Order ${order._id} to 100KM...`);
-      order.transitRadius = 100;
-      
-      const newCandidates = await findTransporterCandidates(order, 100);
-      const alreadyTriedIds = order.transitCandidates.map(c => c.transporter.toString());
-      const filteredNewCandidates = newCandidates.filter(c => !alreadyTriedIds.includes(c.transporter.toString()));
-      
-      if (filteredNewCandidates.length > 0) {
-        order.transitCandidates = [...order.transitCandidates, ...filteredNewCandidates];
-        const nextCandidate = order.transitCandidates[nextIndex];
-        order.transporter = nextCandidate.transporter;
-        order.deliveryPrice = nextCandidate.price;
-        order.requestExpiresAt = new Date(Date.now() + 12 * 60 * 60 * 1000); // 12 hours
-        await order.save();
-        logger.info(`Reassigned Order ${order._id} to first 100KM radius transporter candidate`);
-      } else {
-        order.transporter = null;
-        order.deliveryPrice = 0;
-        order.requestExpiresAt = null;
-        await order.save();
-        logger.warn(`No transporters found in 100KM radius either for Order ${order._id}`);
+    // Candidates exhausted! Cancel order automatically
+    order.status = "Cancelled";
+    order.transporter = null;
+    order.deliveryPrice = 0;
+    order.requestExpiresAt = null;
+    await order.save();
+    logger.warn(`Logistics matching exhausted all candidates. Automatically cancelling Order ${order._id}`);
+
+    // Trigger email notification to buyer
+    try {
+      const populatedOrder = await Order.findById(order._id)
+        .populate("buyer", "username email fullName")
+        .populate("product", "title");
+        
+      const emailService = require("../services/email.service");
+      if (populatedOrder && populatedOrder.buyer && populatedOrder.product) {
+        await emailService.sendOrderCancellationTransporterExhaustedEmail(
+          populatedOrder.buyer.email,
+          populatedOrder.buyer.username,
+          populatedOrder.product.title,
+          populatedOrder._id
+        );
       }
-    } else {
-      // Already at 100 KM
-      order.transporter = null;
-      order.deliveryPrice = 0;
-      order.requestExpiresAt = null;
-      await order.save();
-      logger.warn(`Exhausted all candidates in 100KM radius for Order ${order._id}. Setting transporter to null.`);
+    } catch (notifyErr) {
+      logger.error(`Failed to send cancellation notification email for Order ${order._id}: ${notifyErr.message}`);
+    }
+
+    // Trigger Razorpay Refund
+    try {
+      const PaymentSession = require("../models/paymentSession");
+      const sessionById = await PaymentSession.findById(order.paymentSession);
+      if (sessionById && sessionById.razorpayPaymentId && sessionById.status === "Paid") {
+        const refundAmount = order.price + (order.deliveryPrice || 0);
+        await refundPayment(sessionById.razorpayPaymentId, refundAmount);
+        
+        sessionById.status = "Refunded";
+        await sessionById.save();
+        logger.info(`Refund initiated successfully for Order ${order._id} amount: ${refundAmount}`);
+      }
+    } catch (refundErr) {
+      logger.error(`Failed to trigger Razorpay refund on candidate exhaustion for Order ${order._id}: ${refundErr.message}`);
     }
   }
 }
@@ -376,9 +407,63 @@ const sellerAcceptOrder = async (req, res, next) => {
     if (order.seller.toString() !== req.user._id.toString() && req.user.role !== "admin") {
       return res.status(403).json({ error: "Unauthorized." });
     }
+    
     order.status = "Accepted";
+    
+    // Bypass transporter matching for self-pickup machinery
+    if (order.vehicleType === "self-pickup") {
+      order.transporter = null;
+      order.deliveryPrice = 0;
+      await order.save();
+      logger.info(`Auto Dispatch: Skipped transporter matching for self-pickup Order ${order._id}`);
+      return res.json({ success: true, order });
+    }
+    
+    order.transitRadius = 50;
+    
+    // Find candidates in 50 KM radius automatically
+    const candidates = await findTransporterCandidates(order, 50);
+    
+    if (candidates.length > 0) {
+      order.transitCandidates = candidates;
+      order.currentCandidateIndex = 0;
+      order.transporter = candidates[0].transporter;
+      order.deliveryPrice = candidates[0].price;
+      order.requestExpiresAt = new Date(Date.now() + 5 * 60 * 60 * 1000); // 5 hours
+      order.status = "Transit Requested";
+      logger.info(`Auto Dispatch: Transit requested for Order ${order._id}. Matched ${candidates.length} candidates in 50KM. First assigned: ${order.transporter}`);
+    } else {
+      logger.info(`Auto Dispatch: No transporters found in 50KM for Order ${order._id}. Expanding to 100KM...`);
+      order.transitRadius = 100;
+      const candidates100 = await findTransporterCandidates(order, 100);
+      if (candidates100.length > 0) {
+        order.transitCandidates = candidates100;
+        order.currentCandidateIndex = 0;
+        order.transporter = candidates100[0].transporter;
+        order.deliveryPrice = candidates100[0].price;
+        order.requestExpiresAt = new Date(Date.now() + 5 * 60 * 60 * 1000); // 5 hours
+        order.status = "Transit Requested";
+        logger.info(`Auto Dispatch: Matched ${candidates100.length} candidates in 100KM. First assigned: ${order.transporter}`);
+      } else {
+        logger.info(`Auto Dispatch: No transporters found in 100KM for Order ${order._id}. Falling back to global...`);
+        order.transitRadius = 999999;
+        const candidatesGlobal = await findTransporterCandidates(order, 999999);
+        if (candidatesGlobal.length > 0) {
+          order.transitCandidates = candidatesGlobal;
+          order.currentCandidateIndex = 0;
+          order.transporter = candidatesGlobal[0].transporter;
+          order.deliveryPrice = candidatesGlobal[0].price;
+          order.requestExpiresAt = new Date(Date.now() + 5 * 60 * 60 * 1000); // 5 hours
+          order.status = "Transit Requested";
+          logger.info(`Auto Dispatch: Matched ${candidatesGlobal.length} global candidates. Nearest assigned: ${order.transporter}`);
+        } else {
+          logger.warn(`Auto Dispatch: No available transporters found for vehicle type: ${order.vehicleType}`);
+        }
+      }
+    }
+    
     await order.save();
-    logger.info(`Order ${req.params.id} accepted by seller`);
+    logger.info(`Order ${req.params.id} accepted and auto-logistics dispatched`);
     res.json({ success: true, order });
   } catch (err) {
     next(err);
@@ -407,7 +492,7 @@ const sellerRequestTransit = async (req, res, next) => {
       order.currentCandidateIndex = 0;
       order.transporter = candidates[0].transporter;
       order.deliveryPrice = candidates[0].price;
-      order.requestExpiresAt = new Date(Date.now() + 12 * 60 * 60 * 1000); // 12 hours
+      order.requestExpiresAt = new Date(Date.now() + 5 * 60 * 60 * 1000); // 5 hours
       order.status = "Transit Requested";
       logger.info(`Transit requested for Order ${order._id}. Matched ${candidates.length} candidates in 50KM. First assigned: ${order.transporter}`);
     } else {
@@ -419,7 +504,7 @@ const sellerRequestTransit = async (req, res, next) => {
         order.currentCandidateIndex = 0;
         order.transporter = candidates100[0].transporter;
         order.deliveryPrice = candidates100[0].price;
-        order.requestExpiresAt = new Date(Date.now() + 12 * 60 * 60 * 1000); // 12 hours
+        order.requestExpiresAt = new Date(Date.now() + 5 * 60 * 60 * 1000); // 5 hours
         order.status = "Transit Requested";
         logger.info(`Matched ${candidates100.length} candidates in 100KM. First assigned: ${order.transporter}`);
       } else {
@@ -431,7 +516,7 @@ const sellerRequestTransit = async (req, res, next) => {
           order.currentCandidateIndex = 0;
           order.transporter = candidatesGlobal[0].transporter;
           order.deliveryPrice = candidatesGlobal[0].price;
-          order.requestExpiresAt = new Date(Date.now() + 12 * 60 * 60 * 1000); // 12 hours
+          order.requestExpiresAt = new Date(Date.now() + 5 * 60 * 60 * 1000); // 5 hours
           order.status = "Transit Requested";
           logger.info(`Matched ${candidatesGlobal.length} global candidates. Nearest assigned: ${order.transporter}`);
         } else {
@@ -672,11 +757,33 @@ const rentProduct = async (req, res, next) => {
     const end = new Date(start.getTime() + days * 24 * 60 * 60 * 1000);
     const totalPrice = product.price * days;
 
+    // Fetch platform markup
+    const markupDoc = await CategoryMarkup.findOne({ category: "instrument_rent" });
+    const markupPercentage = markupDoc ? markupDoc.markupPercentage : 8;
+    
+    const sellerPrice = totalPrice;
+    const platformCommission = totalPrice * (markupPercentage / 100);
+    const productCost = totalPrice + platformCommission;
+
+    // Determine vehicle type by listing weight
+    const unitWeight = product.weightKg || 1.0;
+    const weightRules = await WeightRule.find({}).sort({ minWeightKg: 1 });
+    let matchedRule = weightRules.find(r => unitWeight >= r.minWeightKg && unitWeight < r.maxWeightKg);
+    if (!matchedRule && weightRules.length > 0) {
+      matchedRule = weightRules[weightRules.length - 1];
+    }
+    const vehicleType = matchedRule ? matchedRule.vehicleType : "two-wheeler";
+
     const newOrder = new Order({
       buyer: req.user._id,
       seller: product.owner,
       product: product._id,
-      price: totalPrice,
+      price: productCost,
+      productCost: productCost,
+      sellerPrice: sellerPrice,
+      platformCommission: platformCommission,
+      sellerEarnings: sellerPrice,
+      vehicleType,
       quantity: 1,
       shippingAddress: address,
       shippingLatitude: shippingLat,
@@ -784,6 +891,238 @@ const confirmRentalReturn = async (req, res, next) => {
   }
 };
 
+const previewTransporterPrice = async (sellerId, sellerLat, sellerLon, buyerLat, buyerLon, vehicleType, radius, totalWeight = 1.0) => {
+  const distDelivery = Math.max(getDistanceKm(sellerLat, sellerLon, buyerLat, buyerLon), 1);
+  const transporters = await User.find({ role: "transporter" });
+  const candidates = [];
+  
+  for (const trans of transporters) {
+    const transLat = trans.latitude || 27.56;
+    const transLon = trans.longitude || 80.68;
+    const distToSeller = getDistanceKm(transLat, transLon, sellerLat, sellerLon);
+    
+    if (distToSeller <= radius) {
+      const matchingTypes = VEHICLE_MAPPING[vehicleType] || ["two-wheeler"];
+      let vehicle = await Vehicle.findOne({
+        transporter: trans._id,
+        vehicleType: { $in: matchingTypes },
+        isAvailable: true,
+        $or: [
+          { availableCount: { $exists: false } },
+          { availableCount: { $gt: 0 } }
+        ]
+      });
+      
+      if (!vehicle) {
+        const anyVehicle = await Vehicle.findOne({ transporter: trans._id });
+        if (!anyVehicle) {
+          // Determine default properties by matching type
+          let pPerKm = 15;
+          let mChg = 50;
+          let lChg = 100;
+          if (matchingTypes.includes("two-wheeler")) {
+            pPerKm = 8; mChg = 20; lChg = 0;
+          } else if (matchingTypes.includes("three-wheeler")) {
+            pPerKm = 12; mChg = 40; lChg = 0;
+          } else if (matchingTypes.includes("pickup") || matchingTypes.includes("tata-ace")) {
+            pPerKm = 15; mChg = 100; lChg = 50;
+          }
+          
+          vehicle = new Vehicle({
+            transporter: trans._id,
+            vehicleType: matchingTypes[0] || "two-wheeler",
+            registrationNumber: "TEMP-" + trans._id.toString().substring(18).toUpperCase(),
+            capacityKg: 150,
+            isAvailable: true,
+            pricePerKm: pPerKm,
+            minCharge: mChg,
+            loadingCharge: lChg
+          });
+          await vehicle.save();
+          logger.info(`Preview seeded default vehicle for transporter: ${trans.username}`);
+        } else if (anyVehicle.isAvailable && matchingTypes.includes(anyVehicle.vehicleType)) {
+          vehicle = anyVehicle;
+        }
+      }
+      
+      if (vehicle && vehicle.isAvailable && matchingTypes.includes(vehicle.vehicleType)) {
+        // Loading fee is waived (set to 0) if order is under 50 kg
+        const loading = totalWeight < 50 ? 0 : (vehicle.loadingCharge || 0);
+        const price = (vehicle.minCharge || 0) + ((vehicle.pricePerKm || 0) * distDelivery) + loading;
+        
+        candidates.push({
+          transporter: trans._id,
+          price: Math.round(price),
+          distanceToSeller: Math.round(distToSeller * 10) / 10,
+          distanceBuyerSeller: Math.round(distDelivery * 10) / 10
+        });
+      }
+    }
+  }
+  
+  candidates.sort((a, b) => a.price - b.price);
+  return candidates;
+};
+
+const getCheapestTransporterPrice = async (listing, shippingLat, shippingLon, vehicleType, totalWeight = 1.0) => {
+  const sellerLat = listing.latitude || 27.56;
+  const sellerLon = listing.longitude || 80.68;
+  
+  // Try 50 KM
+  let candidates = await previewTransporterPrice(listing.owner, sellerLat, sellerLon, shippingLat, shippingLon, vehicleType, 50, totalWeight);
+  if (candidates.length > 0) return candidates[0].price;
+  
+  // Try 100 KM
+  candidates = await previewTransporterPrice(listing.owner, sellerLat, sellerLon, shippingLat, shippingLon, vehicleType, 100, totalWeight);
+  if (candidates.length > 0) return candidates[0].price;
+  
+  // Try Global
+  candidates = await previewTransporterPrice(listing.owner, sellerLat, sellerLon, shippingLat, shippingLon, vehicleType, 999999, totalWeight);
+  if (candidates.length > 0) return candidates[0].price;
+  
+  // Hard fallback with updated economical rates
+  const baseCharges = {
+    "two-wheeler": { min: 20, perKm: 8, loading: 0 },
+    "three-wheeler": { min: 40, perKm: 12, loading: 0 },
+    "pickup": { min: 100, perKm: 15, loading: 50 },
+    "tata-ace": { min: 100, perKm: 15, loading: 50 },
+    "mini-truck": { min: 300, perKm: 35, loading: 200 },
+    "large-truck": { min: 500, perKm: 50, loading: 400 },
+    "container": { min: 700, perKm: 60, loading: 500 },
+    "refrigerated-truck": { min: 800, perKm: 65, loading: 500 }
+  };
+  const rates = baseCharges[vehicleType] || baseCharges["two-wheeler"];
+  const distance = Math.max(getDistanceKm(sellerLat, sellerLon, shippingLat, shippingLon), 1);
+  const loading = totalWeight < 50 ? 0 : rates.loading;
+  return Math.round(rates.min + (rates.perKm * distance) + loading);
+};
+
+const getCheckoutPreview = async (req, res, next) => {
+  try {
+    const { address } = req.body;
+    const mongoose = require("mongoose");
+    
+    const user = await User.findById(req.user._id).populate("cart");
+    if (!user || !user.cart || user.cart.length === 0) {
+      return res.json({ success: true, items: [], totalAmount: 0, deliveryTotal: 0, grandTotal: 0 });
+    }
+    
+    let shippingLat = req.user.latitude || 27.56;
+    let shippingLon = req.user.longitude || 80.68;
+    const rawAddress = address || (user.address ? `${user.address.street || ""}, ${user.address.city || ""}, ${user.address.state || ""} ${user.address.pincode || ""}` : "") || "No address provided";
+    
+    if (address && address !== "No address provided") {
+      try {
+        const geocodeRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(address)}`, {
+          headers: { "User-Agent": "Trishastik-AgriTech-App" }
+        });
+        if (geocodeRes.ok) {
+          const data = await geocodeRes.json();
+          if (data && data.length > 0) {
+            shippingLat = Number(data[0].lat);
+            shippingLon = Number(data[0].lon);
+            logger.info(`Preview geocoded shipping address to: ${shippingLat}, ${shippingLon}`);
+          }
+        }
+      } catch (err) {
+        logger.error("Preview geocoding failed: " + err.message);
+      }
+    }
+    
+    // Count cart item occurrences to group them
+    const productCounts = {};
+    for (const item of user.cart) {
+      if (item) {
+        const idStr = item._id.toString();
+        productCounts[idStr] = (productCounts[idStr] || 0) + 1;
+      }
+    }
+    
+    const uniqueProductIds = Object.keys(productCounts);
+    const listings = await Listing.find({ _id: { $in: uniqueProductIds } }).populate("owner");
+    
+    // Fetch Platform Markup Configuration
+    const CategoryMarkup = require("../models/categoryMarkup");
+    const markups = await CategoryMarkup.find({});
+    const markupMap = {};
+    markups.forEach(m => {
+      markupMap[m.category] = m.markupPercentage;
+    });
+    
+    const WeightRule = require("../models/weightRule");
+    const weightRules = await WeightRule.find({}).sort({ minWeightKg: 1 });
+    
+    const previewItems = [];
+    let totalProductCost = 0;
+    let totalDeliveryCharge = 0;
+    
+    for (const listing of listings) {
+      const qty = productCounts[listing._id.toString()];
+      const unitWeight = listing.weightKg || 1.0;
+      const totalWeight = unitWeight * qty;
+      
+      // Determine Vehicle Type from rules
+      let matchedRule = weightRules.find(r => totalWeight >= r.minWeightKg && totalWeight < r.maxWeightKg);
+      if (!matchedRule && weightRules.length > 0) {
+        matchedRule = weightRules[weightRules.length - 1]; // Fallback to highest
+      }
+      let vehicleType = matchedRule ? matchedRule.vehicleType : "two-wheeler";
+      let vehicleDisplayName = matchedRule ? matchedRule.displayName : "Two Wheeler";
+      
+      // Override for Machinery / Equipment (Self-Pickup)
+      if (listing.category === "instrument_rent" || listing.category === "instrument_sale") {
+        vehicleType = "self-pickup";
+        vehicleDisplayName = "Self-Pickup (No Delivery)";
+      }
+      
+      // Calculate Distance
+      const sellerLat = listing.latitude || 27.56;
+      const sellerLon = listing.longitude || 80.68;
+      const distance = Math.max(getDistanceKm(sellerLat, sellerLon, shippingLat, shippingLon), 1);
+      
+      // Calculate Cheapest Transporter Price
+      let deliveryPrice = 0;
+      if (vehicleType !== "self-pickup") {
+        deliveryPrice = await getCheapestTransporterPrice(listing, shippingLat, shippingLon, vehicleType, totalWeight);
+      }
+      
+      // Compute marked up customer price (hidden platform fee)
+      const markupPercentage = markupMap[listing.category] || 5;
+      const customerPrice = listing.price * (1 + (markupPercentage / 100));
+      const itemTotal = customerPrice * qty;
+      
+      totalProductCost += itemTotal;
+      totalDeliveryCharge += deliveryPrice;
+      
+      previewItems.push({
+        listingId: listing._id,
+        title: listing.title,
+        image: listing.image,
+        quantity: qty,
+        sellerName: listing.owner ? listing.owner.fullName || listing.owner.username : "Seller",
+        unitWeight,
+        totalWeight,
+        vehicleType,
+        vehicleDisplayName,
+        distance: Math.round(distance * 10) / 10,
+        customerPrice: Math.round(customerPrice * 100) / 100,
+        itemTotal: Math.round(itemTotal * 100) / 100,
+        deliveryPrice
+      });
+    }
+    
+    res.json({
+      success: true,
+      items: previewItems,
+      totalAmount: Math.round(totalProductCost * 100) / 100,
+      deliveryTotal: totalDeliveryCharge,
+      grandTotal: Math.round((totalProductCost + totalDeliveryCharge) * 100) / 100
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getCheckout,
   checkout,
@@ -803,4 +1142,7 @@ module.exports = {
   rentProduct,
   initiateRentalReturn,
   confirmRentalReturn,
+  getCheckoutPreview,
+  getCheapestTransporterPrice,
+  previewTransporterPrice,
 };

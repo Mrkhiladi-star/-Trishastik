@@ -19,10 +19,12 @@ const checkIsProfileComplete = (user, vehicleDoc) => {
 
   if (user.role === "transporter") {
     if (!vehicleDoc) return false;
-    if (!vehicleDoc.vehicleType || !vehicleDoc.registrationNumber || !vehicleDoc.pricePerKm) {
+    const primaryVeh = Array.isArray(vehicleDoc) ? vehicleDoc[0] : vehicleDoc;
+    if (!primaryVeh) return false;
+    if (!primaryVeh.vehicleType || !primaryVeh.registrationNumber || !primaryVeh.pricePerKm) {
       return false;
     }
-    if (!vehicleDoc.driverDetails || !vehicleDoc.driverDetails.name || !vehicleDoc.driverDetails.phone || !vehicleDoc.driverDetails.licenseNumber) {
+    if (!primaryVeh.driverDetails || !primaryVeh.driverDetails.name || !primaryVeh.driverDetails.phone || !primaryVeh.driverDetails.licenseNumber) {
       return false;
     }
   }
@@ -180,27 +182,30 @@ const getVehicle = async (req, res, next) => {
       return res.status(403).json({ error: "Access denied. Only transporters have vehicles." });
     }
     const Vehicle = require("../models/vehicle");
-    let vehicle = await Vehicle.findOne({ transporter: req.user._id });
-    if (!vehicle) {
-      vehicle = new Vehicle({
+    const vehicles = await Vehicle.find({ transporter: req.user._id });
+    let defaultVehicle = vehicles[0];
+    if (!defaultVehicle) {
+      defaultVehicle = new Vehicle({
         transporter: req.user._id,
         vehicleType: "two-wheeler",
         registrationNumber: "TEMP-" + req.user._id.toString().substring(18).toUpperCase(),
         capacityKg: 500,
         isAvailable: true,
+        availableCount: 1,
         pricePerKm: 15,
         minCharge: 50,
         loadingCharge: 100
       });
-      await vehicle.save();
+      await defaultVehicle.save();
+      vehicles.push(defaultVehicle);
     }
-    res.json({ success: true, vehicle });
+    res.json({ success: true, vehicle: defaultVehicle, vehicles });
   } catch (err) {
     next(err);
   }
 };
 
-const updateVehicle = async (req, res, next) => {
+const addVehicle = async (req, res, next) => {
   try {
     if (req.user.role !== "transporter") {
       return res.status(403).json({ error: "Access denied. Only transporters have vehicles." });
@@ -210,6 +215,7 @@ const updateVehicle = async (req, res, next) => {
       registrationNumber,
       capacityKg,
       isAvailable,
+      availableCount,
       pricePerKm,
       minCharge,
       loadingCharge,
@@ -221,20 +227,84 @@ const updateVehicle = async (req, res, next) => {
     } = req.body;
 
     const Vehicle = require("../models/vehicle");
-    let vehicle = await Vehicle.findOne({ transporter: req.user._id });
+    const vehicle = new Vehicle({
+      transporter: req.user._id,
+      vehicleType: vehicleType || "two-wheeler",
+      registrationNumber: registrationNumber || "TEMP-" + Math.floor(1000 + Math.random() * 9000),
+      capacityKg: Number(capacityKg) || 150,
+      isAvailable: isAvailable !== undefined ? isAvailable : true,
+      availableCount: Number(availableCount) || 1,
+      pricePerKm: Number(pricePerKm) || 15,
+      minCharge: Number(minCharge) || 50,
+      loadingCharge: Number(loadingCharge) || 100,
+      waitingCharge: Number(waitingCharge) || 50,
+      nightSurcharge: Number(nightSurcharge) || 0,
+      driverDetails: {
+        name: driverName || "",
+        phone: driverPhone || "",
+        licenseNumber: driverLicense || ""
+      }
+    });
+
+    await vehicle.save();
+
+    // Re-evaluate profile completeness
+    const user = await User.findById(req.user._id);
+    const allVehicles = await Vehicle.find({ transporter: req.user._id });
+    user.isProfileComplete = checkIsProfileComplete(user, allVehicles);
+    await user.save();
+
+    res.json({ success: true, vehicle, vehicles: allVehicles });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updateVehicle = async (req, res, next) => {
+  try {
+    if (req.user.role !== "transporter") {
+      return res.status(403).json({ error: "Access denied. Only transporters have vehicles." });
+    }
+    const {
+      id,
+      vehicleType,
+      registrationNumber,
+      capacityKg,
+      isAvailable,
+      availableCount,
+      pricePerKm,
+      minCharge,
+      loadingCharge,
+      waitingCharge,
+      nightSurcharge,
+      driverName,
+      driverPhone,
+      driverLicense
+    } = req.body;
+
+    const Vehicle = require("../models/vehicle");
+    let vehicle;
+    const vehicleId = id || req.params.id;
+    if (vehicleId) {
+      vehicle = await Vehicle.findOne({ _id: vehicleId, transporter: req.user._id });
+    } else {
+      vehicle = await Vehicle.findOne({ transporter: req.user._id });
+    }
+
     if (!vehicle) {
       vehicle = new Vehicle({ transporter: req.user._id });
     }
 
     if (vehicleType !== undefined) vehicle.vehicleType = vehicleType;
     if (registrationNumber !== undefined) vehicle.registrationNumber = registrationNumber;
-    if (capacityKg !== undefined) vehicle.capacityKg = capacityKg;
+    if (capacityKg !== undefined) vehicle.capacityKg = Number(capacityKg);
     if (isAvailable !== undefined) vehicle.isAvailable = isAvailable;
-    if (pricePerKm !== undefined) vehicle.pricePerKm = pricePerKm;
-    if (minCharge !== undefined) vehicle.minCharge = minCharge;
-    if (loadingCharge !== undefined) vehicle.loadingCharge = loadingCharge;
-    if (waitingCharge !== undefined) vehicle.waitingCharge = waitingCharge;
-    if (nightSurcharge !== undefined) vehicle.nightSurcharge = nightSurcharge;
+    if (availableCount !== undefined) vehicle.availableCount = Number(availableCount);
+    if (pricePerKm !== undefined) vehicle.pricePerKm = Number(pricePerKm);
+    if (minCharge !== undefined) vehicle.minCharge = Number(minCharge);
+    if (loadingCharge !== undefined) vehicle.loadingCharge = Number(loadingCharge);
+    if (waitingCharge !== undefined) vehicle.waitingCharge = Number(waitingCharge);
+    if (nightSurcharge !== undefined) vehicle.nightSurcharge = Number(nightSurcharge);
     
     if (!vehicle.driverDetails) vehicle.driverDetails = {};
     if (driverName !== undefined) vehicle.driverDetails.name = driverName;
@@ -245,10 +315,34 @@ const updateVehicle = async (req, res, next) => {
 
     // Re-evaluate profile completeness
     const user = await User.findById(req.user._id);
-    user.isProfileComplete = checkIsProfileComplete(user, vehicle);
+    const allVehicles = await Vehicle.find({ transporter: req.user._id });
+    user.isProfileComplete = checkIsProfileComplete(user, allVehicles);
     await user.save();
 
-    res.json({ success: true, vehicle });
+    res.json({ success: true, vehicle, vehicles: allVehicles });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteVehicle = async (req, res, next) => {
+  try {
+    if (req.user.role !== "transporter") {
+      return res.status(403).json({ error: "Access denied. Only transporters have vehicles." });
+    }
+    const Vehicle = require("../models/vehicle");
+    const deleted = await Vehicle.findOneAndDelete({ _id: req.params.id, transporter: req.user._id });
+    if (!deleted) {
+      return res.status(404).json({ error: "Vehicle not found." });
+    }
+
+    // Re-evaluate profile completeness
+    const user = await User.findById(req.user._id);
+    const allVehicles = await Vehicle.find({ transporter: req.user._id });
+    user.isProfileComplete = checkIsProfileComplete(user, allVehicles);
+    await user.save();
+
+    res.json({ success: true, message: "Vehicle deleted successfully.", vehicles: allVehicles });
   } catch (err) {
     next(err);
   }
@@ -260,5 +354,7 @@ module.exports = {
   updatePhoto,
   changePassword,
   getVehicle,
-  updateVehicle
+  addVehicle,
+  updateVehicle,
+  deleteVehicle
 };

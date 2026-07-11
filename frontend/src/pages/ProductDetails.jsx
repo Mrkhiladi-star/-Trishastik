@@ -20,11 +20,12 @@ const ProductDetails = () => {
   const [addingToCart, setAddingToCart] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [activeImage, setActiveImage] = useState("");
+  const [similarProducts, setSimilarProducts] = useState([]);
 
   // Rental Form state
   const [showRentModal, setShowRentModal] = useState(false);
-  const [rentalDuration, setRentalDuration] = useState(7);
-  const [rentalStartDate, setRentalStartDate] = useState(new Date().toISOString().split("T")[0]);
+  const [rentalDuration, setRentalDuration] = useState(1);
+  const [rentalStartDate, setRentalStartDate] = useState("");
   const [rentalFullName, setRentalFullName] = useState("");
   const [rentalPhone, setRentalPhone] = useState("");
   const [rentalAddress, setRentalAddress] = useState("");
@@ -93,6 +94,20 @@ const ProductDetails = () => {
       setProduct(data.listing);
       setReviews(data.reviews || []);
       setActiveImage(data.listing.image || "");
+
+      // Fetch similar category listings
+      try {
+        const allRes = await fetch("/api");
+        if (allRes.ok) {
+          const allData = await allRes.json();
+          const similar = (allData.allListings || []).filter(
+            (item) => item.category === data.listing.category && item._id !== data.listing._id
+          );
+          setSimilarProducts(similar);
+        }
+      } catch (err) {
+        console.error("Error loading similar products:", err);
+      }
     } catch (err) {
       console.error(err);
       setError(err.message || "Failed to load product details.");
@@ -566,6 +581,51 @@ const ProductDetails = () => {
           )}
         </div>
       </div>
+
+      {/* Similar Products Recommendation Slider */}
+      {similarProducts.length > 0 && (
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-10 rounded-3xl shadow-sm text-left mt-8">
+          <div className="border-b border-slate-200 dark:border-slate-800 pb-4 mb-6">
+            <h3 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">Similar Products You Might Like</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 font-sans">Recommended items from the same category</p>
+          </div>
+
+          <div className="flex space-x-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-slate-250 scrollbar-track-transparent">
+            {similarProducts.map((item) => (
+              <div
+                key={item._id}
+                onClick={() => {
+                  navigate(`/product/${item._id}`);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="cursor-pointer min-w-[240px] max-w-[240px] bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm hover:border-slate-350 dark:hover:border-slate-700 transition-all flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="relative h-36 overflow-hidden bg-slate-100 dark:bg-slate-950">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500"; }}
+                    />
+                  </div>
+                  <div className="p-4 space-y-1.5 text-left">
+                    <h4 className="text-xs font-bold text-slate-850 dark:text-white line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{item.title}</h4>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-2 min-h-[1.5rem] leading-relaxed font-sans">{item.description}</p>
+                  </div>
+                </div>
+
+                <div className="p-4 pt-0">
+                  <div className="flex items-baseline space-x-1.5 font-sans">
+                    <span className="text-sm font-extrabold text-emerald-605 dark:text-emerald-450">₹{item.price}</span>
+                    <span className="text-[9px] text-slate-500 font-bold">/ {item.priceUnit || "kg"}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* RENTAL REGISTER MODAL */}
       {showRentModal && (

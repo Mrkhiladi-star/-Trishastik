@@ -551,3 +551,175 @@
 {"level":"info","message":"New Kisan testimonial created by Ram","timestamp":"2026-07-09 16:54:02"}
 {"level":"info","message":"New Kisan testimonial created by Ram","timestamp":"2026-07-09 16:54:18"}
 {"level":"info","message":"User logged out: Ram","timestamp":"2026-07-09 16:54:25"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 12:55:09"}
+{"level":"info","message":"Database Seeding: Default weight rules seeded successfully.","timestamp":"2026-07-11 12:55:11"}
+{"level":"info","message":"Database Seeding: Default category markups seeded successfully.","timestamp":"2026-07-11 12:55:12"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-11 12:56:21"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a2 added to cart for user Ram","timestamp":"2026-07-11 12:56:36"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a0 removed from cart for user Ram","timestamp":"2026-07-11 12:56:56"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a2 added to cart for user Ram","timestamp":"2026-07-11 12:57:20"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a2 added to cart for user Ram","timestamp":"2026-07-11 12:57:27"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a2 added to cart for user Ram","timestamp":"2026-07-11 12:57:36"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a2 added to cart for user Ram","timestamp":"2026-07-11 12:57:37"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a2 added to cart for user Ram","timestamp":"2026-07-11 12:57:37"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a2 added to cart for user Ram","timestamp":"2026-07-11 12:57:38"}
+{"level":"error","message":"500 - orderController.getCheapestTransporterPrice is not a function - /checkout/initiate - POST - 127.0.0.1","stack":"TypeError: orderController.getCheapestTransporterPrice is not a function\n    at initiatePayment (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\controllers\\payment.controller.js:83:51)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-07-11 12:57:46"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 12:58:47"}
+{"level":"info","message":"One unit of product 6a4b3afee6b943a85f84f1a2 removed from cart for user Ram","timestamp":"2026-07-11 12:59:16"}
+{"level":"info","message":"One unit of product 6a4b3afee6b943a85f84f1a2 removed from cart for user Ram","timestamp":"2026-07-11 12:59:16"}
+{"level":"info","message":"One unit of product 6a4b3afee6b943a85f84f1a2 removed from cart for user Ram","timestamp":"2026-07-11 12:59:17"}
+{"level":"info","message":"One unit of product 6a4b3afee6b943a85f84f1a2 removed from cart for user Ram","timestamp":"2026-07-11 12:59:17"}
+{"level":"info","message":"One unit of product 6a4b3afee6b943a85f84f1a2 removed from cart for user Ram","timestamp":"2026-07-11 12:59:17"}
+{"level":"info","message":"One unit of product 6a4b3afee6b943a85f84f1a2 removed from cart for user Ram","timestamp":"2026-07-11 12:59:19"}
+{"level":"error","message":"401 - undefined - /checkout/initiate - POST - 127.0.0.1","timestamp":"2026-07-11 12:59:24"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 13:02:31"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 13:02:38"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 13:03:31"}
+{"error":{"code":"BAD_REQUEST_ERROR","description":"Authentication failed"},"level":"error","message":"Razorpay order creation failed. Verify that RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET are correctly defined in backend/.env: undefined","statusCode":401,"timestamp":"2026-07-11 13:03:52"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 16:07:20"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-11 16:07:34"}
+{"level":"info","message":"Listing created successfully: Radish by Ram","timestamp":"2026-07-11 16:13:40"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-11 16:13:44"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-11 16:13:52"}
+{"level":"info","message":"Product 6a521e5b2feb86e42f82cc0b added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:14:02"}
+{"level":"info","message":"Product 6a521e5b2feb86e42f82cc0b removed from cart for user Ramu Yadav","timestamp":"2026-07-11 16:15:29"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-11 16:15:34"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-11 16:15:55"}
+{"level":"info","message":"Listing created successfully: Mooli by Shri Krishna","timestamp":"2026-07-11 16:16:45"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-11 16:16:50"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-11 16:16:57"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:10"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:28"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:29"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:29"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:30"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:30"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:31"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:31"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:31"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:32"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:35"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:36"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:36"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:37"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:37"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:37"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:38"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:38"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:39"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:39"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:40"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:40"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:41"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:41"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:42"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:17:42"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-11 16:21:28"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-11 16:21:38"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-11 16:22:08"}
+{"level":"info","message":"User logged in: Rubi","timestamp":"2026-07-11 16:22:14"}
+{"level":"info","message":"User logged out: Rubi","timestamp":"2026-07-11 16:24:19"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-11 16:24:34"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 removed from cart for user Ramu Yadav","timestamp":"2026-07-11 16:24:44"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 16:24:52"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-11 16:26:07"}
+{"level":"info","message":"User logged in: Rubi","timestamp":"2026-07-11 16:26:17"}
+{"level":"info","message":"User logged out: Rubi","timestamp":"2026-07-11 16:27:08"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-11 16:27:16"}
+{"level":"info","message":"Payment verified successfully for user Ramu Yadav. Session: 6a5221a12feb86e42f82d27f","timestamp":"2026-07-11 16:28:14"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-11 16:29:37"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-11 16:29:49"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-11 16:30:18"}
+{"level":"info","message":"User logged in: Rubi","timestamp":"2026-07-11 16:30:25"}
+{"level":"info","message":"User logged out: Rubi","timestamp":"2026-07-11 16:30:44"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-11 16:30:55"}
+{"level":"info","message":"Auto Dispatch: No transporters found in 50KM for Order 6a5221c52feb86e42f82d299. Expanding to 100KM...","timestamp":"2026-07-11 16:31:58"}
+{"level":"info","message":"Auto Dispatch: No transporters found in 100KM for Order 6a5221c52feb86e42f82d299. Falling back to global...","timestamp":"2026-07-11 16:31:59"}
+{"level":"info","message":"Auto Dispatch: Matched 1 global candidates. Nearest assigned: 6a4b93792da2a9dd2a0e1b17","timestamp":"2026-07-11 16:31:59"}
+{"level":"info","message":"Order 6a5221c52feb86e42f82d299 accepted and auto-logistics dispatched","timestamp":"2026-07-11 16:31:59"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-11 16:32:10"}
+{"level":"info","message":"User logged in: Rubi","timestamp":"2026-07-11 16:32:18"}
+{"level":"info","message":"Transporter Rubi accepted delivery for Order 6a5221c52feb86e42f82d299","timestamp":"2026-07-11 16:33:01"}
+{"level":"info","message":"Tracking updated for Order 6a5221c52feb86e42f82d299: status=Delivered","timestamp":"2026-07-11 16:33:13"}
+{"level":"info","message":"User logged out: Rubi","timestamp":"2026-07-11 16:33:22"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-11 16:33:34"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-11 16:34:10"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-11 16:35:59"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 16:50:06"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a1 added to cart for user Ram","timestamp":"2026-07-11 16:51:07"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a2 removed from cart for user Ram","timestamp":"2026-07-11 16:51:13"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-11 16:52:24"}
+{"level":"info","message":"User logged in: Sanjay","timestamp":"2026-07-11 16:52:32"}
+{"level":"error","message":"400 - \"listing.weightKg\" must be greater than or equal to 0 - /new - POST - 127.0.0.1","stack":"Error: \"listing.weightKg\" must be greater than or equal to 0\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\middleware\\validate.js:17:19\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at isLoggedIn (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\middleware\\auth.js:5:3)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:149:13)\n    at Route.dispatch (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\route.js:119:3)\n    at Layer.handle [as handle_request] (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (C:\\Users\\mrkhi\\OneDrive\\Desktop\\Trishastik\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)","timestamp":"2026-07-11 16:55:07"}
+{"level":"info","message":"Listing created successfully: cultivator by Sanjay","timestamp":"2026-07-11 16:55:19"}
+{"level":"info","message":"User logged out: Sanjay","timestamp":"2026-07-11 16:55:23"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-11 16:55:31"}
+{"level":"info","message":"Product 6a52281f7a845e0277aa21a4 added to cart for user Ram","timestamp":"2026-07-11 16:56:01"}
+{"level":"info","message":"Product 6a4b3afee6b943a85f84f1a1 removed from cart for user Ram","timestamp":"2026-07-11 16:56:08"}
+{"level":"info","message":"Soil test request created by farmer Ram","timestamp":"2026-07-11 16:57:08"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-11 16:57:11"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-11 16:57:20"}
+{"level":"info","message":"Agent 6a16dadeee701f8f2eae116f assigned to Soil Test 6a52288c7a845e0277aa2271","timestamp":"2026-07-11 16:58:04"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-11 16:58:09"}
+{"level":"info","message":"User logged in: Badal","timestamp":"2026-07-11 16:58:17"}
+{"level":"info","message":"Soil Test 6a52288c7a845e0277aa2271 status updated to Sample Collected by agent/admin","timestamp":"2026-07-11 16:58:34"}
+{"level":"info","message":"Soil Test 6a52288c7a845e0277aa2271 status updated to Testing by agent/admin","timestamp":"2026-07-11 16:58:36"}
+{"level":"info","message":"Report details updated for Soil Test 6a52288c7a845e0277aa2271","timestamp":"2026-07-11 16:58:58"}
+{"level":"info","message":"User logged out: Badal","timestamp":"2026-07-11 16:59:05"}
+{"level":"info","message":"User logged in: admin","timestamp":"2026-07-11 16:59:15"}
+{"level":"info","message":"Fetching and extracting text from PDF report: https://res.cloudinary.com/dbxi4z3it/image/upload/v1783769336/trishastik/soil-reports/uj1jug6ie4cu7pr1alyz.pdf","timestamp":"2026-07-11 16:59:23"}
+{"level":"info","message":"GROK_API_KEY env not configured, generating mock response...","timestamp":"2026-07-11 16:59:30"}
+{"level":"info","message":"Grok AI soil analysis report completed for request 6a52288c7a845e0277aa2271","timestamp":"2026-07-11 16:59:30"}
+{"level":"info","message":"Soil Test 6a52288c7a845e0277aa2271 published by admin","timestamp":"2026-07-11 16:59:40"}
+{"level":"info","message":"User logged out: admin","timestamp":"2026-07-11 16:59:45"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-11 16:59:51"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:02:09"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:11:34"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:11:39"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:12:47"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:13:14"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:13:20"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:13:26"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:13:38"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-11 19:20:20"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-11 19:20:36"}
+{"level":"info","message":"Product 6a521e5b2feb86e42f82cc0b added to cart for user Ramu Yadav","timestamp":"2026-07-11 19:20:53"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-11 19:21:24"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-11 19:21:34"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-11 19:22:55"}
+{"level":"info","message":"User logged in: Rubi","timestamp":"2026-07-11 19:23:10"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:29:02"}
+{"level":"info","message":"User logged out: Rubi","timestamp":"2026-07-11 19:30:01"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-11 19:30:09"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ram","timestamp":"2026-07-11 19:30:24"}
+{"level":"info","message":"One unit of product 6a52281f7a845e0277aa21a4 removed from cart for user Ram","timestamp":"2026-07-11 19:30:33"}
+{"level":"info","message":"User logged out: Ram","timestamp":"2026-07-11 19:35:45"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-11 19:35:54"}
+{"level":"info","message":"Product 6a521e5b2feb86e42f82cc0b removed from cart for user Ramu Yadav","timestamp":"2026-07-11 19:36:02"}
+{"level":"info","message":"Product 6a521f152feb86e42f82cce5 added to cart for user Ramu Yadav","timestamp":"2026-07-11 19:36:08"}
+{"level":"info","message":"Payment verified successfully for user Ramu Yadav. Session: 6a524dd8871b90784ce9f59f","timestamp":"2026-07-11 19:39:21"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-11 19:39:33"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-11 19:39:46"}
+{"level":"info","message":"Auto Dispatch: No transporters found in 50KM for Order 6a524e91871b90784ce9f5bc. Expanding to 100KM...","timestamp":"2026-07-11 19:40:05"}
+{"level":"info","message":"Auto Dispatch: No transporters found in 100KM for Order 6a524e91871b90784ce9f5bc. Falling back to global...","timestamp":"2026-07-11 19:40:06"}
+{"level":"info","message":"Auto Dispatch: Matched 1 global candidates. Nearest assigned: 6a4b93792da2a9dd2a0e1b17","timestamp":"2026-07-11 19:40:07"}
+{"level":"info","message":"Order 6a524e91871b90784ce9f5bc accepted and auto-logistics dispatched","timestamp":"2026-07-11 19:40:07"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-11 19:40:14"}
+{"level":"info","message":"User logged in: Rubi","timestamp":"2026-07-11 19:40:23"}
+{"level":"info","message":"Transporter Rubi rejected job for Order 6a524e91871b90784ce9f5bc","timestamp":"2026-07-11 19:40:33"}
+{"level":"warn","message":"Exhausted all candidates in 100KM radius for Order 6a524e91871b90784ce9f5bc. Setting transporter to null.","timestamp":"2026-07-11 19:40:33"}
+{"level":"info","message":"User logged out: Rubi","timestamp":"2026-07-11 19:40:43"}
+{"level":"info","message":"User logged in: Anuj","timestamp":"2026-07-11 19:40:53"}
+{"level":"info","message":"User logged out: Anuj","timestamp":"2026-07-11 19:41:00"}
+{"level":"info","message":"User logged in: Ramu Yadav","timestamp":"2026-07-11 19:41:08"}
+{"level":"info","message":"User logged out: Ramu Yadav","timestamp":"2026-07-11 19:42:31"}
+{"level":"info","message":"User logged in: Shri Krishna","timestamp":"2026-07-11 19:42:40"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:51:29"}
+{"level":"info","message":"Startup Repair: Reset 1 stuck transit requests back to \"Accepted\".","timestamp":"2026-07-11 19:51:31"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:51:39"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:51:52"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:53:58"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:54:07"}
+{"level":"info","message":"Server is running at http://localhost:3000","timestamp":"2026-07-11 19:59:08"}
+{"level":"info","message":"User logged out: Shri Krishna","timestamp":"2026-07-11 20:00:18"}
+{"level":"info","message":"User logged in: Ram","timestamp":"2026-07-11 20:02:32"}

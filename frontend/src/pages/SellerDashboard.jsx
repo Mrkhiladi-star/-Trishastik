@@ -381,7 +381,7 @@ const SellerDashboard = () => {
                     {order.status === "Pending" && (
                       <button
                         onClick={() => handleAcceptOrder(order._id)}
-                        className="bg-blue-655 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl flex items-center space-x-1.5 text-xs shadow-sm active:scale-95"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl flex items-center space-x-1.5 text-xs shadow-sm active:scale-95"
                       >
                         <CheckCircle size={12} />
                         <span>Accept Order</span>

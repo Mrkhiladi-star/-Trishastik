@@ -1,10 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const orderController = require("../controllers/order.controller");
+const paymentController = require("../controllers/payment.controller");
 const { isLoggedIn, authorizeRoles } = require("../middleware/auth");
 
 router.get("/checkout", isLoggedIn, orderController.getCheckout);
 router.post("/checkout", isLoggedIn, orderController.checkout);
+router.post("/checkout/preview", isLoggedIn, orderController.getCheckoutPreview);
+router.post("/checkout/initiate", isLoggedIn, paymentController.initiatePayment);
+router.post("/checkout/verify", isLoggedIn, paymentController.verifyPayment);
+router.post("/webhooks/razorpay", paymentController.handleRazorpayWebhook);
 router.get("/orders", isLoggedIn, orderController.getBuyerOrders);
 router.get("/seller/orders", isLoggedIn, orderController.getSellerOrders);
 

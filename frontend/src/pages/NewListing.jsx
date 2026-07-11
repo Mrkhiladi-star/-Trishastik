@@ -26,6 +26,7 @@ const NewListing = () => {
   const [images, setImages] = useState([""]); // array of image URLs (initially 1 empty string)
   const [video, setVideo] = useState("");
   const [category, setCategory] = useState("organic_product");
+  const [weightKg, setWeightKg] = useState("1.0");
   const [location, setLocation] = useState("");
   const [latitude, setLatitude] = useState(27.56);
   const [longitude, setLongitude] = useState(80.68);
@@ -185,14 +186,15 @@ const NewListing = () => {
             title,
             description,
             price: Number(price),
-            image: filteredImages[0], // primary image
-            images: filteredImages, // list of all images
+            image: filteredImages[0],
+            images: filteredImages,
             video,
             category,
             location,
             latitude: Number(latitude),
             longitude: Number(longitude),
-            priceUnit
+            priceUnit,
+            weightKg: Number(weightKg)
           }
         })
       });
@@ -304,6 +306,21 @@ const NewListing = () => {
                 <option value="day" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Per Day (Rent)</option>
               </select>
             </div>
+          </div>
+
+          <div className="space-y-1.5 text-left">
+            <label htmlFor="weightKg" className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Unit Weight (Kg) / Volume (Liter) (प्रति बैग / प्रति लीटर वजन)</label>
+            <input
+              type="number"
+              step="any"
+              id="weightKg"
+              value={weightKg}
+              onChange={(e) => setWeightKg(e.target.value)}
+              className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none"
+              placeholder="e.g. 50 (for a 50 kg bag) or 1 (for 1 Liter medicine)"
+              required
+            />
+            <span className="text-[9px] text-slate-400 dark:text-slate-500 block leading-tight font-sans">Used to automatically allocate logistics size. Enter 50 for a 50kg bag, 1 for a 1L bottle. Machinery/Tractors can leave it as 1.0 (self-pickup is free).</span>
           </div>
 
           {/* Product Media Section */}

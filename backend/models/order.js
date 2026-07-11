@@ -116,6 +116,36 @@ const orderSchema = new Schema({
     type: Number,
     default: 0
   },
+  paymentSession: {
+    type: Schema.Types.ObjectId,
+    ref: 'PaymentSession',
+    default: null
+  },
+  productCost: {
+    type: Number,
+    required: true
+  },
+  sellerPrice: {
+    type: Number,
+    required: true
+  },
+  platformCommission: {
+    type: Number,
+    default: 0
+  },
+  sellerEarnings: {
+    type: Number,
+    default: 0
+  },
+  transporterEarnings: {
+    type: Number,
+    default: 0
+  },
+  settlementStatus: {
+    type: String,
+    enum: ['Unpaid', 'Pending Settle', 'Settled', 'Refunded'],
+    default: 'Unpaid'
+  },
   review: {
     rating: { type: Number, default: 0 },
     comment: { type: String, default: "" },

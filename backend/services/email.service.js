@@ -183,8 +183,30 @@ const sendRentalReturnConfirmationEmail = async (
   await sendMailHelper(email, subject, htmlContent);
 };
 
+const sendOrderCancellationTransporterExhaustedEmail = async (email, buyerName, productName, orderId) => {
+  const subject = `[Trishastik Hub] Delivery Unserviceable - Order #${orderId} Cancelled`;
+  const htmlContent = `
+    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #0f172a; color: #f8fafc;">
+      <h2 style="color: #ef4444; text-align: center;">Delivery Unserviceable - Order Cancelled</h2>
+      <p>Hello <strong>${buyerName}</strong>,</p>
+      <p>We regret to inform you that we are unable to match a delivery transporter for your location to ship <strong>${productName}</strong> (Order ID: #${orderId}).</p>
+      <p>As a result, your order has been cancelled, and a **full refund** has been automatically processed back to your original payment method.</p>
+      <div style="background-color: #1e293b; padding: 15px; border-radius: 8px; border: 1px solid #334155; margin: 20px 0; text-align: center;">
+        <p style="margin: 0; color: #ef4444; font-weight: bold;">Order Status: Cancelled</p>
+        <p style="margin: 5px 0 0 0; color: #cbd5e1; font-size: 13px;">Refund Status: Processed via Razorpay</p>
+      </div>
+      <p>The refunded amount should reflect in your account within 5-7 business days depending on your bank.</p>
+      <p style="margin-top: 20px;">We apologize for the inconvenience caused.</p>
+      <hr style="border: 0; border-top: 1px solid #334155; margin: 30px 0;" />
+      <p style="font-size: 11px; color: #64748b; text-align: center;">&copy; ${new Date().getFullYear()} Trishastik Hub. All rights reserved.</p>
+    </div>
+  `;
+  await sendMailHelper(email, subject, htmlContent);
+};
+
 module.exports = {
   sendOtpEmail,
   sendRentalDeliveryEmail,
   sendRentalReturnConfirmationEmail,
+  sendOrderCancellationTransporterExhaustedEmail
 };
